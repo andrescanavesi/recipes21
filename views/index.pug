@@ -3,3 +3,11 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
+
+  each recipe in recipies
+    h2= recipe.title
+    p= recipe.description
+    - var img = recipe.featured_image
+    img(src=img, width="200px")
+
+    
