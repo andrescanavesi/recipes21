@@ -14,19 +14,23 @@ const cache = apicache.middleware;
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
 /* GET home page. */
-router.get("/", function(req, res, next) {
-  const page = getPage(req);
-  const recipies = daoRecipies.find(page);
+router.get("/", async function(req, res, next) {
+  try {
+    const page = getPage(req);
+    const recipes = await daoRecipies.find(page);
 
-  if (!recipies) {
-    throw Error("No recipies found");
+    if (!recipes) {
+      throw Error("No recipies found");
+    }
+
+    const json = {};
+    json.title = "recetas-city.com";
+    json.recipies = recipes;
+    //console.log(json);
+    res.render("index", json);
+  } catch (e) {
+    next(e);
   }
-
-  const json = {};
-  json.title = "recetas-city.com";
-  json.recipies = recipies;
-  console.log(json);
-  res.render("index", json);
 });
 
 /**

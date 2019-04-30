@@ -7,7 +7,14 @@ block content
   each recipe in recipies
     h2= recipe.title
     p= recipe.description
-    - var img = recipe.featured_image
-    img(src=img, width="200px")
+    p= recipe.created_at
+    - var img = recipe.thumbnail
+    img(src=img)
+    h3 Ingredients:
+    each ingr in recipe.ingredients
+      p= ingr
+    h3 Steps:
+    each step in recipe.steps
+      p= step
 
     
