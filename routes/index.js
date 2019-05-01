@@ -4,17 +4,16 @@ const daoRecipies = require("../daos/dao_recipies");
 
 ////////////////////////////////////////// cache //////////////////////////////////////////////////
 const apicache = require("apicache");
-const cacheOptions = {
-  debug: false,
-  defaultDuration: "5 minutes",
-  enabled: false
-};
+const cacheOptions = {};
+cacheOptions.debug = process.env.RC_CACHE_DEBUG;
+cacheOptions.enabled = process.env.RC_CACHE_ENABLED;
+cacheOptions.defaultDuration = process.env.RC_CACHE_DURATION;
 apicache.options(cacheOptions);
 const cache = apicache.middleware;
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
 /* GET home page. */
-router.get("/", async function(req, res, next) {
+router.get("/", cache(), async function(req, res, next) {
   try {
     const page = getPage(req);
     const recipes = await daoRecipies.find(page);

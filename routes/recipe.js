@@ -4,16 +4,15 @@ const daoRecipies = require("../daos/dao_recipies");
 
 ////////////////////////////////////////// cache //////////////////////////////////////////////////
 const apicache = require("apicache");
-const cacheOptions = {
-  debug: false,
-  defaultDuration: "5 minutes",
-  enabled: false
-};
+const cacheOptions = {};
+cacheOptions.debug = process.env.RC_CACHE_DEBUG;
+cacheOptions.enabled = process.env.RC_CACHE_ENABLED;
+cacheOptions.defaultDuration = process.env.RC_CACHE_DURATION;
 apicache.options(cacheOptions);
 const cache = apicache.middleware;
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-router.get("/:id/:titleforurl", async function(req, res, next) {
+router.get("/:id/:titleforurl", cache(), async function(req, res, next) {
   try {
     //titleforurl path param is for SEO purposes. It is ignored by the code
     const recipeId = req.params.id;
