@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  h1= recipe.title
+  - var img = recipe.thumbnail
+  img(src=img)
+  p= recipe.description  
+  h3 Ingredients:
+  each ingr in recipe.ingredients
+    p= ingr
+  h3 Steps:
+  each step in recipe.steps
+    p= step
+    

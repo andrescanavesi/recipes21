@@ -2,10 +2,9 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
-
   each recipe in recipies
-    h2= recipe.title
+    h1
+      a(href=`receta/${recipe.id}/${recipe.title_for_url}`)=recipe.title
     p= recipe.description
     p= recipe.created_at
     - var img = recipe.thumbnail
