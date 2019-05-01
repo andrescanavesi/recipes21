@@ -8,7 +8,7 @@ const cacheOptions = {};
 //cacheOptions.debug = process.env.RC_CACHE_DEBUG;
 //cacheOptions.enabled = process.env.RC_CACHE_ENABLED;
 cacheOptions.debug = false;
-cacheOptions.enabled = true;
+cacheOptions.enabled = false;
 //cacheOptions.defaultDuration = "5 minutes";
 apicache.options(cacheOptions);
 const cache = apicache.middleware;

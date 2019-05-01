@@ -1,5 +1,7 @@
 # Recetas node back
 
+[![Build Status](https://travis-ci.com/andrescanavesi/recetas-node-back.svg?branch=master)](https://travis-ci.com/andrescanavesi/recetas-node-back)
+
 # Packages
 
 - mocha

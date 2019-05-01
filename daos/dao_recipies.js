@@ -34,9 +34,9 @@ async function findById(id) {
 
 function convertRecipe(row) {
   const imageBase =
-    "https://res.cloudinary.com/dniiru5xy/image/upload/c_fill,g_auto/w_600,q_auto,f_auto/";
+    "https://res.cloudinary.com/dniiru5xy/image/upload/c_fill,g_auto/w_900,q_auto,f_auto/";
   const featuredImageBase = imageBase;
-  const thumbnailImageBase = imageBase.replace("w_600", "w_100");
+  const thumbnailImageBase = imageBase.replace("w_900", "w_200");
   const recipe = {};
   recipe.id = row.id;
   recipe.title = row.title;

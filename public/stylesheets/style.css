@@ -1,1 +1,18 @@
 /* custom css*/
+body {
+  font-size: 14px;
+  color: #212529 !important;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+.recipe-title a {
+  color: #212529 !important;
+}
+
+a:hover {
+  color: #20c997 !important;
+}

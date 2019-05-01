@@ -3,15 +3,23 @@ extends layout
 block content
   each recipe in recipies
     div.mt-md-3
-      h1
-        a(href=`receta/${recipe.id}/${recipe.title_for_url}`)=recipe.title
-      p= recipe.description
-      - var img = recipe.thumbnail
-      img(src=img)
-      h3 Ingredientes:
-      ul
-        each ingr in recipe.ingredients
-          li= ingr
-      a(href=`receta/${recipe.id}/${recipe.title_for_url}`) Seguir leyendo
+      .card.mb-1
+        h5.card-header.recipe-title
+          a(href=`receta/${recipe.id}/${recipe.title_for_url}`)=recipe.title
+        .row.no-gutters
+          .col-md-4.pt-3.pl-3
+            - var img = recipe.thumbnail
+            img.card-img(src=img, alt='imagen receta')
+            small.rexr-muted= recipe.description
+          .col-md-8
+            .card-body            
+              h6.card-subtitle.mb-2.text-muted Ingredientes:
+              ul
+                each ingr in recipe.ingredients
+                    li.card-text= ingr
+              p.card-text.text-right
+                a(href=`receta/${recipe.id}/${recipe.title_for_url}`) Seguir leyendo
+              
 
-    
+
+
