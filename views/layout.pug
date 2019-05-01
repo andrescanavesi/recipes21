@@ -6,4 +6,26 @@ html(lang="es")
     link(rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous")
 
   body
-    block content
+    nav.nav.justify-content-start.fixed-top.bg-success.p-2
+      a.nav-link(href='/') 
+        span.text-white Inicio
+      a.nav-link(href='/') 
+        span.text-white Recetas
+      a.nav-link(href='/sobre-este-sitio') 
+        span.text-white Sobre este sitio
+      a.nav-link(href='/recetas/celiacos') 
+        span.text-white Celiacos
+      a.nav-link(href='/suscribite') 
+        span.text-white Suscribite
+      a.nav-link(href='/facebook') 
+        span.text-white Facebook
+   
+    div.mt-md-5
+      div.row
+        div.col-2
+          
+        div.col-8
+          block content
+        div.col-2
+          
+        
