@@ -3,8 +3,9 @@ const moment = require("moment");
 const sqlFormatter = require("sql-formatter");
 
 async function find(page) {
+  //TODO add pagination
   const result = await dbHelper.pool.query(
-    "SELECT * FROM recipes WHERE active=true ORDER BY id DESC LIMIT 2"
+    "SELECT * FROM recipes WHERE active=true ORDER BY id DESC LIMIT 5"
   );
   console.info("recipes: " + result.rows.length);
   const recipes = [];

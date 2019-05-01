@@ -1,14 +1,18 @@
 extends layout
 
 block content
-  h1= recipe.title
-  - var img = recipe.featured_image
-  img(src=img)
-  p= recipe.description  
-  h3 Ingredients:
-  each ingr in recipe.ingredients
-    p= ingr
-  h3 Steps:
-  each step in recipe.steps
-    p= step
+  div.mt-md-3
+    h1.text-center= recipe.title
+    div.text-center
+      - var img = recipe.featured_image
+      img(src=img)
+    div.mt-md-3= recipe.description  
+    h3.mt-md-3 Ingredientes:
+    ul
+    each ingr in recipe.ingredients
+      li= ingr
+    h3.mt-md-3 Pasos:
+    ol
+    each step in recipe.steps
+      li= step
     

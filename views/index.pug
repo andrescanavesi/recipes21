@@ -2,18 +2,16 @@ extends layout
 
 block content
   each recipe in recipies
-    div.mt-md-5
+    div.mt-md-3
       h1
         a(href=`receta/${recipe.id}/${recipe.title_for_url}`)=recipe.title
       p= recipe.description
-      p= recipe.created_at
       - var img = recipe.thumbnail
       img(src=img)
-      h3 Ingredients:
-      each ingr in recipe.ingredients
-        p= ingr
-      h3 Steps:
-      each step in recipe.steps
-        p= step
+      h3 Ingredientes:
+      ul
+        each ingr in recipe.ingredients
+          li= ingr
+      a(href=`receta/${recipe.id}/${recipe.title_for_url}`) Seguir leyendo
 
     
