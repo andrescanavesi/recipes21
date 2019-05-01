@@ -7,7 +7,7 @@ const apicache = require("apicache");
 const cacheOptions = {};
 cacheOptions.debug = process.env.RC_CACHE_DEBUG;
 cacheOptions.enabled = process.env.RC_CACHE_ENABLED;
-cacheOptions.defaultDuration = process.env.RC_CACHE_DURATION;
+cacheOptions.defaultDuration = "5 minutes";
 apicache.options(cacheOptions);
 const cache = apicache.middleware;
 /////////////////////////////////////////////////////////////////////////////////////////////////
