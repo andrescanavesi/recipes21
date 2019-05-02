@@ -47,8 +47,12 @@ function convertRecipe(row) {
   recipe.steps = row.steps.split("\n");
   recipe.keywords = row.keywords.split(",");
   recipe.title_for_url = row.titleforurl;
+  recipe.created_at_en = moment(row.createdat, "YYYY-MM-DD");
+  recipe.created_at_en = recipe.created_at_en.format("YYYY-MM-DD");
   recipe.created_at = moment(row.createdat, "YYYY-MM-DD");
   recipe.created_at = recipe.created_at.format("DD/MM/YYYY");
+  recipe.updated_at_en = moment(row.updatedat, "YYYY-MM-DD");
+  recipe.updated_at_en = recipe.updated_at_en.format("YYYY-MM-DD");
   recipe.updated_at = moment(row.updatedat, "YYYY-MM-DD");
   recipe.updated_at = recipe.updated_at.format("DD/MM/YYYY");
   recipe.apto_celiacos = row.apto_celiacos;
