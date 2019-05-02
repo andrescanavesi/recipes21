@@ -7,7 +7,13 @@ block content
       img(src=img).card-img-top.img-fluid
       div.card-body
         h3.card-title= recipe.title
-        p.card-text= recipe.description  
+        p.card-text 
+          span.mr-1= recipe.description  
+          // Pinterest button
+          - var href = "https://www.pinterest.com/pin/create/button/?url=http://recetas-city.com/receta/"+recipe.id+"/"+recipe.title_for_url+"&media="+recipe.thumbnail+"&description="+recipe.description
+          a(data-pin-do='buttonPin', href=href)
+          img(src='//assets.pinterest.com/images/pidgets/pinit_fg_en_round_red_16.png')
+    
     div.card.mt-md-3
       h3.card-header Ingredientes
       div.card-body
