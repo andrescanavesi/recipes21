@@ -15,13 +15,13 @@ block content
           img(src='//assets.pinterest.com/images/pidgets/pinit_fg_en_round_red_16.png')
     
     div.card.mt-md-3
-      h3.card-header Ingredientes
+      h3.card-header Ingredients
       div.card-body
         ul
         each ingr in recipe.ingredients
           li= ingr
     div.card.mt-md-3
-      h3.card-header Pasos
+      h3.card-header Steps
       div.card-body
         ol
           each step in recipe.steps
@@ -29,4 +29,5 @@ block content
     
     div.mt-md-3
       each keyword in recipe.keywords
-        span.badge.badge-pill.badge-secondary.mr-2.px-3.py-2= keyword
+        a(href=`/recipes/keyword/${keyword}`)
+          span.badge.badge-pill.badge-secondary.mr-2.px-3.py-2=keyword

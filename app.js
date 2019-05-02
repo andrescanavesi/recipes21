@@ -27,7 +27,7 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/recipies", recipiesRouter);
 app.use("/cache", cacheRouter);
-app.use("/receta", recipeRouter);
+app.use("/recipe", recipeRouter);
 app.use("/sitemap.xml", sitemapRouter);
 
 // catch 404 and forward to error handler

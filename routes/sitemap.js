@@ -10,7 +10,7 @@ const moment = require("moment");
 router.get("/", async function(req, res, next) {
   try {
     const baseUrl = process.env.BASE_URL || "http://www.recetas-city.com/";
-    const recipes = await daoRecipies.find(0); //TODO create findAll
+    const recipes = await daoRecipies.findAll();
     const collection = [];
     let today = moment();
     today = today.format("YYYY/MM/DD");
@@ -31,8 +31,8 @@ router.get("/", async function(req, res, next) {
     for (let i = 0; i < recipes.length; i++) {
       const url = {};
       url.loc =
-        baseUrl + "receta/" + recipes[i].id + "/" + recipes[i].title_for_url;
-      url.lastmod = recipes[i].updated_at_en;
+        baseUrl + "recipe/" + recipes[i].id + "/" + recipes[i].title_for_url;
+      url.lastmod = recipes[i].updated_at;
       url["image:image"] = {
         "image:loc": recipes[i].featured_image,
         "image:caption": recipes[i].description

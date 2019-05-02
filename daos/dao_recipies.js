@@ -2,17 +2,37 @@ const dbHelper = require("./db_helper");
 const moment = require("moment");
 const sqlFormatter = require("sql-formatter");
 
-async function find(page) {
-  //TODO add pagination
-  const result = await dbHelper.pool.query(
-    "SELECT * FROM recipes WHERE active=true ORDER BY id DESC LIMIT 5"
-  );
+async function findAll() {
+  return findWithLimit(1000);
+}
+
+async function findWithKeyword(keyword) {
+  return findWithLimit(10, keyword);
+}
+
+async function findWithLimit(limit, keyword) {
+  let query;
+  const bindings = [limit];
+  if (keyword) {
+    bindings.push("%" + keyword + "%");
+    query =
+      "SELECT * FROM recipes WHERE active=true AND keywords like $2 ORDER BY id DESC LIMIT $1 ";
+  } else {
+    query =
+      "SELECT * FROM recipes WHERE active=true ORDER BY id DESC LIMIT $1 ";
+  }
+
+  const result = await dbHelper.execute.query(query, bindings);
   console.info("recipes: " + result.rows.length);
   const recipes = [];
   for (let i = 0; i < result.rows.length; i++) {
     recipes.push(convertRecipe(result.rows[i]));
   }
   return recipes;
+}
+async function find(page) {
+  //TODO add pagination
+  return findWithLimit(5);
 }
 
 async function findById(id) {
@@ -24,7 +44,7 @@ async function findById(id) {
   const bindings = [id];
   console.info(sqlFormatter.format(query));
   console.info("bindings: " + bindings);
-  const result = await dbHelper.pool.query(query, bindings);
+  const result = await dbHelper.execute.query(query, bindings);
   if (result.rows.length > 0) {
     return convertRecipe(result.rows[0]);
   } else {
@@ -47,14 +67,10 @@ function convertRecipe(row) {
   recipe.steps = row.steps.split("\n");
   recipe.keywords = row.keywords.split(",");
   recipe.title_for_url = row.titleforurl;
-  recipe.created_at_en = moment(row.createdat, "YYYY-MM-DD");
-  recipe.created_at_en = recipe.created_at_en.format("YYYY-MM-DD");
   recipe.created_at = moment(row.createdat, "YYYY-MM-DD");
-  recipe.created_at = recipe.created_at.format("DD/MM/YYYY");
-  recipe.updated_at_en = moment(row.updatedat, "YYYY-MM-DD");
-  recipe.updated_at_en = recipe.updated_at_en.format("YYYY-MM-DD");
+  recipe.created_at = recipe.created_at.format("YYYY/MM/DD");
   recipe.updated_at = moment(row.updatedat, "YYYY-MM-DD");
-  recipe.updated_at = recipe.updated_at.format("DD/MM/YYYY");
+  recipe.updated_at = recipe.updated_at.format("YYYY/MM/DD");
   recipe.apto_celiacos = row.apto_celiacos;
   recipe.total_time_tex = row.total_time_text;
   recipe.total_time_meta = row.total_time_meta;
@@ -64,3 +80,5 @@ function convertRecipe(row) {
 
 module.exports.find = find;
 module.exports.findById = findById;
+module.exports.findAll = findAll;
+module.exports.findWithKeyword = findWithKeyword;

@@ -10,4 +10,4 @@ const pool = new Pool({
 });
 
 console.info("DB initialized");
-module.exports.pool = pool;
+module.exports.execute = pool;

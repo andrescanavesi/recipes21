@@ -62,3 +62,6 @@ typings/
 
 # mochawesome output
 test_results/
+
+#visual studio code files
+.vscode/
