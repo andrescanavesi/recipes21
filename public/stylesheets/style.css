@@ -1,6 +1,6 @@
 /* custom css*/
 body {
-  font-size: 14px;
+  font-size: 14px !important;
   color: #212529 !important;
   font-family: Arial, Helvetica, sans-serif;
 }
