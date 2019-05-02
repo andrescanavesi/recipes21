@@ -4,14 +4,17 @@ const daoRecipies = require("../daos/dao_recipies");
 const js2xmlparser = require("js2xmlparser");
 const moment = require("moment");
 
+/**
+ * It generates an standard sitemal.xml for SEO purposes
+ */
 router.get("/", async function(req, res, next) {
   try {
-    const baseUrl = process.env.BASE_URL || "http://localhost:3000/";
+    const baseUrl = process.env.BASE_URL || "http://www.recetas-city.com/";
     const recipes = await daoRecipies.find(0); //TODO create findAll
     const collection = [];
     let today = moment();
-    today = today.format("YYYT/MM/DD");
-    //add root url
+    today = today.format("YYYY/MM/DD");
+    //add site root url
     const rootUrl = {};
     rootUrl.loc = baseUrl;
     rootUrl.lastmod = today;
@@ -22,7 +25,9 @@ router.get("/", async function(req, res, next) {
         "https://res.cloudinary.com/dniiru5xy/image/upload/c_fill,g_auto/w_600,q_auto,f_auto/recipe-default.png",
       "image:caption": "Recetas City. Las mejores recetas de cocina"
     };
+    collection.push(rootUrl);
 
+    //add recipes urls
     for (let i = 0; i < recipes.length; i++) {
       const url = {};
       url.loc =
