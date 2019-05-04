@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  div.mt-md-3
+  div.mt-3
     div.card.mb-3
       - var img = recipe.featured_image
       img(src=img).card-img-top.img-fluid
@@ -14,20 +14,20 @@ block content
           a(data-pin-do='buttonPin', href=href)
           img(src='//assets.pinterest.com/images/pidgets/pinit_fg_en_round_red_16.png')
     
-    div.card.mt-md-3
+    div.card.mt-2
       h3.card-header Ingredients
       div.card-body
         ul
         each ingr in recipe.ingredients
           li= ingr
-    div.card.mt-md-3
+    div.card.mt-2
       h3.card-header Steps
       div.card-body
         ol
           each step in recipe.steps
             li= step
     
-    div.mt-md-3
+    div.mt-2
       each keyword in recipe.keywords
         a(href=`/recipes/keyword/${keyword}`)
           span.badge.badge-pill.badge-secondary.mr-2.px-3.py-2=keyword

@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 const daoRecipies = require("../daos/dao_recipies");
+const moment = require("moment");
 
 ////////////////////////////////////////// cache //////////////////////////////////////////////////
 const apicache = require("apicache");
@@ -24,9 +25,12 @@ router.get("/", cache(), async function(req, res, next) {
     if (!recipes) {
       throw Error("No recipies found");
     }
+    let today = moment();
+    today = today.format("YYYY/MM/DD");
 
     const json = {};
     json.title = "recetas-city.com";
+    json.today = moment().format("YYYY/MM/DD");
     json.recipies = recipes;
     res.render("index", json);
   } catch (e) {

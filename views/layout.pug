@@ -17,15 +17,13 @@ html(lang="es")
     meta(property='og:site_name', content='recetas-city.com')
     meta(property='article:publisher', content='http://www.recetas-city.com/')
     meta(property='article:author', content='http://www.recetas-city.com/')
-    meta(property='fb:app_id', content='255783151834736')
-    meta(name='title', content='Recetas City | Las mejores recetas de cocina')
+    meta(name='title', content=title)
     meta(name='description', content='Recetas City. Las mejores y mas faciles recetas de cocina')
     meta(property='og:title', content='Recetas City | Las mejores recetas de cocina')
     meta(property='og:description', content='Recetas City. Las mejores y mas faciles recetas de cocina')
     meta(property='og:url', content='http://www.recetas-city.com/')
     meta(property='og:image', content='https://res.cloudinary.com/dniiru5xy/image/upload/c_fill,g_auto/w_600,q_auto,f_auto/medialunas.jpg')
-    meta(property='article:modified_time', content='2019/05/02')
-  
+    meta(property='article:modified_time', content=today)
 
     link(rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous")
     link(rel='stylesheet', href='/stylesheets/style.css')
@@ -44,18 +42,21 @@ html(lang="es")
         }
 
   body
-    nav.nav.justify-content-start.fixed-top.bg-success.p-2
-      a.nav-link(href='/') 
-        span.text-white Inicio
-      a.nav-link(href='/about') 
-        span.text-white About this site
+    div.container
+      nav.nav.justify-content-start.fixed-top.bg-success.p-2
+        a.nav-link(href='/') 
+          span.text-white Recipes
+        a.nav-link(href='/about') 
+          span.text-white About this site
    
-    div.mt-md-5.mb-md-5
-      div.row
-        div.col-2
-          
-        div.col-8
-          block content
-        div.col-2
-          
-        
+    .mt-5
+        .row.no-gutters.mx-2
+          .col-md-9
+            block content
+          .col-md-3
+            .card.position-fixed.border-0
+              .card-body Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco 
+    .mb-5 &nbsp
+    .mb-3 &nbsp
+    .fixed-bottom(style='height: 105px')
+      p.text-center &nbsp
