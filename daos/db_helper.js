@@ -1,11 +1,17 @@
-const Pool = require("pg").Pool;
 console.info("Initializing DB...");
+if (!process.env.DATABASE_URL) {
+  throw new Error("No DB configured. Set the environment config DATABASE_URL");
+}
+const parseDbUrl = require("parse-database-url");
+
+const dbConfig = parseDbUrl(process.env.DATABASE_URL);
+const Pool = require("pg").Pool;
 const pool = new Pool({
-  user: process.env.RC_DB_USER,
-  host: process.env.RC_DB_HOST,
-  database: process.env.RC_DB_NAME,
-  password: process.env.RC_DB_PASSWORD,
-  port: process.env.RC_DB_PORT,
+  user: dbConfig.user,
+  host: dbConfig.host,
+  database: dbConfig.database,
+  password: dbConfig.password,
+  port: dbConfig.port,
   ssl: true
 });
 
