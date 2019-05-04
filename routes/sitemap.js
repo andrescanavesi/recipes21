@@ -9,7 +9,7 @@ const moment = require("moment");
  */
 router.get("/", async function(req, res, next) {
   try {
-    const baseUrl = process.env.BASE_URL || "http://www.recetas-city.com/";
+    const baseUrl = process.env.BASE_URL || "http://www.recipes21.com/";
     const recipes = await daoRecipies.findAll();
     const collection = [];
     let today = moment();
@@ -22,8 +22,8 @@ router.get("/", async function(req, res, next) {
     rootUrl.priority = "1.0";
     rootUrl["image:image"] = {
       "image:loc":
-        "https://res.cloudinary.com/dniiru5xy/image/upload/c_fill,g_auto/w_600,q_auto,f_auto/recipe-default.png",
-      "image:caption": "Recetas City. Las mejores recetas de cocina"
+        "https://res.cloudinary.com/dniiru5xy/image/upload/w_600,ar_16:9,c_fill,g_auto,e_sharpen/v1556981218/recipes21/choco-cookies.jpg",
+      "image:caption": "recipes21.com. The best recipes for cooking"
     };
     collection.push(rootUrl);
 
