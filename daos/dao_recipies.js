@@ -77,7 +77,11 @@ function convertRecipe(row) {
   recipe.total_time_meta = row.total_time_meta;
   recipe.category = row.category;
   recipe.url =
-    process.env.BASE_URL + "recipe/" + recipe.id + "/" + recipe.title_for_url;
+    process.env.R21_BASE_URL +
+    "recipe/" +
+    recipe.id +
+    "/" +
+    recipe.title_for_url;
   return recipe;
 }
 

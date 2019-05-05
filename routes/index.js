@@ -39,7 +39,7 @@ router.get("/recipes/keyword/:keyword", cache(), async function(
     responseJson.description =
       "The best recipes of " + req.params.keyword + " | Recipes21";
     responseJson.linkToThisPage =
-      process.env.BASE_URL + "recipes/keyword/" + req.params.keyword;
+      process.env.R21_BASE_URL + "recipes/keyword/" + req.params.keyword;
 
     res.render("index", responseJson);
   } catch (e) {
