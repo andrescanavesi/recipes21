@@ -7,7 +7,7 @@ async function findAll() {
 }
 
 async function findWithKeyword(keyword) {
-  return findWithLimit(10, keyword);
+  return findWithLimit(20, keyword);
 }
 
 async function findWithLimit(limit, keyword) {
@@ -32,7 +32,7 @@ async function findWithLimit(limit, keyword) {
 }
 async function find(page) {
   //TODO add pagination
-  return findWithLimit(5);
+  return findWithLimit(20);
 }
 
 async function findById(id) {

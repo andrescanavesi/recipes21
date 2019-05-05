@@ -9,7 +9,7 @@ router.get("/:id/:titleforurl", cache(), async function(req, res, next) {
     const recipeId = req.params.id;
     const recipe = await daoRecipies.findById(recipeId);
 
-    responseJson.totle = recipe.title;
+    responseJson.title = recipe.title;
     responseJson.recipe = recipe;
     res.render("recipe", responseJson);
   } catch (e) {

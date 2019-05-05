@@ -15,6 +15,7 @@ router.get("/", cache(), async function(req, res, next) {
       throw Error("No recipes found");
     }
     responseJson.recipes = recipes;
+    responseJson.isHomePage = true;
     res.render("index", responseJson);
   } catch (e) {
     next(e);
