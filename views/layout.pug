@@ -63,27 +63,44 @@ html(lang="en")
         a.nav-link(href='/') 
           span.text-white Recipes21
    
-    .mt-5
+      .mt-5
         .row.no-gutters.mx-2
           .col-md-9
             block content
+            //recipes spotlight
+            if !isHomePage
+              .mt-2
+                .card
+                  h3.card-header Recipes spotlight
+                  .card-body
+                    .row
+                      each recipe in recipesSpotlight
+                        .col-3
+                          .card.border-0
+                            .card-body
+                              a(href=`${recipe.url}`)
+                                h6= recipe.title
+                              - var img = recipe.thumbnail200
+                              a(href=`${recipe.url}`)
+                                img.img-fluid(src=img, alt='recipe image')
           .col-md-3
             .card.position-fixed.border-0
               .card-body
-                 if isProduction
+                if isProduction
                   // Ad fixed rught
                   script(async='', src='//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js')
                   ins.adsbygoogle(style='display:block', data-ad-client='ca-pub-9559827534748081', data-ad-slot='4716175564', data-ad-format='auto', data-full-width-responsive='true')
                   script.
                     (adsbygoogle = window.adsbygoogle || []).push({});
-    .mb-5 &nbsp
-    .mb-3 &nbsp
-    .fixed-bottom(style='height: 100px')
-      p.text-center
-        if isProduction
-          // Ad fixed bottom
-          script(async='', src='//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js')
-          ins.adsbygoogle(style='display:inline-block;width:970px;height:90px', data-ad-client='ca-pub-9559827534748081', data-ad-slot='4308981457')
-          script.
-            (adsbygoogle = window.adsbygoogle || []).push({});
+    
+      .mb-5 &nbsp
+      .mb-3 &nbsp
+      .fixed-bottom(style='height: 100px')
+        p.text-center
+          if isProduction
+            // Ad fixed bottom
+            script(async='', src='//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js')
+            ins.adsbygoogle(style='display:inline-block;width:970px;height:90px', data-ad-client='ca-pub-9559827534748081', data-ad-slot='4308981457')
+            script.
+              (adsbygoogle = window.adsbygoogle || []).push({});
     

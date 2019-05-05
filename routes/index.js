@@ -29,6 +29,7 @@ router.get("/recipes/keyword/:keyword", cache(), async function(
 ) {
   try {
     const recipes = await daoRecipies.findWithKeyword(req.params.keyword);
+    const recipesSpotlight = await daoRecipies.findRecipesSpotlight();
 
     if (!recipes) {
       throw Error("No recipes found");
@@ -40,6 +41,8 @@ router.get("/recipes/keyword/:keyword", cache(), async function(
       "The best recipes of " + req.params.keyword + " | Recipes21";
     responseJson.linkToThisPage =
       process.env.R21_BASE_URL + "recipes/keyword/" + req.params.keyword;
+    responseJson.isHomePage = false;
+    responseJson.recipesSpotlight = recipesSpotlight;
 
     res.render("index", responseJson);
   } catch (e) {

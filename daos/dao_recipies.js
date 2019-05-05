@@ -6,6 +6,10 @@ async function findAll() {
   return findWithLimit(1000);
 }
 
+async function findRecipesSpotlight() {
+  return findWithLimit(5);
+}
+
 async function findWithKeyword(keyword) {
   return findWithLimit(20, keyword);
 }
@@ -57,12 +61,14 @@ function convertRecipe(row) {
     "https://res.cloudinary.com/dniiru5xy/image/upload/c_fill,g_auto/w_900,q_auto,f_auto/recipes21/";
   const featuredImageBase = imageBase;
   const thumbnailImageBase = imageBase.replace("w_900", "w_400");
+  const thumbnail200ImageBase = imageBase.replace("w_900", "w_200");
   const recipe = {};
   recipe.id = row.id;
   recipe.title = row.title;
   recipe.description = row.description;
   recipe.featured_image = featuredImageBase + row.featuredimagename;
   recipe.thumbnail = thumbnailImageBase + row.featuredimagename;
+  recipe.thumbnail200 = thumbnail200ImageBase + row.featuredimagename;
   recipe.ingredients = row.ingredients.split("\n");
   recipe.steps = row.steps.split("\n");
   recipe.keywords_csv = row.keywords.replace(" ", "");
@@ -89,3 +95,4 @@ module.exports.find = find;
 module.exports.findById = findById;
 module.exports.findAll = findAll;
 module.exports.findWithKeyword = findWithKeyword;
+module.exports.findRecipesSpotlight = findRecipesSpotlight;

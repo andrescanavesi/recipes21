@@ -10,7 +10,7 @@ block content
           .col-md-4.pt-3.pl-3
             - var img = recipe.thumbnail
             a(href=`${recipe.url}`)
-              img.card-img(src=img, alt='imagen receta')
+              img.card-img(src=img, alt='recipe image')
             small.rexr-muted.mr-1= recipe.description
             // Pinterest button
             - var href = "https://www.pinterest.com/pin/create/button/?url=http://recipes21.com/recipe/"+recipe.id+"/"+recipe.title_for_url+"&media="+recipe.thumbnail+"&description="+recipe.description

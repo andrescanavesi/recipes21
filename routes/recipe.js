@@ -8,6 +8,7 @@ router.get("/:id/:titleforurl", cache(), async function(req, res, next) {
     //titleforurl path param is for SEO purposes. It is ignored by the code
     const recipeId = req.params.id;
     const recipe = await daoRecipies.findById(recipeId);
+    const recipesSpotlight = await daoRecipies.findRecipesSpotlight();
 
     responseJson.title = recipe.title;
     responseJson.recipe = recipe;
@@ -17,6 +18,10 @@ router.get("/:id/:titleforurl", cache(), async function(req, res, next) {
     responseJson.description = recipe.description + " | recipes21.com";
     responseJson.metaImage = recipe.featured_image;
     responseJson.keywords = recipe.keywords_csv;
+    responseJson.recipesSpotlight = recipesSpotlight;
+    responseJson.isHomePage = false;
+    console.log("recipes spotlight");
+    console.info(responseJson.recipesSpotlight);
 
     res.render("recipe", responseJson);
   } catch (e) {

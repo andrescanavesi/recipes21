@@ -4,7 +4,7 @@ block content
   div.mt-3
     div.card.mb-3
       - var img = recipe.featured_image
-      img(src=img).card-img-top.img-fluid
+      img(src=img, alt='recipe image').card-img-top.img-fluid
       div.card-body
         h3.card-title= recipe.title
         p.card-text 

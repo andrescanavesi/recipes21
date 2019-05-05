@@ -6,7 +6,7 @@
 const express = require("express");
 const router = express.Router();
 
-const apicache = require("apicache");
+const { apicache } = require("../util/configs");
 
 /**
  * Displays cache info
