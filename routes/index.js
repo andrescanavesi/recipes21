@@ -1,5 +1,5 @@
-var express = require("express");
-var router = express.Router();
+const express = require("express");
+const router = express.Router();
 const daoRecipies = require("../daos/dao_recipies");
 const { responseJson, cache } = require("../util/configs");
 
@@ -12,7 +12,7 @@ router.get("/", cache(), async function(req, res, next) {
     const recipes = await daoRecipies.find(page);
 
     if (!recipes) {
-      throw Error("No recipies found");
+      throw Error("No recipes found");
     }
     responseJson.recipes = recipes;
     res.render("index", responseJson);
@@ -30,13 +30,11 @@ router.get("/recipes/keyword/:keyword", cache(), async function(
     const recipes = await daoRecipies.findWithKeyword(req.params.keyword);
 
     if (!recipes) {
-      throw Error("No recipies found");
+      throw Error("No recipes found");
     }
 
-    const json = {};
-    json.title = "Recipes with " + req.params.keyword;
-    json.recipies = recipes;
-    res.render("index", json);
+    responseJson.recipes = recipes;
+    res.render("index", responseJson);
   } catch (e) {
     next(e);
   }
