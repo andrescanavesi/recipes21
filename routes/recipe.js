@@ -11,6 +11,13 @@ router.get("/:id/:titleforurl", cache(), async function(req, res, next) {
 
     responseJson.title = recipe.title;
     responseJson.recipe = recipe;
+    responseJson.createdAt = recipe.created_at;
+    responseJson.updatedAt = recipe.updated_at;
+    responseJson.linkToThisPage = recipe.url;
+    responseJson.description = recipe.description + " | recipes21.com";
+    responseJson.metaImage = recipe.featured_image;
+    responseJson.keywords = recipe.keywords_csv;
+
     res.render("recipe", responseJson);
   } catch (e) {
     next(e);

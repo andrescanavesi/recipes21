@@ -65,7 +65,8 @@ function convertRecipe(row) {
   recipe.thumbnail = thumbnailImageBase + row.featuredimagename;
   recipe.ingredients = row.ingredients.split("\n");
   recipe.steps = row.steps.split("\n");
-  recipe.keywords = row.keywords.replace(" ", "").split(",");
+  recipe.keywords_csv = row.keywords.replace(" ", "");
+  recipe.keywords = recipe.keywords_csv.split(",");
   recipe.title_for_url = row.titleforurl;
   recipe.created_at = moment(row.createdat, "YYYY-MM-DD");
   recipe.created_at = recipe.created_at.format("YYYY-MM-DD");
@@ -75,6 +76,8 @@ function convertRecipe(row) {
   recipe.total_time_tex = row.total_time_text;
   recipe.total_time_meta = row.total_time_meta;
   recipe.category = row.category;
+  recipe.url =
+    process.env.BASE_URL + "recipe/" + recipe.id + "/" + recipe.title_for_url;
   return recipe;
 }
 

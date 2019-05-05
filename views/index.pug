@@ -5,11 +5,11 @@ block content
     div.mt-md-3
       .card.mb-1
         h5.card-header.recipe-title
-          a(href=`/recipe/${recipe.id}/${recipe.title_for_url}`)=recipe.title
+          a(href=`${recipe.url}`)=recipe.title
         .row.no-gutters
           .col-md-4.pt-3.pl-3
             - var img = recipe.thumbnail
-            a(href=`/recipe/${recipe.id}/${recipe.title_for_url}`)
+            a(href=`${recipe.url}`)
               img.card-img(src=img, alt='imagen receta')
             small.rexr-muted.mr-1= recipe.description
             // Pinterest button
@@ -23,7 +23,7 @@ block content
                 each ingr in recipe.ingredients
                     li.card-text= ingr
               p.card-text.text-right
-                a(href=`/recipe/${recipe.id}/${recipe.title_for_url}`) Continue reading
+                a(href=`${recipe.url}`) Continue reading
               
 
 
