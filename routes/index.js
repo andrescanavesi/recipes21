@@ -1,18 +1,7 @@
 var express = require("express");
 var router = express.Router();
 const daoRecipies = require("../daos/dao_recipies");
-const moment = require("moment");
-
-////////////////////////////////////////// cache //////////////////////////////////////////////////
-const apicache = require("apicache");
-const cacheOptions = {};
-cacheOptions.debug = JSON.parse(process.env.RC_CACHE_DEBUG);
-cacheOptions.enabled = JSON.parse(process.env.RC_CACHE_ENABLED);
-cacheOptions.defaultDuration = "1 hour";
-console.info(cacheOptions);
-apicache.options(cacheOptions);
-const cache = apicache.middleware;
-/////////////////////////////////////////////////////////////////////////////////////////////////
+const { responseJson, cache } = require("../util/configs");
 
 /**
  * Home page
@@ -25,14 +14,8 @@ router.get("/", cache(), async function(req, res, next) {
     if (!recipes) {
       throw Error("No recipies found");
     }
-    let today = moment();
-    today = today.format("YYYY/MM/DD");
-
-    const json = {};
-    json.title = "recetas-city.com";
-    json.today = moment().format("YYYY/MM/DD");
-    json.recipies = recipes;
-    res.render("index", json);
+    responseJson.recipes = recipes;
+    res.render("index", responseJson);
   } catch (e) {
     next(e);
   }

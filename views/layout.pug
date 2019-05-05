@@ -1,6 +1,24 @@
 doctype html
-html(lang="es")
+html(lang="en")
   head
+    if isProduction
+      //Global site tag (gtag.js) - Google Analytics
+      script(async='', src='https://www.googletagmanager.com/gtag/js?id=UA-139523568-1')
+      script.
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-139523568-1');
+
+    if isProduction
+      //Google Adsense
+      script(async='', src='//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js')
+      script.
+        (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-9559827534748081",
+        enable_page_level_ads: true
+        });
+
     title= title
    
     meta(http-equiv='Content-Type', content='text/html; charset=UTF-8')
@@ -45,7 +63,7 @@ html(lang="es")
     div.container
       nav.nav.justify-content-start.fixed-top.bg-success.p-2
         a.nav-link(href='/') 
-          span.text-white Recipes
+          span.text-white Recipes21
         a.nav-link(href='/about') 
           span.text-white About this site
    
@@ -55,8 +73,20 @@ html(lang="es")
             block content
           .col-md-3
             .card.position-fixed.border-0
-              .card-body Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco 
+              .card-body
+                 if isProduction
+                  // Ad fixed rught
+                  script(async='', src='//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js')
+                  ins.adsbygoogle(style='display:block', data-ad-client='ca-pub-9559827534748081', data-ad-slot='4716175564', data-ad-format='auto', data-full-width-responsive='true')
+                  script.
+                    (adsbygoogle = window.adsbygoogle || []).push({});
     .mb-5 &nbsp
     .mb-3 &nbsp
-    .fixed-bottom(style='height: 105px')
-      p.text-center &nbsp
+    .fixed-bottom(style='height: 100px')
+      p.text-center
+        if isProduction
+          // Ad fixed bottom
+          script(async='', src='//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js')
+          ins.adsbygoogle(style='display:inline-block;width:970px;height:90px', data-ad-client='ca-pub-9559827534748081', data-ad-slot='4308981457')
+          script.
+            (adsbygoogle = window.adsbygoogle || []).push({});
