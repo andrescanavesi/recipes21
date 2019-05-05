@@ -6,7 +6,7 @@ const { responseJson, cache } = require("../util/configs");
 /**
  * Home page
  */
-router.get("/", cache(), async function(req, res, next) {
+router.get("/", async function(req, res, next) {
   try {
     const page = getPage(req);
     const recipes = await daoRecipies.find(page);
@@ -22,11 +22,7 @@ router.get("/", cache(), async function(req, res, next) {
   }
 });
 
-router.get("/recipes/keyword/:keyword", cache(), async function(
-  req,
-  res,
-  next
-) {
+router.get("/recipes/keyword/:keyword", async function(req, res, next) {
   try {
     const recipes = await daoRecipies.findWithKeyword(req.params.keyword);
     const recipesSpotlight = await daoRecipies.findRecipesSpotlight();
