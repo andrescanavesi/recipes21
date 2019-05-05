@@ -1,6 +1,15 @@
 doctype html
 html(lang="es")
   head
+    if isProduction
+      //Global site tag (gtag.js) - Google Analytics
+      script(async='', src='https://www.googletagmanager.com/gtag/js?id=UA-139523568-1')
+      script.
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-139523568-1');
+
     title= title
    
     meta(http-equiv='Content-Type', content='text/html; charset=UTF-8')

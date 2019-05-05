@@ -56,7 +56,7 @@ function convertRecipe(row) {
   const imageBase =
     "https://res.cloudinary.com/dniiru5xy/image/upload/c_fill,g_auto/w_900,q_auto,f_auto/recipes21/";
   const featuredImageBase = imageBase;
-  const thumbnailImageBase = imageBase.replace("w_900", "w_200");
+  const thumbnailImageBase = imageBase.replace("w_900", "w_400");
   const recipe = {};
   recipe.id = row.id;
   recipe.title = row.title;
@@ -65,7 +65,7 @@ function convertRecipe(row) {
   recipe.thumbnail = thumbnailImageBase + row.featuredimagename;
   recipe.ingredients = row.ingredients.split("\n");
   recipe.steps = row.steps.split("\n");
-  recipe.keywords = row.keywords.split(",");
+  recipe.keywords = row.keywords.replace(" ", "").split(",");
   recipe.title_for_url = row.titleforurl;
   recipe.created_at = moment(row.createdat, "YYYY-MM-DD");
   recipe.created_at = recipe.created_at.format("YYYY/MM/DD");
