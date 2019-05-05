@@ -1,5 +1,5 @@
-var express = require("express");
-var router = express.Router();
+const express = require("express");
+const router = express.Router();
 const daoRecipies = require("../daos/dao_recipies");
 const { responseJson, cache } = require("../util/configs");
 
