@@ -32,7 +32,7 @@ router.get("/", async function(req, res, next) {
       const url = {};
       url.loc =
         baseUrl + "recipe/" + recipes[i].id + "/" + recipes[i].title_for_url;
-      url.lastmod = recipes[i].updated_at_for_sitemap;
+      url.lastmod = recipes[i].updated_at;
       url["image:image"] = {
         "image:loc": recipes[i].featured_image,
         "image:caption": recipes[i].description
