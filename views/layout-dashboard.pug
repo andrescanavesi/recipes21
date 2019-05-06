@@ -1,0 +1,75 @@
+doctype html
+html(lang="en")
+  head
+    if isProduction
+      //Global site tag (gtag.js) - Google Analytics
+      script(async='', src='https://www.googletagmanager.com/gtag/js?id=UA-139523568-1')
+      script.
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-139523568-1');
+
+    title= title
+   
+    meta(http-equiv='Content-Type', content='text/html; charset=UTF-8')
+    meta(charset='utf-8')
+    meta(http-equiv='Cache-control', content=metaCache)
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    meta(name='author', content='Recipes21')
+    meta(name='language', content='en')
+    meta(name='keywords', content=keywords)
+    meta(name='robots', content='Index, Follow')
+    meta(property='og:locale', content='en_EN')
+    meta(property='og:type', content='article')
+    meta(property='og:site_name', content='Recipes21')
+    meta(property='article:publisher', content='http://www.recipes21.com/')
+    meta(property='article:author', content='http://www.recipes21.com/')
+    meta(name='title', content=title)
+    meta(name='description', content=description)
+    meta(property='og:title', content=title)
+    meta(property='og:description', content=description)
+    meta(property='og:url', content=linkToThisPage)
+    meta(property='og:image', content=metaImage)
+    meta(property='article:modified_time', content=updatedAt)
+    if isHomePage
+      script(async='async', defer='true', charset='UTF-8', type='application/ld+json').
+        {
+          "@context": "http://schema.org/",
+          "@type": "WebSite",
+          "name": "recipes21.com. The best recipes for cooking",
+          "image": [
+          "https://res.cloudinary.com/dniiru5xy/image/upload/w_600,ar_16:9,c_fill,g_auto,e_sharpen/v1556981218/recipes21/choco-cookies.jpg"
+          ],
+          "datePublished": "2019/05/02",
+          "description": "recipes21.com. The best recipes for cooking",
+          "keywords": "recipes,food,cooking,easy"
+          }
+    link(rel="stylesheet" media="screen" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous")
+    link(rel='stylesheet' media="screen" href='/stylesheets/style.css')
+
+  body
+    div.container
+      nav.nav.justify-content-start.fixed-top.bg-info.p-2
+        a.nav-link(href='/dashboard') 
+          span.text-white Dashboard
+   
+      .mt-5
+        .row.no-gutters.mx-1
+          .col-md-12
+            block content
+             
+    //footer
+    footer.bg-info.text-white.py-4
+      .container
+        .row
+          .col-md-12
+            span.text-white Dashboard
+         
+                
+      // Copyright
+      hr
+      .py-2.text-center
+        | © 2019 Copyright 
+        a(href='http://www.recipes21.com/')  
+          span.text-white www.recipes21.com

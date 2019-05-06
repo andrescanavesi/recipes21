@@ -11,6 +11,7 @@ const recipiesRouter = require("./routes/recipies");
 const cacheRouter = require("./routes/cache");
 const recipeRouter = require("./routes/recipe");
 const sitemapRouter = require("./routes/sitemap");
+const dashboardRouter = require("./routes/dashboard");
 
 var app = express();
 
@@ -32,6 +33,7 @@ app.use("/recipies", recipiesRouter);
 app.use("/cache", cacheRouter);
 app.use("/recipe", recipeRouter);
 app.use("/sitemap.xml", sitemapRouter);
+app.use("/dashboard", dashboardRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

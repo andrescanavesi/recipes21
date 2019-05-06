@@ -36,7 +36,7 @@ async function findWithLimit(limit, keyword) {
 }
 async function find(page) {
   //TODO add pagination
-  return findWithLimit(20);
+  return findWithLimit(5);
 }
 
 async function findById(id) {
@@ -69,7 +69,9 @@ function convertRecipe(row) {
   recipe.featured_image = featuredImageBase + row.featuredimagename;
   recipe.thumbnail = thumbnailImageBase + row.featuredimagename;
   recipe.thumbnail200 = thumbnail200ImageBase + row.featuredimagename;
+  recipe.ingredients_raw = row.ingredients;
   recipe.ingredients = row.ingredients.split("\n");
+  recipe.steps_raw = row.steps;
   recipe.steps = row.steps.split("\n");
   recipe.keywords_csv = row.keywords.replace(" ", "");
   recipe.keywords = recipe.keywords_csv.split(",");
