@@ -10,12 +10,14 @@ router.get("/", async function(req, res, next) {
   try {
     const page = getPage(req);
     const recipes = await daoRecipies.find(page);
+    const footerRecipes = await daoRecipies.findAll();
 
     if (!recipes) {
       throw Error("No recipes found");
     }
     responseJson.recipes = recipes;
     responseJson.isHomePage = true;
+    responseJson.footerRecipes = footerRecipes;
     res.render("index", responseJson);
   } catch (e) {
     next(e);
@@ -26,6 +28,7 @@ router.get("/recipes/keyword/:keyword", async function(req, res, next) {
   try {
     const recipes = await daoRecipies.findWithKeyword(req.params.keyword);
     const recipesSpotlight = await daoRecipies.findRecipesSpotlight();
+    const footerRecipes = await daoRecipies.findAll();
 
     if (!recipes) {
       throw Error("No recipes found");
@@ -39,6 +42,7 @@ router.get("/recipes/keyword/:keyword", async function(req, res, next) {
       process.env.R21_BASE_URL + "recipes/keyword/" + req.params.keyword;
     responseJson.isHomePage = false;
     responseJson.recipesSpotlight = recipesSpotlight;
+    responseJson.footerRecipes = footerRecipes;
 
     res.render("index", responseJson);
   } catch (e) {

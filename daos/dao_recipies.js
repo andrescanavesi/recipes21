@@ -7,11 +7,11 @@ async function findAll() {
 }
 
 async function findRecipesSpotlight() {
-  return findWithLimit(5);
+  return findWithLimit(8);
 }
 
 async function findWithKeyword(keyword) {
-  return findWithLimit(20, keyword);
+  return findWithLimit(40, keyword);
 }
 
 async function findWithLimit(limit, keyword) {

@@ -9,6 +9,7 @@ router.get("/:id/:titleforurl", async function(req, res, next) {
     const recipeId = req.params.id;
     const recipe = await daoRecipies.findById(recipeId);
     const recipesSpotlight = await daoRecipies.findRecipesSpotlight();
+    const footerRecipes = await daoRecipies.findAll();
 
     responseJson.title = recipe.title;
     responseJson.recipe = recipe;
@@ -20,8 +21,7 @@ router.get("/:id/:titleforurl", async function(req, res, next) {
     responseJson.keywords = recipe.keywords_csv;
     responseJson.recipesSpotlight = recipesSpotlight;
     responseJson.isHomePage = false;
-    console.log("recipes spotlight");
-    console.info(responseJson.recipesSpotlight);
+    responseJson.footerRecipes = footerRecipes;
 
     res.render("recipe", responseJson);
   } catch (e) {

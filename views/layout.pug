@@ -78,9 +78,17 @@ html(lang="en")
             .card.position-fixed.border-0
               .card-body
                 // Ad fixed right  
-    
-      .mb-5 &nbsp
-      .mb-3 &nbsp
-      .fixed-bottom(style='height: 100px')
-        p.text-center
-    
+    //footer
+    footer.bg-info.text-white.py-4
+      .container
+        .row
+          each recipe in footerRecipes  
+            .col-2.mt-2
+              a(href=`${recipe.url}`)
+                span.text-white= recipe.title
+      // Copyright
+      hr
+      .py-2.text-center
+        | © 2019 Copyright 
+        a(href='http://www.recipes21.com/')  
+          span.text-white www.recipes21.com
