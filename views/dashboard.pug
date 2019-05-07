@@ -2,26 +2,21 @@ extends layout-dashboard
 
 block content
   div.mt-3
-    div(role='alert').alert.alert-success= successMessage
-    form(action="/dashboard" method="POST")
-        each recipe in recipes
-            .card.mt-2.mb-5
+    if successMessage
+        div(role='alert').alert.alert-success= successMessage
+    - var action = "/dashboard/recipe/edit/"+recipe.id
+    form(action=action method="POST")
+            .card.mt-2.mb-5.border-0
                 - var header = '['+recipe.id+']'+' '+recipe.title
                 .card-header= header
                 .card-body  
-                    input(type="hidden" name=recipe.id)
                     .form-group.row
-                        - var titleName = 'title-'+recipe.id
-                        input(type='text', placeholder='Title', name=titleName, value=recipe.title).form-control.form-control-sm
+                        input(name='title', type='text', placeholder='Title', value=recipe.title).form-control.form-control-sm
                     .form-group.row
-                        - var descriptionName = 'description-'+recipe.id
-                        textarea(name=descriptionName, cols="100", rows="2").form-control= recipe.description
+                        textarea(name='description', cols="100", rows="2").form-control= recipe.description
                     .form-group.row
-                        - var ingredientsName = 'ingredients-'+recipe.id
-                        textarea(name=ingredientsName, cols="100", rows="10").form-control= recipe.ingredients_raw
+                        textarea(name='ingredients', cols="100", rows="10").form-control= recipe.ingredients_raw
                     .form-group.row
-                        - var stepsName = 'steps-'+recipe.id
-                        textarea(name=stepsName, cols="100", rows="10").form-control= recipe.steps_raw
-                    
+                        textarea(name='steps', cols="100", rows="10").form-control= recipe.steps_raw
                     .form-group.row  
                         button(type="submit" ).btn.btn-primary Save

@@ -20,10 +20,10 @@ async function findWithLimit(limit, keyword) {
   if (keyword) {
     bindings.push("%" + keyword + "%");
     query =
-      "SELECT * FROM recipes WHERE active=true AND keywords like $2 ORDER BY id DESC LIMIT $1 ";
+      "SELECT * FROM recipes WHERE active=true AND keywords like $2 ORDER BY updatedat DESC LIMIT $1 ";
   } else {
     query =
-      "SELECT * FROM recipes WHERE active=true ORDER BY id DESC LIMIT $1 ";
+      "SELECT * FROM recipes WHERE active=true ORDER BY updatedat DESC LIMIT $1 ";
   }
 
   const result = await dbHelper.execute.query(query, bindings);
@@ -93,8 +93,18 @@ function convertRecipe(row) {
   return recipe;
 }
 
+async function update(recipe) {
+  const today = moment().format("YYYY-MM-DD HH:mm:ss");
+  const query =
+    "UPDATE recipes SET ingredients=$1, steps=$2, updatedat=$3 WHERE id=$4";
+  const bindings = [recipe.ingredients, recipe.steps, today, recipe.id];
+  const result = await dbHelper.execute.query(query, bindings);
+  console.info(result);
+}
+
 module.exports.find = find;
 module.exports.findById = findById;
 module.exports.findAll = findAll;
 module.exports.findWithKeyword = findWithKeyword;
 module.exports.findRecipesSpotlight = findRecipesSpotlight;
+module.exports.update = update;

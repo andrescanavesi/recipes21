@@ -6,26 +6,36 @@ const { responseJson } = require("../util/configs");
 /**
  *
  */
-router.get("/", async function(req, res, next) {
+router.get("/recipe/edit/:recipeId", async function(req, res, next) {
   try {
-    const recipes = await daoRecipies.find(2);
-    responseJson.recipes = recipes;
+    const recipe = await daoRecipies.findById(req.params.recipeId);
+    responseJson.recipe = recipe;
+    responseJson.successMessage = null;
     res.render("dashboard", responseJson);
   } catch (e) {
     next(e);
   }
 });
 
-router.post("/", async function(req, res, next) {
+router.post("/recipe/edit/:recipeId", async function(req, res, next) {
   try {
     //TODO sanitize with express validator
-    if (req.body) {
-      const title = req.body["title-170"];
-      console.info("Recipe title submited: " + title);
-    }
+    const recipeId = req.params.recipeId;
+    const title = req.body["title"];
+    const ingredients = req.body["ingredients"];
+    const steps = req.body["steps"];
+    console.info("Recipe title submited: " + recipeId + " " + title);
+    const recipeToUdate = {
+      id: recipeId,
+      title: title,
+      ingredients: ingredients,
+      steps: steps
+    };
+    console.info(recipeToUdate);
+    //await daoRecipies.update(recipeToUdate);
+    const recipe = await daoRecipies.findById(recipeId);
     responseJson.successMessage = "ok";
-    //const recipes = await daoRecipies.find(2);
-    //responseJson.recipes = recipes;
+    responseJson.recipe = recipe;
     res.render("dashboard", responseJson);
   } catch (e) {
     next(e);
