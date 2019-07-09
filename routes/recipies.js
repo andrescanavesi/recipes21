@@ -6,8 +6,8 @@ const daoRecipies = require("../daos/dao_recipies");
 const apicache = require("apicache");
 const cacheOptions = {
     debug: true,
-    defaultDuration: "5 minutes",
-    enabled: true,
+    defaultDuration: "60 minutes",
+    enabled: false,
 };
 apicache.options(cacheOptions);
 const cache = apicache.middleware;
@@ -21,6 +21,7 @@ router.get("/", cache(), function(req, res, next) {
 
 router.get("/search", cache(), function(req, res, next) {
     const phrase = req.query.phrase;
+    console.info("searching by: " + phrase);
     const page = getPage(req);
     const recipies = daoRecipies.find(rpage);
     response(recipies, page, res);
