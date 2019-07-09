@@ -1,13 +1,20 @@
 const dbHelper = require("./db_helper");
 const moment = require("moment");
 const sqlFormatter = require("sql-formatter");
-
+let allRecipes = [];
+let spotlightRecipes = [];
 async function findAll() {
-    return findWithLimit(1000);
+    if (allRecipes.length === 0) {
+        allRecipes = findWithLimit(1000);
+    }
+    return allRecipes;
 }
 
 async function findRecipesSpotlight() {
-    return findWithLimit(8);
+    if (spotlightRecipes.length === 0) {
+        spotlightRecipes = findWithLimit(8);
+    }
+    return spotlightRecipes;
 }
 
 async function findWithKeyword(keyword) {
