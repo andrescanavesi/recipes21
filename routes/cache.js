@@ -6,20 +6,20 @@
 const express = require("express");
 const router = express.Router();
 
-const { apicache } = require("../util/configs");
+const {apicache} = require("../util/configs");
 
 /**
  * Displays cache info
  */
 router.get("/", (req, res) => {
-  res.json(apicache.getIndex());
+    res.json(apicache.getIndex());
 });
 
 /**
  * Clears all cache
  */
 router.get("/clear", (req, res) => {
-  res.json(apicache.clear());
+    res.json(apicache.clear());
 });
 
 module.exports = router;

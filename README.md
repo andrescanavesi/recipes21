@@ -1,16 +1,18 @@
-# Recetas node back
+# Recipes Node
 
 [![Build Status](https://travis-ci.com/andrescanavesi/recetas-node-back.svg?branch=master)](https://travis-ci.com/andrescanavesi/recetas-node-back)
 
 # Packages
 
-- mocha
-- chai
-- chai-hhtp
-- nyc
-- mochawesome
-- npm-check
-- apicache
+-   mocha
+-   chai
+-   chai-hhtp
+-   nyc
+-   mochawesome
+-   npm-check
+-   apicache
+-   prettier
+-   flexsearch
 
 # Run tests
 
