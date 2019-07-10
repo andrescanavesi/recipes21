@@ -49,12 +49,28 @@ html(lang="en")
     link(rel='stylesheet' media="screen" href='/stylesheets/style.css')
 
   body
+    script.
+      function search(event) {
+        if (event.keyCode === 13) {//listen to 'enter' key
+          const phrase = document.getElementById('search').value;
+          if(phrase.length > 0){
+            console.info('phrase: '+phrase);
+            window.location.href = 'search?q='+phrase;
+          }else{
+            window.location.href = '/';
+          }
+          
+        }
+      }
     div.container
       nav.nav.justify-content-start.fixed-top.bg-success.p-2
         a.nav-link(href='/') 
           span.text-white Recipes21
-   
+  
       .mt-5
+        .row.no-gutters.mx-1.pt-3
+          .col-md-9
+            input(name='search', id="search" type='text', placeholder='Search', onkeyup="search(event)", value=searchText).form-control.form-control-sm
         .row.no-gutters.mx-1
           .col-md-9
             block content
