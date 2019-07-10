@@ -4,7 +4,7 @@ const daoRecipies = require("../daos/dao_recipies");
 const {responseJson, cache} = require("../util/configs");
 
 const FlexSearch = require("flexsearch");
-const preset = "default";
+const preset = "fast";
 const searchIndex = new FlexSearch(preset);
 
 buildSearchIndex()
