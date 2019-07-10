@@ -4,7 +4,7 @@ const daoRecipies = require("../daos/dao_recipies");
 const {responseJson, cache} = require("../util/configs");
 
 const FlexSearch = require("flexsearch");
-const preset = "score";
+const preset = "default";
 const searchIndex = new FlexSearch(preset);
 
 buildSearchIndex()
@@ -32,6 +32,7 @@ router.get("/", async function(req, res, next) {
         responseJson.recipes = recipes;
         responseJson.isHomePage = true;
         responseJson.footerRecipes = footerRecipes;
+        responseJson.searchText = "";
         res.render("index", responseJson);
     } catch (e) {
         next(e);
@@ -56,16 +57,27 @@ router.get("/search", async function(req, res, next) {
         });
 
         console.info("results: " + resultIds.length);
-        const p1 = daoRecipies.findByIds(resultIds);
+        let p1;
+        if (resultIds.length === 0) {
+            p1 = daoRecipies.findRecipesSpotlight();
+        } else {
+            p1 = daoRecipies.findByIds(resultIds);
+        }
+
         const p2 = daoRecipies.findRecipesSpotlight();
         const p3 = daoRecipies.findAll();
 
         const [recipes, recipesSpotlight, footerRecipes] = await Promise.all([p1, p2, p3]);
-
+        console.info("Recipes: ");
+        console.info(recipes);
+        if (recipes.length === 0) {
+            recipes = recipesSpotlight;
+        }
         responseJson.recipes = recipes;
         responseJson.isHomePage = false;
         responseJson.recipesSpotlight = recipesSpotlight;
         responseJson.footerRecipes = footerRecipes;
+        responseJson.searchText = phrase;
 
         res.render("index", responseJson);
     } catch (e) {

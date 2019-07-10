@@ -1,35 +1,35 @@
 {
-  "name": "recetas-node-back",
-  "version": "0.0.0",
-  "private": true,
-  "scripts": {
-    "start": "nodemon ./bin/www",
-    "test": "nyc --check-coverage --lines 1 --per-file --reporter=html mocha tests/test_*.js --recursive --reporter mochawesome --reporter-options reportDir=./test_results --exit"
-  },
-  "dependencies": {
-    "apicache": "^1.4.0",
-    "cookie-parser": "~1.4.3",
-    "debug": "~2.6.9",
-    "express": "~4.16.0",
-    "express-favicon": "^2.0.1",
-    "flexsearch": "^0.6.22",
-    "http-errors": "~1.6.2",
-    "js2xmlparser": "^4.0.0",
-    "moment": "^2.24.0",
-    "morgan": "~1.9.0",
-    "nodemon": "^1.18.11",
-    "parse-database-url": "^0.3.0",
-    "pg": "^7.10.0",
-    "pug": "2.0.3",
-    "sql-formatter": "^2.3.2"
-  },
-  "devDependencies": {
-    "chai": "^4.2.0",
-    "chai-http": "^4.2.1",
-    "mocha": "^6.1.4",
-    "mochawesome": "^3.1.2",
-    "npm-check": "^5.9.0",
-    "nyc": "^14.0.0",
-    "prettier": "^1.18.2"
-  }
+    "name": "recetas-node-back",
+    "version": "0.0.0",
+    "private": true,
+    "scripts": {
+        "start": "nodemon ./bin/www",
+        "test": "nyc --check-coverage --lines 1 --per-file --reporter=html mocha tests/test_*.js --recursive --reporter mochawesome --reporter-options reportDir=./test_results --exit"
+    },
+    "dependencies": {
+        "apicache": "^1.4.0",
+        "cookie-parser": "~1.4.3",
+        "debug": "~2.6.9",
+        "express": "~4.16.0",
+        "express-favicon": "^2.0.1",
+        "flexsearch": "^0.6.22",
+        "http-errors": "~1.6.2",
+        "js2xmlparser": "^4.0.0",
+        "moment": "^2.24.0",
+        "morgan": "~1.9.0",
+        "nodemon": "^1.18.11",
+        "parse-database-url": "^0.3.0",
+        "pg": "^7.10.0",
+        "pug": "2.0.3",
+        "sql-formatter": "^2.3.2"
+    },
+    "devDependencies": {
+        "chai": "^4.2.0",
+        "chai-http": "^4.2.1",
+        "mocha": "^6.1.4",
+        "mochawesome": "^3.1.2",
+        "npm-check": "^5.9.0",
+        "nyc": "^14.0.0",
+        "prettier": "^1.18.2"
+    }
 }
