@@ -55,7 +55,7 @@ html(lang="en")
           const phrase = document.getElementById('search').value;
           if(phrase.length > 0){
             console.info('phrase: '+phrase);
-            window.location.href = 'search?q='+phrase;
+            window.location.href = '/search?q='+phrase;
           }else{
             window.location.href = '/';
           }
