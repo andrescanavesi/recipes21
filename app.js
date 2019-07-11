@@ -28,8 +28,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
-//app.use("/users", usersRouter);
-//app.use("/recipies", recipiesRouter);
+app.use("/users", usersRouter);
+app.use("/recipies", recipiesRouter);
 app.use("/cache", cacheRouter);
 app.use("/recipe", recipeRouter);
 app.use("/sitemap.xml", sitemapRouter);

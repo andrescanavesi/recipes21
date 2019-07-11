@@ -22,12 +22,14 @@ router.post("/recipe/edit/:recipeId", async function(req, res, next) {
         //TODO sanitize with express validator
         const recipeId = req.params.recipeId;
         const title = req.body.title;
+        const titleForUrl = req.body.title_for_url;
         const ingredients = req.body.ingredients;
         const steps = req.body.steps;
         console.info("Recipe title submited: " + recipeId + " " + title);
         const recipeToUdate = {
             id: recipeId,
             title: title,
+            titleForUrl: titleForUrl,
             ingredients: ingredients,
             steps: steps,
         };
