@@ -41,7 +41,7 @@ async function findWithLimit(limit, keyword) {
 }
 async function find(page) {
     //TODO add pagination
-    return findWithLimit(5);
+    return findWithLimit(50);
 }
 
 async function findById(id) {
@@ -118,8 +118,8 @@ function convertRecipe(row) {
 
 async function update(recipe) {
     const today = moment().format("YYYY-MM-DD HH:mm:ss");
-    const query = "UPDATE recipes SET ingredients=$1, steps=$2, updatedat=$3 WHERE id=$4";
-    const bindings = [recipe.ingredients, recipe.steps, today, recipe.id];
+    const query = "UPDATE recipes SET ingredients=$1, steps=$2, updatedat=$3, titleforurl=$4 WHERE id=$5";
+    const bindings = [recipe.ingredients, recipe.steps, today, recipe.titleForUrl, recipe.id];
     const result = await dbHelper.execute.query(query, bindings);
     console.info(result);
 }
