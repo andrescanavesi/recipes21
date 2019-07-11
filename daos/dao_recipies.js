@@ -41,7 +41,7 @@ async function findWithLimit(limit, keyword) {
 }
 async function find(page) {
     //TODO add pagination
-    return findWithLimit(5);
+    return findWithLimit(50);
 }
 
 async function findById(id) {
