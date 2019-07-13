@@ -1,38 +1,62 @@
 /* custom css*/
 body {
-  font-size: 14px !important;
-  color: #212529 !important;
-  font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px !important;
+    color: #212529 !important;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 a {
-  text-decoration: none !important;
+    text-decoration: none !important;
 }
 
 .recipe-title a {
-  color: #212529 !important;
+    color: #212529 !important;
 }
 
 a:hover {
-  color: #20c997 !important;
+    color: #20c997 !important;
 }
 
 .show-on-mobile {
-  display: block;
+    display: block;
 }
 
 .show-on-desktop {
-  display: block;
+    display: block;
 }
 
 @media (max-width: 767.98px) {
-  .show-on-desktop {
-    display: none;
-  }
+    .show-on-desktop {
+        display: none;
+    }
 }
 
 @media (min-width: 768px) {
-  .show-on-mobile {
-    display: none;
-  }
+    .show-on-mobile {
+        display: none;
+    }
+}
+
+header {
+    height: 200px;
+    font-size: 25px;
+    background-image: url("https://res.cloudinary.com/dniiru5xy/image/upload/c_fill,h_222,q_100,w_1361/v1562999397/recipes21/food-background.jpg");
+}
+
+.content {
+    margin-top: 2px;
+}
+
+.search-box {
+    max-width: 900px;
+    margin: auto;
+    height: 40px;
+}
+
+.brand {
+    background: #cccc00;
+    border-radius: 10px;
+    padding: 2px 22px;
+    font-style: italic;
+    font-family: -webkit-body;
 }
