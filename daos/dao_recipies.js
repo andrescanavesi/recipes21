@@ -116,7 +116,27 @@ function convertRecipe(row) {
     return recipe;
 }
 
+async function create(recipe) {
+    console.info("Creating recipe");
+    const today = moment().format("YYYY-MM-DD HH:mm:ss");
+    const query =
+        "INSERT INTO recipes(title, description, ingredients, steps, titleforurl, createdat, updatedat) VALUES($1,$2,$3,$4,$5,$6,$7)";
+    const bindings = [
+        recipe.title,
+        recipe.description,
+        recipe.ingredients,
+        recipe.steps,
+        recipe.titleForUrl,
+        today,
+        today,
+    ];
+    const result = await dbHelper.execute.query(query, bindings);
+    console.info(result);
+    return result.insertId;
+}
+
 async function update(recipe) {
+    console.info("updating recipe...");
     const today = moment().format("YYYY-MM-DD HH:mm:ss");
     const query = "UPDATE recipes SET ingredients=$1, steps=$2, updatedat=$3, titleforurl=$4 WHERE id=$5";
     const bindings = [recipe.ingredients, recipe.steps, today, recipe.titleForUrl, recipe.id];
@@ -131,3 +151,4 @@ module.exports.findAll = findAll;
 module.exports.findWithKeyword = findWithKeyword;
 module.exports.findRecipesSpotlight = findRecipesSpotlight;
 module.exports.update = update;
+module.exports.create = create;
