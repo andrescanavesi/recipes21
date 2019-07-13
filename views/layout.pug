@@ -62,12 +62,12 @@ html(lang="en")
           
         }
       }
-    .shadow-sm.pb-3.mb-2
+    .shadow-sm.pb-3.mb-3
       header.p-2.d-flex.flex-row
         h1.text-dark.d-inline.brand Recipes 21
         input(name='search', id="search" type='text', 
         placeholder='Find a recipe', onkeyup="search(event)", 
-        value=searchText).form-control.form-control-sm.search-box.d-inline.ml-2
+        value=searchText).form-control.form-control-sm.search-box.d-inline.ml-4
         .d-inline.mt-2.mr-3
           button.btn.btn-link Sign In
           | 
@@ -84,37 +84,34 @@ html(lang="en")
             span.text-dark Subscribe
           a.nav-item.ml-3(href='/') 
             span.text-dark Facebook
-
-      
   
-    div.container
-      
-      .content
-        .row.no-gutters.mx-1
-          .col-md-9
+    .container-fluid
+        .row
+          .col-md-2
+            .position-fixed Ad Panel
+                // Ad fixed left  
+          .col-md-7
             block content
             //recipes spotlight
             if !isHomePage
-              .mt-2
-                .card
-                  h3.card-header Recipes spotlight
-                  .card-body
-                    .row
-                      each recipe in recipesSpotlight
-                        .col-3
-                          .card.border-0
-                            .card-body
-                              a(href=`${recipe.url}`)
-                                h6= recipe.title
-                              - var img = recipe.thumbnail200
-                              a(href=`${recipe.url}`)
-                                img.img-fluid(src=img, alt='recipe image')
+              .mt-4.border-top
+                h3.pt-3 Explore More
+                .row
+                  each recipe in recipesSpotlight
+                    .col-sm-4
+                      - var img = recipe.thumbnail200
+                      a(href=`${recipe.url}`)
+                        img.img-fluid(src=img, alt='recipe image')
+                      a(href=`${recipe.url}`)
+                        h6.text-dark= recipe.title
+                     
+                      
+                      
           .col-md-3
-            .card.position-fixed.border-0
-              .card-body
+            .position-fixed Ad Panel
                 // Ad fixed right  
     //footer
-    footer.bg-info.text-white.py-4
+    footer.bg-info.text-white.py-4.mt-3
       .container
         .row
           each recipe in footerRecipes  

@@ -1,33 +1,26 @@
 extends layout
 
 block content
-  div.mt-3
-    div.card.mb-3
-      - var img = recipe.featured_image
-      img(src=img, alt='recipe image').card-img-top.img-fluid
-      div.card-body
-        h3.card-title= recipe.title
-        p.card-text 
-          span.mr-1= recipe.description  
-          // Pinterest button
-          - var href = "https://www.pinterest.com/pin/create/button/?url=http://recetas-city.com/receta/"+recipe.id+"/"+recipe.title_for_url+"&media="+recipe.thumbnail+"&description="+recipe.description
-          a(data-pin-do='buttonPin', href=href)
-          img(src='//assets.pinterest.com/images/pidgets/pinit_fg_en_round_red_16.png')
+    h1=recipe.title
+    - var img = recipe.featured_image
+    img(src=img, alt='recipe image').card-img-top.img-fluid
+    .mt-3
+      span.mr-1.lead= recipe.description  
+      // Pinterest button
+      - var href = "https://www.pinterest.com/pin/create/button/?url=http://recetas-city.com/receta/"+recipe.id+"/"+recipe.title_for_url+"&media="+recipe.thumbnail+"&description="+recipe.description
+      a(data-pin-do='buttonPin', href=href)
+        img(src='//assets.pinterest.com/images/pidgets/pinit_fg_en_round_red_16.png')
+
+    h2.mt-3 Ingredients
+    ul
+      each ingr in recipe.ingredients
+        li= ingr
+    h2.mt-3 Directions
+    ol
+      each step in recipe.steps
+        li= step
     
-    div.card.mt-2
-      h3.card-header Ingredients
-      div.card-body
-        ul
-        each ingr in recipe.ingredients
-          li= ingr
-    div.card.mt-2
-      h3.card-header Directions
-      div.card-body
-        ol
-          each step in recipe.steps
-            li= step
-    
-    div.mt-2
+    .mt-2
       each keyword in recipe.keywords
         a(href=`/recipes/keyword/${keyword}`)
           span.badge.badge-pill.badge-secondary.mr-2.px-3.py-2=keyword
