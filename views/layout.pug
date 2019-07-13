@@ -62,23 +62,30 @@ html(lang="en")
           
         }
       }
-    header.p-2
-      h1.text-white.d-inline.brand Recipes 21
-      nav.nav.d-inline.ml-3
-        a.nav-item.ml-3(href='/') 
-          span.text-white Home
-        a.nav-item.ml-3(href='/') 
-          span.text-white About
-        a.nav-item.ml-3(href='/') 
-          span.text-white Recipes
-        a.nav-item.ml-3(href='/') 
-          span.text-white Subscribe
-        a.nav-item.ml-3(href='/') 
-            span.text-white Facebook
+    .shadow-sm.pb-3.mb-2
+      header.p-2.d-flex.flex-row
+        h1.text-dark.d-inline.brand Recipes 21
+        input(name='search', id="search" type='text', 
+        placeholder='Find a recipe', onkeyup="search(event)", 
+        value=searchText).form-control.form-control-sm.search-box.d-inline.ml-2
+        .d-inline.mt-2.mr-3
+          button.btn.btn-link Sign In
+          | 
+          button.btn.btn-outline-success Get Started
+      div.sub-header.mt-2  
+        nav.nav.justify-content-center
+          a.nav-item.ml-3(href='/') 
+            span.text-dark Home
+          a.nav-item.ml-3(href='/') 
+            span.text-dark About
+          a.nav-item.ml-3(href='/') 
+            span.text-dark Recipes
+          a.nav-item.ml-3(href='/') 
+            span.text-dark Subscribe
+          a.nav-item.ml-3(href='/') 
+            span.text-dark Facebook
 
-      input(name='search', id="search" type='text', 
-      placeholder='Find a recipe', onkeyup="search(event)", 
-      value=searchText).form-control.form-control-sm.search-box.mt-5
+      
   
     div.container
       
