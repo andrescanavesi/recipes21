@@ -63,15 +63,23 @@ html(lang="en")
         }
       }
     .shadow-sm.pb-3.mb-3
-      header.p-2.d-flex.flex-row
-        h1.text-dark.d-inline.brand Recipes 21
-        input(name='search', id="search" type='text', 
-        placeholder='Find a recipe', onkeyup="search(event)", 
-        value=searchText).form-control.form-control-sm.search-box.d-inline.ml-4
-        .d-inline.mt-2.mr-3
-          button.btn.btn-link Sign In
-          | 
-          button.btn.btn-outline-success Get Started
+      header
+        .container-fluid
+          .row
+            .col-lg-3
+              h1.text-dark.brand.text-center.text-lg-left Recipes 21
+            .col-lg-6
+              input(name='search', id="search" type='text', 
+              placeholder='Find a recipe', onkeyup="search(event)", 
+              value=searchText).form-control.form-control-md.mt-3
+            .col-lg-3
+              .mt-2.mr-3.show-on-desktop.text-right.mt-2
+                button.btn.btn-link Sign In
+                button.btn.btn-outline-success Get Started
+
+        
+        
+        
       div.sub-header.mt-2  
         nav.nav.justify-content-center
           a.nav-item.ml-3(href='/') 
@@ -87,10 +95,9 @@ html(lang="en")
   
     .container-fluid
         .row
-          .col-md-2
-            .position-fixed Ad Panel
-                // Ad fixed left  
-          .col-md-7
+          .col-md-1
+            //left
+          .col-md-8
             block content
             //recipes spotlight
             if !isHomePage
@@ -98,7 +105,7 @@ html(lang="en")
                 h3.pt-3 Explore More
                 .row
                   each recipe in recipesSpotlight
-                    .col-sm-4
+                    .col-sm-4.text-center
                       - var img = recipe.thumbnail200
                       a(href=`${recipe.url}`)
                         img.img-fluid(src=img, alt='recipe image')
@@ -108,10 +115,9 @@ html(lang="en")
                       
                       
           .col-md-3
-            .position-fixed Ad Panel
-                // Ad fixed right  
+            //right column
     //footer
-    footer.bg-info.text-white.py-4.mt-3
+    footer.bg-dark.text-white.py-4.mt-3
       .container
         .row
           each recipe in footerRecipes  
