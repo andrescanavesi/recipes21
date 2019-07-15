@@ -12,6 +12,7 @@ const cacheRouter = require("./routes/cache");
 const recipeRouter = require("./routes/recipe");
 const sitemapRouter = require("./routes/sitemap");
 const dashboardRouter = require("./routes/dashboard");
+const ssoRouter = require("./routes/sso");
 
 const app = express();
 
@@ -34,6 +35,7 @@ app.use("/cache", cacheRouter);
 app.use("/recipe", recipeRouter);
 app.use("/sitemap.xml", sitemapRouter);
 app.use("/dashboard", dashboardRouter);
+app.use("/sso", ssoRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
