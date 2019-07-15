@@ -20,8 +20,10 @@
         "morgan": "~1.9.0",
         "nodemon": "^1.18.11",
         "parse-database-url": "^0.3.0",
-        "pg": "^7.10.0",
+        "pg": "^7.11.0",
+        "pg-hstore": "^2.3.3",
         "pug": "2.0.3",
+        "sequelize": "^5.10.1",
         "sql-formatter": "^2.3.2"
     },
     "devDependencies": {
