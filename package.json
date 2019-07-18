@@ -12,6 +12,7 @@
         "debug": "~2.6.9",
         "express": "~4.16.0",
         "express-favicon": "^2.0.1",
+        "express-session": "^1.16.2",
         "flexsearch": "^0.6.22",
         "googleapis": "^41.0.0",
         "http-errors": "~1.6.2",
@@ -24,7 +25,8 @@
         "pg-hstore": "^2.3.3",
         "pug": "2.0.3",
         "sequelize": "^5.10.1",
-        "sql-formatter": "^2.3.2"
+        "sql-formatter": "^2.3.2",
+        "uuid": "^3.3.2"
     },
     "devDependencies": {
         "chai": "^4.2.0",

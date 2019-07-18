@@ -61,16 +61,20 @@ async function getGoogleAccountFromCode(code) {
 
     // connect to google plus - need this to get the user's email
     const plus = getGooglePlusApi(auth);
+    //console.info(plus);
     const me = await plus.people.get({userId: "me"});
+    console.info(me);
 
     // get the google id and email
     const userGoogleId = me.data.id;
     const userGoogleEmail = me.data.emails && me.data.emails.length && me.data.emails[0].value;
+    let userGoogleEmailImageUrl = me.data.image.url;
 
     // return so we can login or sign up the user
     return {
         id: userGoogleId,
         email: userGoogleEmail,
+        imageUrl: userGoogleEmailImageUrl,
         tokens: tokens, // you can save these to the user if you ever want to get their details without making them log in again
     };
 }

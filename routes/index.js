@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const daoRecipies = require("../daos/dao_recipies");
-const {responseJson, cache} = require("../util/configs");
+const {cache} = require("../util/configs");
+const responseHelper = require("../util/response_helper");
 
 const FlexSearch = require("flexsearch");
 const preset = "fast";
@@ -20,6 +21,7 @@ buildSearchIndex()
  */
 router.get("/", async function(req, res, next) {
     try {
+        let responseJson = responseHelper.getResponseJson(req);
         const page = getPage(req);
 
         const p1 = daoRecipies.find(page);
@@ -41,6 +43,7 @@ router.get("/", async function(req, res, next) {
 
 router.get("/search", async function(req, res, next) {
     try {
+        let responseJson = responseHelper.getResponseJson(req);
         if (searchIndex.length === 0) {
             throw new Error("index to search not ready");
         }
@@ -87,6 +90,7 @@ router.get("/search", async function(req, res, next) {
 
 router.get("/recipes/keyword/:keyword", async function(req, res, next) {
     try {
+        let responseJson = responseHelper.getResponseJson(req);
         console.info("recipes by keyword: " + req.params.keyword);
         const recipes = await daoRecipies.findWithKeyword(req.params.keyword);
         const recipesSpotlight = await daoRecipies.findRecipesSpotlight();

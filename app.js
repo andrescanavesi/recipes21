@@ -1,9 +1,11 @@
 const createError = require("http-errors");
 const express = require("express");
 const favicon = require("express-favicon");
+const session = require("express-session");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
+const uuid = require("uuid/v4");
 
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
@@ -27,6 +29,21 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+
+// add & configure middleware
+//TODO to use => cookie: { secure: true }
+app.use(
+    session({
+        genid: req => {
+            console.log("Inside the session middleware");
+            console.log(req.sessionID);
+            return uuid(); // use UUIDs for session IDs
+        },
+        secret: "changeit", //TODO to use env vars
+        resave: false,
+        saveUninitialized: true,
+    })
+);
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
