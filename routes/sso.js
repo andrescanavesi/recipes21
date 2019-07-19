@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const responseHelper = require("../util/response_helper");
 const googleUtil = require("../util/google-util");
+const User = require("../model/User");
 
 router.get("/", async function(req, res, next) {
     try {

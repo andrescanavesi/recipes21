@@ -15,10 +15,16 @@ const options = {
 };
 const sequelize = new Sequelize(process.env.DATABASE_URL, options);
 
-// sequelize.sync().then(() => {
-//     console.info("DB synced");
-//     const User = require("../model/User");
-// });
+// sequelize
+//     .sync()
+//     .then(() => {
+//         console.info("DB synced");
+//         const User = require("../model/User");
+//         const Recipe = require("../model/Recipe");
+//     })
+//     .catch(err => {
+//         console.error(err);
+//     });
 
 // sequelize
 //     .authenticate()
