@@ -39,7 +39,7 @@ app.use(
             console.log(req.sessionID);
             return uuid(); // use UUIDs for session IDs
         },
-        secret: "changeit", //TODO to use env vars
+        secret: process.env.R21_SESSION_SECRET,
         resave: false,
         saveUninitialized: true,
     })

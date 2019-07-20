@@ -16,6 +16,7 @@ export R21_GOOGLE_CLIENT_ID=**********************
 export R21_GOOGLE_CLIENT_SECRET=**********************
 export R21_GOOGLE_CALLBACK_URL=http://localhost:3000/sso/google/callback
 export PGSSLMODE=require
+export R21_SESSION_SECRET=*****************
 ```
 
 # Packages
