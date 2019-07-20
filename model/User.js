@@ -8,11 +8,11 @@ User.init(
         // attributes
         email: {
             type: Sequelize.STRING,
-            allowNull: true,
+            allowNull: false,
         },
         userName: {
             type: Sequelize.STRING,
-            allowNull: true,
+            allowNull: false,
         },
         firstName: {
             type: Sequelize.STRING,
@@ -22,6 +22,7 @@ User.init(
         },
         isAdmin: {
             type: Sequelize.BOOLEAN,
+            allowNull: false,
             defaultValue: false,
         },
     },
