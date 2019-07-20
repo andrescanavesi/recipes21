@@ -22,11 +22,6 @@ buildSearchIndex()
  */
 router.get("/", async function(req, res, next) {
     try {
-        const andres = await User.findByEmail("andres.canavesi@gmail.com2");
-        console.info("********");
-        console.info(andres);
-        //console.info(andres[0].userName);
-        console.info("********");
         let responseJson = responseHelper.getResponseJson(req);
         const page = getPage(req);
 

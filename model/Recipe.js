@@ -13,15 +13,15 @@ Recipe.init(
     },
     {
         sequelize,
-        modelName: "recipee",
+        modelName: "recipe",
         tableName: "the_recipes",
         // options
     }
 );
 
 // Note: using `force: true` will drop the table if it already exists
-Recipe.sync({force: true}).then(() => {
-    return Recipe.create({
-        title: "recipe 1",
-    });
-});
+// Recipe.sync({force: true}).then(() => {
+//     return Recipe.create({
+//         title: "recipe 1",
+//     });
+// });

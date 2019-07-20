@@ -9,6 +9,7 @@ router.get("/", async function(req, res, next) {
         const urlGoogle = googleUtil.urlGoogle();
         const responseJson = responseHelper.getResponseJson(req);
         responseJson.urlGoogle = urlGoogle;
+
         res.render("sso", responseJson);
     } catch (e) {
         next(e);
@@ -32,9 +33,20 @@ router.get("/google/callback", async function(req, res, next) {
         req.session.userName = result.email.split("@")[0];
         req.session.userImageUrl = result.imageUrl;
 
-        responseJson = responseHelper.getResponseJson(req);
+        const user = await User.findByEmail(result.email);
+        if (user.length === 0) {
+            //the user does not exist, let's create a new one
+            const user = {
+                email: result.email,
+                userName: req.session.userName,
+            };
+            console.info("The user " + result.email + " is not registered. Will be created");
+            await User.create(user);
+        } else {
+            console.info("the user " + result.email + " is already registered");
+        }
 
-        res.render("sso", responseJson);
+        res.redirect("/");
     } catch (e) {
         next(e);
     }
