@@ -23,11 +23,13 @@ buildSearchIndex()
 router.get("/", async function(req, res, next) {
     try {
         let responseJson = responseHelper.getResponseJson(req);
+        responseJson.displayMoreRecipes = true;
         const page = getPage(req);
 
         const p1 = daoRecipies.find(page);
         const p2 = daoRecipies.findAll(page);
-        const [recipes, footerRecipes] = await Promise.all([p1, p2]);
+        const p3 = daoRecipies.findRecipesSpotlight();
+        const [recipes, footerRecipes, recipesSpotlight] = await Promise.all([p1, p2, p3]);
 
         if (!recipes) {
             throw Error("No recipes found");
@@ -35,6 +37,7 @@ router.get("/", async function(req, res, next) {
         responseJson.recipes = recipes;
         responseJson.isHomePage = true;
         responseJson.footerRecipes = footerRecipes;
+        responseJson.recipesSpotlight = recipesSpotlight;
         responseJson.searchText = "";
         res.render("index", responseJson);
     } catch (e) {
@@ -45,6 +48,7 @@ router.get("/", async function(req, res, next) {
 router.get("/search", async function(req, res, next) {
     try {
         let responseJson = responseHelper.getResponseJson(req);
+        responseJson.displayMoreRecipes = true;
         if (searchIndex.length === 0) {
             throw new Error("index to search not ready");
         }
@@ -92,6 +96,7 @@ router.get("/search", async function(req, res, next) {
 router.get("/recipes/keyword/:keyword", async function(req, res, next) {
     try {
         let responseJson = responseHelper.getResponseJson(req);
+        responseJson.displayMoreRecipes = true;
         console.info("recipes by keyword: " + req.params.keyword);
         const recipes = await daoRecipies.findWithKeyword(req.params.keyword);
         const recipesSpotlight = await daoRecipies.findRecipesSpotlight();

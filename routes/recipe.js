@@ -7,6 +7,7 @@ const responseHelper = require("../util/response_helper");
 router.get("/:id/:titleforurl", async function(req, res, next) {
     try {
         let responseJson = responseHelper.getResponseJson(req);
+        responseJson.displayMoreRecipes = true;
 
         //titleforurl path param is for SEO purposes. It is ignored by the code
         const recipeId = req.params.id;
@@ -27,6 +28,63 @@ router.get("/:id/:titleforurl", async function(req, res, next) {
         responseJson.footerRecipes = footerRecipes;
 
         res.render("recipe", responseJson);
+    } catch (e) {
+        next(e);
+    }
+});
+
+router.get("/new", async function(req, res, next) {
+    try {
+        let responseJson = responseHelper.getResponseJson(req);
+        // if (!responseJson.isUserAuthenticated) {
+        //     res.redirect("/sso");
+        // } else {
+        responseJson.recipe = {
+            id: 0,
+            title: "",
+        };
+        responseJson.newRecipe = true;
+        responseJson.successMessage = null;
+        res.render("recipe-edit", responseJson);
+        //}
+    } catch (e) {
+        next(e);
+    }
+});
+
+router.post("/edit/:recipeId", async function(req, res, next) {
+    try {
+        let responseJson = responseHelper.getResponseJson(req);
+        // if (!responseJson.isUserAuthenticated) {
+        //     res.redirect("/sso");
+        // } else {
+        //TODO sanitize with express validator
+        const recipeId = req.params.recipeId;
+        console.info("Recipe id: " + recipeId);
+        const title = req.body.title;
+        const titleForUrl = req.body.title_for_url;
+        const ingredients = req.body.ingredients;
+        const steps = req.body.steps;
+        console.info("Recipe title submited: " + recipeId + " " + title);
+        const recipeToUdate = {
+            id: recipeId,
+            title: title,
+            titleForUrl: titleForUrl,
+            ingredients: ingredients,
+            steps: steps,
+        };
+        console.info(recipeToUdate);
+        if (recipeId === "0") {
+            recipeId = await daoRecipies.create(recipeToUdate);
+        } else {
+            await daoRecipies.update(recipeToUdate);
+        }
+
+        const recipe = await daoRecipies.findById(recipeId);
+        responseJson.successMessage = "ok";
+        responseJson.recipe = recipe;
+        res.render("recipe-edit", responseJson);
+        //}
     } catch (e) {
         next(e);
     }

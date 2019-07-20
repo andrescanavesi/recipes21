@@ -7,6 +7,7 @@ module.exports.getResponseJson = function(req) {
     responseJson.today = moment().format("YYYY-MM-DD");
     responseJson.isProduction = JSON.parse(process.env.R21_IS_PRODUCTION) || false;
     responseJson.isHomePage = false;
+    responseJson.displayMoreRecipes = false;
     responseJson.createdAt = moment().format("YYYY-MM-DD");
     responseJson.updatedAt = moment().format("YYYY-MM-DD");
     responseJson.linkToThisPage = process.env.BASE_URL;

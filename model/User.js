@@ -20,6 +20,10 @@ User.init(
         lastName: {
             type: Sequelize.STRING,
         },
+        isAdmin: {
+            type: Sequelize.BOOLEAN,
+            defaultValue: false,
+        },
     },
     {
         sequelize,
@@ -36,6 +40,7 @@ User.init(
 //         userName: "andres.canavesi",
 //         firstName: "Andres",
 //         lastName: "Canavesi",
+//         isAdmin: true,
 //     });
 // });
 
