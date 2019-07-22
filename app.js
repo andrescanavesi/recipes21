@@ -8,6 +8,9 @@ const logger = require("morgan");
 const uuid = require("uuid/v4");
 
 const dbHelper = require("./daos/db_helper");
+dbHelper.dbSync().then(() => {
+    console.info("DB synced");
+});
 
 const indexRouter = require("./routes/index");
 //const usersRouter = require("./routes/users");

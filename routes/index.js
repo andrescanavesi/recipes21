@@ -3,18 +3,7 @@ const router = express.Router();
 const daoRecipies = require("../daos/dao_recipies");
 const {cache} = require("../util/configs");
 const responseHelper = require("../util/response_helper");
-
-const FlexSearch = require("flexsearch");
-const preset = "fast";
-const searchIndex = new FlexSearch(preset);
-
-// buildSearchIndex()
-//     .then(() => {
-//         console.info("Search index ready to use");
-//     })
-//     .catch(err => {
-//         console.error(err);
-//     });
+const dbHelper = require("../daos/db_helper");
 
 /**
  * Home page
@@ -48,7 +37,7 @@ router.get("/search", async function(req, res, next) {
     try {
         let responseJson = responseHelper.getResponseJson(req);
         responseJson.displayMoreRecipes = true;
-        if (searchIndex.length === 0) {
+        if (dbHelper.searchIndex.length === 0) {
             throw new Error("index to search not ready");
         }
         const phrase = req.query.q;
@@ -58,7 +47,7 @@ router.get("/search", async function(req, res, next) {
         console.info("searching by: " + phrase);
 
         //search using flexsearch. It will return a list of IDs we used as keys during indexing
-        const resultIds = await searchIndex.search({
+        const resultIds = await dbHelper.searchIndex.search({
             query: phrase,
             suggest: true, //When suggestion is enabled all results will be filled up (until limit, default 1000) with similar matches ordered by relevance.
         });
@@ -118,24 +107,6 @@ router.get("/recipes/keyword/:keyword", async function(req, res, next) {
         next(e);
     }
 });
-
-async function buildSearchIndex() {
-    console.time("buildIndexTook");
-    console.info("building index...");
-
-    const allRecipes = await daoRecipies.findAll();
-
-    const size = allRecipes.length;
-    for (let i = 0; i < size; i++) {
-        //we might concatenate the fields we want for our content
-        const content = allRecipes[i].title + " " + allRecipes[i].description + " " + allRecipes[i].keywords_csv;
-        const key = parseInt(allRecipes[i].id);
-        searchIndex.add(key, content);
-    }
-    console.info("index built, length: " + searchIndex.length);
-    console.info("Open a browser at http://localhost:3000/");
-    console.timelineEnd("buildIndexTook");
-}
 
 /**
  *

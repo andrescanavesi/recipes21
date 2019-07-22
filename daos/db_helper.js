@@ -3,7 +3,6 @@ if (!process.env.DATABASE_URL) {
     throw new Error("No DB configured. Set the environment config DATABASE_URL");
 }
 
-/////////////////
 const Sequelize = require("sequelize");
 const options = {
     pool: {
@@ -106,15 +105,18 @@ Recipe.init(
 
 User.hasMany(Recipe);
 
-sequelize
-    .sync({force: true})
-    .then(() => {
-        console.info("DB sync");
-    })
-    .then(() => seed())
-    .then(() => {
-        console.info("Data populated");
-    });
+async function dbSync() {
+    sequelize
+        .sync({force: true})
+        .then(() => {
+            console.info("DB sync");
+        })
+        .then(() => seed())
+        .then(() => buildSearchIndex())
+        .then(() => {
+            console.info("Data populated");
+        });
+}
 
 async function seed() {
     const user1 = await User.create({
@@ -163,7 +165,33 @@ const pool = new Pool({
     ssl: true,
 });
 
+const FlexSearch = require("flexsearch");
+const preset = "fast";
+const searchIndex = new FlexSearch(preset);
+
+async function buildSearchIndex() {
+    console.time("buildIndexTook");
+    console.info("building index...");
+
+    //const allRecipes = await daoRecipies.findAll();
+    const allRecipes = await Recipe.findAll();
+
+    const size = allRecipes.length;
+    for (let i = 0; i < size; i++) {
+        //we might concatenate the fields we want for our content
+        const content = allRecipes[i].title + " " + allRecipes[i].description + " " + allRecipes[i].keywords;
+        const key = parseInt(allRecipes[i].id);
+        searchIndex.add(key, content);
+    }
+    console.info("index built, length: " + searchIndex.length);
+    console.info("Open a browser at http://localhost:3000/");
+    console.timelineEnd("buildIndexTook");
+}
+
 console.info("DB initialized");
 module.exports.execute = pool;
-module.exports.sequelize = sequelize;
+//module.exports.sequelize = sequelize;
 module.exports.User = User;
+module.exports.Recipe = Recipe;
+module.exports.dbSync = dbSync;
+module.exports.searchIndex = searchIndex;
