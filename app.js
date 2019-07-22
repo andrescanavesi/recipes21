@@ -7,13 +7,15 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const uuid = require("uuid/v4");
 
+const dbHelper = require("./daos/db_helper");
+
 const indexRouter = require("./routes/index");
-const usersRouter = require("./routes/users");
-const recipiesRouter = require("./routes/recipies");
+//const usersRouter = require("./routes/users");
+//const recipiesRouter = require("./routes/recipies");
 const cacheRouter = require("./routes/cache");
 const recipeRouter = require("./routes/recipe");
 const sitemapRouter = require("./routes/sitemap");
-const dashboardRouter = require("./routes/dashboard");
+//const dashboardRouter = require("./routes/dashboard");
 const ssoRouter = require("./routes/sso");
 
 const app = express();
@@ -46,12 +48,12 @@ app.use(
 );
 
 app.use("/", indexRouter);
-app.use("/users", usersRouter);
-app.use("/recipies", recipiesRouter);
+//app.use("/users", usersRouter);
+//app.use("/recipies", recipiesRouter);
 app.use("/cache", cacheRouter);
 app.use("/recipe", recipeRouter);
 app.use("/sitemap.xml", sitemapRouter);
-app.use("/dashboard", dashboardRouter);
+//app.use("/dashboard", dashboardRouter);
 app.use("/sso", ssoRouter);
 
 // catch 404 and forward to error handler

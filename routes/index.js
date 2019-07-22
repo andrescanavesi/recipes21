@@ -3,19 +3,18 @@ const router = express.Router();
 const daoRecipies = require("../daos/dao_recipies");
 const {cache} = require("../util/configs");
 const responseHelper = require("../util/response_helper");
-const User = require("../model/User");
 
 const FlexSearch = require("flexsearch");
 const preset = "fast";
 const searchIndex = new FlexSearch(preset);
 
-buildSearchIndex()
-    .then(() => {
-        console.info("Search index ready to use");
-    })
-    .catch(err => {
-        console.error(err);
-    });
+// buildSearchIndex()
+//     .then(() => {
+//         console.info("Search index ready to use");
+//     })
+//     .catch(err => {
+//         console.error(err);
+//     });
 
 /**
  * Home page
