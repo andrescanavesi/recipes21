@@ -105,8 +105,8 @@ Recipe.init(
 
 User.hasMany(Recipe);
 
-async function dbSync() {
-    sequelize
+function dbSync() {
+    return sequelize
         .sync({force: true})
         .then(() => {
             console.info("DB sync");

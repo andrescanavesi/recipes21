@@ -5,6 +5,21 @@ const {cache} = require("../util/configs");
 const responseHelper = require("../util/response_helper");
 const dbHelper = require("../daos/db_helper");
 
+router.get("/sync", async function(req, res, next) {
+    try {
+        console.info(req.query.adminSecret);
+        console.info(process.env.R21_ADMIN_SECRET);
+        if (req.query.adminSecret === process.env.R21_ADMIN_SECRET) {
+            console.info("db sync....");
+            dbHelper.dbSync().then(() => {
+                console.info("DB synced");
+                res.json({status: "ok!"});
+            });
+        }
+    } catch (e) {
+        next(e);
+    }
+});
 /**
  * Home page
  */
@@ -14,9 +29,12 @@ router.get("/", async function(req, res, next) {
         responseJson.displayMoreRecipes = true;
         const page = getPage(req);
 
-        const p1 = daoRecipies.find(page);
-        const p2 = daoRecipies.findAll(page);
-        const p3 = daoRecipies.findRecipesSpotlight();
+        const p1 = dbHelper.Recipe.findAll();
+        const p2 = dbHelper.Recipe.findAll();
+        const p3 = dbHelper.Recipe.findAll();
+
+        //const p2 = daoRecipies.findAll(page);
+        //const p3 = daoRecipies.findRecipesSpotlight();
         const [recipes, footerRecipes, recipesSpotlight] = await Promise.all([p1, p2, p3]);
 
         if (!recipes) {
