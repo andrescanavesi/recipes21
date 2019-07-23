@@ -1,53 +1,41 @@
 const {sequelize} = require("./sequelize");
+const {Recipe} = require("../model/Recipe");
 const {User} = require("../model/User");
-//const Recipe = require("../model/Recipe");
 
 const FlexSearch = require("flexsearch");
 const preset = "fast";
 const searchIndex = new FlexSearch(preset);
 
 async function dbSync() {
-    //User.init(User.attributes, User.options);
-    //await Recipe.setup();
-    //User.hasMany(Recipe);
+    User.hasMany(Recipe);
     await sequelize.sync({force: true});
     await seed();
-    //await buildSearchIndex();
+    await buildSearchIndex();
 }
-
-// function dbSync() {
-//     return sequelize
-//         .sync({force: true})
-//         .then(() => seed())
-//         .then(() => buildSearchIndex())
-//         .then(() => {
-//             console.info("Data populated");
-//         });
-// }
 
 async function seed() {
     const user1 = await User.create({
         email: "andres.canavesi@gmail.com",
         userName: "andres.canavesi",
-        firstName: "11Andres",
+        firstName: "Andres",
         lastName: "Canavesi",
         isAdmin: true,
     });
     //console.info(user1);
-    // for (let i = 0; i < 10; i++) {
-    //     const recipe1 = await Recipe.create({
-    //         title: "the recipe " + i,
-    //         titleForUrl: "recipe-" + i,
-    //         description: "desc",
-    //         ingredients: "ingr1 \n ing2",
-    //         steps: "sep1 \n step2",
-    //         active: true,
-    //         pendingApproval: false,
-    //         keywords: "key1,key2",
-    //         featuredImageName: "default.jpg",
-    //         userId: user1.id,
-    //     });
-    // }
+    for (let i = 0; i < 2; i++) {
+        const recipe1 = await Recipe.create({
+            title: "the recipe " + i,
+            titleForUrl: "recipe-" + i,
+            description: "desc",
+            ingredients: "ingr1 \n ing2",
+            steps: "sep1 \n step2",
+            active: true,
+            pendingApproval: false,
+            keywords: "key1,key2",
+            featuredImageName: "default.jpg",
+            userId: user1.id,
+        });
+    }
 }
 
 // sequelize
@@ -76,7 +64,6 @@ async function buildSearchIndex() {
     console.time("buildIndexTook");
     console.info("building index...");
 
-    //const allRecipes = await daoRecipies.findAll();
     const allRecipes = await Recipe.findAll();
 
     const size = allRecipes.length;
@@ -91,10 +78,7 @@ async function buildSearchIndex() {
     console.timelineEnd("buildIndexTook");
 }
 
-console.info("DB initialized");
 module.exports.execute = pool;
-//module.exports.sequelize = sequelize;
-//module.exports.User = User;
-//module.exports.Recipe = Recipe;
 module.exports.dbSync = dbSync;
 module.exports.searchIndex = searchIndex;
+module.exports.buildSearchIndex = buildSearchIndex;

@@ -1,16 +1,5 @@
 const {sequelize} = require("../daos/sequelize");
-//const Sequelize = require("sequelize");
-
 const Sequelize = require("sequelize");
-// const options = {
-//     pool: {
-//         max: 5,
-//         min: 0,
-//         acquire: 30000,
-//         idle: 10000,
-//     },
-// };
-// const sequelize = new Sequelize(process.env.DATABASE_URL, options);
 
 const Model = Sequelize.Model;
 class User extends Model {}
