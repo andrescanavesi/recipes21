@@ -11,10 +11,12 @@ router.get("/sync", async function(req, res, next) {
         console.info(process.env.R21_ADMIN_SECRET);
         if (req.query.adminSecret === process.env.R21_ADMIN_SECRET) {
             console.info("db sync....");
-            dbHelper.dbSync().then(() => {
-                console.info("DB synced");
-                res.json({status: "ok!"});
-            });
+            // dbHelper.dbSync().then(() => {
+            //     console.info("DB synced");
+            //     res.json({status: "ok!"});
+            // });
+            await dbHelper.dbSync();
+            res.json({status: "ok"});
         }
     } catch (e) {
         next(e);
