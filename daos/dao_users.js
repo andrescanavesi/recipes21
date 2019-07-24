@@ -24,4 +24,34 @@ module.exports.seed = async function() {
     };
     await this.create(user);
 };
-module.exports.findByEmail = async function(email) {};
+module.exports.findByEmail = async function(email) {
+    if (!email) {
+        throw Error("email param not defined");
+    }
+
+    const query = "SELECT * FROM users WHERE email = $1 LIMIT 1";
+    const bindings = [id];
+    console.info(sqlFormatter.format(query));
+    console.info("bindings: " + bindings);
+    const result = await dbHelper.execute.query(query, bindings);
+    if (result.rows.length > 0) {
+        return convertUser(result.rows[0]);
+    } else {
+        throw Error("user not found by id " + id);
+    }
+};
+
+function convertUser(row) {
+    const user = {};
+    user.id = row.id;
+    user.email = row.email;
+    user.username = row.username;
+    user.is_admin = row.is_admin;
+    user.first_name = row.first_name;
+    user.last_name = row.last_name;
+    user.created_at = moment(row.created_at, "YYYY-MM-DD");
+    user.created_at = user.created_at.format("YYYY-MM-DD");
+    user.updated_at = moment(row.updated_at, "YYYY-MM-DD");
+    user.updated_at = user.updated_at.format("YYYY-MM-DD");
+    return user;
+}

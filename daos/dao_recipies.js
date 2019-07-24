@@ -113,9 +113,9 @@ function convertRecipe(row) {
     }
     recipe.keywords = recipe.keywords_csv.split(",");
     recipe.title_for_url = row.title_for_url;
-    recipe.created_at = moment(row.createdat, "YYYY-MM-DD");
+    recipe.created_at = moment(row.created_at, "YYYY-MM-DD");
     recipe.created_at = recipe.created_at.format("YYYY-MM-DD");
-    recipe.updated_at = moment(row.updatedat, "YYYY-MM-DD");
+    recipe.updated_at = moment(row.updated_at, "YYYY-MM-DD");
     recipe.updated_at = recipe.updated_at.format("YYYY-MM-DD");
     recipe.url = process.env.R21_BASE_URL + "recipe/" + recipe.id + "/" + recipe.title_for_url;
     return recipe;

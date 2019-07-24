@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const responseHelper = require("../util/response_helper");
 const googleUtil = require("../util/google-util");
-const User = require("../model/User");
+const daoUsers = require("../daos/dao_users");
 
 router.get("/", async function(req, res, next) {
     try {
@@ -33,15 +33,15 @@ router.get("/google/callback", async function(req, res, next) {
         req.session.userName = result.email.split("@")[0];
         req.session.userImageUrl = result.imageUrl;
 
-        const user = await User.findByEmail(result.email);
-        if (user.length === 0) {
+        const user = await daoUsers.findByEmail(result.email);
+        if (!user) {
             //the user does not exist, let's create a new one
             const user = {
                 email: result.email,
                 userName: req.session.userName,
             };
             console.info("The user " + result.email + " is not registered. Will be created");
-            await User.create(user);
+            await daoUsers.create(user);
         } else {
             console.info("the user " + result.email + " is already registered");
         }
