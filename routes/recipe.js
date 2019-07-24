@@ -36,17 +36,17 @@ router.get("/:id/:titleforurl", async function(req, res, next) {
 router.get("/new", async function(req, res, next) {
     try {
         let responseJson = responseHelper.getResponseJson(req);
-        // if (!responseJson.isUserAuthenticated) {
-        //     res.redirect("/sso");
-        // } else {
-        responseJson.recipe = {
-            id: 0,
-            title: "",
-        };
-        responseJson.newRecipe = true;
-        responseJson.successMessage = null;
-        res.render("recipe-edit", responseJson);
-        //}
+        if (process.env.R21_IS_PRODUCTION === true && !responseJson.isUserAuthenticated) {
+            res.redirect("/sso");
+        } else {
+            responseJson.recipe = {
+                id: 0,
+                title: "",
+            };
+            responseJson.newRecipe = true;
+            responseJson.successMessage = null;
+            res.render("recipe-edit", responseJson);
+        }
     } catch (e) {
         next(e);
     }
@@ -55,36 +55,36 @@ router.get("/new", async function(req, res, next) {
 router.post("/edit/:recipeId", async function(req, res, next) {
     try {
         let responseJson = responseHelper.getResponseJson(req);
-        // if (!responseJson.isUserAuthenticated) {
-        //     res.redirect("/sso");
-        // } else {
-        //TODO sanitize with express validator
-        const recipeId = req.params.recipeId;
-        console.info("Recipe id: " + recipeId);
-        const title = req.body.title;
-        const titleForUrl = req.body.title_for_url;
-        const ingredients = req.body.ingredients;
-        const steps = req.body.steps;
-        console.info("Recipe title submited: " + recipeId + " " + title);
-        const recipeToUdate = {
-            id: recipeId,
-            title: title,
-            titleForUrl: titleForUrl,
-            ingredients: ingredients,
-            steps: steps,
-        };
-        console.info(recipeToUdate);
-        if (recipeId === "0") {
-            recipeId = await daoRecipies.create(recipeToUdate);
+        if (process.env.R21_IS_PRODUCTION === true && !responseJson.isUserAuthenticated) {
+            res.redirect("/sso");
         } else {
-            await daoRecipies.update(recipeToUdate);
-        }
+            //TODO sanitize with express validator
+            const recipeId = req.params.recipeId;
+            console.info("Recipe id: " + recipeId);
+            const title = req.body.title;
+            const titleForUrl = req.body.title_for_url;
+            const ingredients = req.body.ingredients;
+            const steps = req.body.steps;
+            console.info("Recipe title submited: " + recipeId + " " + title);
+            const recipeToUdate = {
+                id: recipeId,
+                title: title,
+                title_for_url: titleForUrl,
+                ingredients: ingredients,
+                steps: steps,
+            };
+            console.info(recipeToUdate);
+            if (recipeId === "0") {
+                recipeId = await daoRecipies.create(recipeToUdate);
+            } else {
+                await daoRecipies.update(recipeToUdate);
+            }
 
-        const recipe = await daoRecipies.findById(recipeId);
-        responseJson.successMessage = "ok";
-        responseJson.recipe = recipe;
-        res.render("recipe-edit", responseJson);
-        //}
+            const recipe = await daoRecipies.findById(recipeId);
+            responseJson.successMessage = "ok";
+            responseJson.recipe = recipe;
+            res.render("recipe-edit", responseJson);
+        }
     } catch (e) {
         next(e);
     }
