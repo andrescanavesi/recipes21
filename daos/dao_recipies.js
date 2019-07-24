@@ -141,7 +141,7 @@ module.exports.create = async function(recipe) {
         today,
     ];
     const result = await dbHelper.execute.query(query, bindings);
-    //console.info(result);
+    console.info("recipe created, id: " + result.insertId);
     return result.insertId;
 };
 

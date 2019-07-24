@@ -42,6 +42,8 @@ router.get("/new", async function(req, res, next) {
             responseJson.recipe = {
                 id: 0,
                 title: "",
+                featured_image_name: "default.jpg",
+                active: false,
             };
             responseJson.newRecipe = true;
             responseJson.successMessage = null;
@@ -59,22 +61,24 @@ router.post("/edit/:recipeId", async function(req, res, next) {
             res.redirect("/sso");
         } else {
             //TODO sanitize with express validator
-            const recipeId = req.params.recipeId;
-            console.info("Recipe id: " + recipeId);
-            const title = req.body.title;
-            const titleForUrl = req.body.title_for_url;
-            const ingredients = req.body.ingredients;
-            const steps = req.body.steps;
-            console.info("Recipe title submited: " + recipeId + " " + title);
+            let recipeId = req.params.recipeId;
+            console.info("Recipe id: " + req.params.recipeId);
+            console.info("Recipe title submited: " + req.params.recipeId + " " + req.body.title);
+            const userId = req.session.user_id || 1; //TODO change this
             const recipeToUdate = {
-                id: recipeId,
-                title: title,
-                title_for_url: titleForUrl,
-                ingredients: ingredients,
-                steps: steps,
+                id: req.params.recipeId,
+                title: req.body.title,
+                title_for_url: req.body.title_for_url,
+                ingredients: req.body.ingredients,
+                description: req.body.description,
+                steps: req.body.steps,
+                keywords: req.body.keywords,
+                featured_image_name: req.body.featured_image_name,
+                user_id: userId,
             };
             console.info(recipeToUdate);
             if (recipeId === "0") {
+                recipeToUdate.active = false;
                 recipeId = await daoRecipies.create(recipeToUdate);
             } else {
                 await daoRecipies.update(recipeToUdate);
