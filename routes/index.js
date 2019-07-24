@@ -1,15 +1,17 @@
 const express = require("express");
 const router = express.Router();
 const daoRecipies = require("../daos/dao_recipies");
+const daoUsers = require("../daos/dao_users");
 const {cache} = require("../util/configs");
 const responseHelper = require("../util/response_helper");
 const dbHelper = require("../daos/db_helper");
 
-router.get("/sync", async function(req, res, next) {
+router.get("/seed", async function(req, res, next) {
     try {
         if (req.query.adminSecret === process.env.R21_ADMIN_SECRET) {
-            console.info("db sync....");
-            await dbHelper.dbSync();
+            console.info("db seed....");
+            //await daoUsers.seed();
+            await daoRecipies.seed(1);
             res.json({status: "ok"});
         }
     } catch (e) {
@@ -19,7 +21,7 @@ router.get("/sync", async function(req, res, next) {
 router.get("/build-search-index", async function(req, res, next) {
     try {
         if (req.query.adminSecret === process.env.R21_ADMIN_SECRET) {
-            await dbHelper.buildSearchIndex();
+            await daoRecipies.buildSearchIndex();
             res.json({status: "ok"});
         }
     } catch (e) {
