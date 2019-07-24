@@ -13,6 +13,9 @@ block content
                     - var header = '['+recipe.id+']'+' '+recipe.title
                     .card-header= header                   
                 .card-body  
+                    if !recipe.active
+                        .form-group.row
+                            span.text-danger Unpublished recipe
                     .form-group.row
                         input(name='title', type='text', placeholder='Recipe title', value=recipe.title).form-control.form-control-sm
                     .form-group.row

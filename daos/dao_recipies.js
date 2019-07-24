@@ -49,12 +49,22 @@ async function find(page) {
     return findWithLimit(50);
 }
 
-async function findById(id) {
+/**
+ *
+ * @param {number} id
+ * @param {boolean} ignoreActive true to find active true and false
+ */
+async function findById(id, ignoreActive) {
     if (!id) {
         throw Error("id param not defined");
     }
+    let query;
+    if (ignoreActive === true) {
+        query = "SELECT * FROM recipes WHERE id = $1 LIMIT 1";
+    } else {
+        query = "SELECT * FROM recipes WHERE active=true AND id = $1 LIMIT 1";
+    }
 
-    const query = "SELECT * FROM recipes WHERE active=true AND id = $1 LIMIT 1";
     const bindings = [id];
     console.info(sqlFormatter.format(query));
     console.info("bindings: " + bindings);
@@ -118,6 +128,7 @@ function convertRecipe(row) {
     recipe.updated_at = moment(row.updated_at, "YYYY-MM-DD");
     recipe.updated_at = recipe.updated_at.format("YYYY-MM-DD");
     recipe.url = process.env.R21_BASE_URL + "recipe/" + recipe.id + "/" + recipe.title_for_url;
+    recipe.active = row.active;
     return recipe;
 }
 
@@ -126,7 +137,7 @@ module.exports.create = async function(recipe) {
     const today = moment().format("YYYY-MM-DD HH:mm:ss");
     const query =
         "INSERT INTO recipes(title, description, ingredients, steps, title_for_url, user_id, active, featured_image_name, keywords, created_at, updated_at) " +
-        "VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)";
+        "VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING id";
     const bindings = [
         recipe.title,
         recipe.description,
@@ -140,9 +151,12 @@ module.exports.create = async function(recipe) {
         today,
         today,
     ];
+
     const result = await dbHelper.execute.query(query, bindings);
-    console.info("recipe created, id: " + result.insertId);
-    return result.insertId;
+
+    //console.info(result);
+    console.info("Recipe created: " + result.rows[0].id);
+    return result.rows[0].id;
 };
 
 module.exports.seed = async function(userId) {

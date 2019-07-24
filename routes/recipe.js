@@ -41,12 +41,34 @@ router.get("/new", async function(req, res, next) {
         } else {
             responseJson.recipe = {
                 id: 0,
-                title: "",
+                title: "123",
                 featured_image_name: "default.jpg",
                 active: false,
+
+                title_for_url: "1234",
+                ingredients_raw: "a",
+                description: "b",
+                steps_raw: "c",
+                keywords: "d",
             };
             responseJson.newRecipe = true;
             responseJson.successMessage = null;
+            res.render("recipe-edit", responseJson);
+        }
+    } catch (e) {
+        next(e);
+    }
+});
+
+router.get("/edit", async function(req, res, next) {
+    try {
+        if (process.env.R21_IS_PRODUCTION === true && !responseJson.isUserAuthenticated) {
+            res.redirect("/sso");
+        } else {
+            let responseJson = responseHelper.getResponseJson(req);
+            const recipeId = req.query.id;
+            const recipe = await daoRecipies.findById(recipeId, true);
+            responseJson.recipe = recipe;
             res.render("recipe-edit", responseJson);
         }
     } catch (e) {
@@ -84,10 +106,8 @@ router.post("/edit/:recipeId", async function(req, res, next) {
                 await daoRecipies.update(recipeToUdate);
             }
 
-            const recipe = await daoRecipies.findById(recipeId);
-            responseJson.successMessage = "ok";
-            responseJson.recipe = recipe;
-            res.render("recipe-edit", responseJson);
+            const url = "/recipe/edit/" + recipeId;
+            res.redirect(url);
         }
     } catch (e) {
         next(e);
