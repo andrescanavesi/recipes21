@@ -1,0 +1,27 @@
+extends layout
+
+block content
+  div.mt-3
+    if successMessage
+        div(role='alert').alert.alert-success= successMessage
+    - var action = "/recipe/edit/"+recipe.id
+    form(action=action method="POST")
+            .card.mt-2.mb-5.border-0
+                if newRecipe
+                    .card-header New Recipe 
+                else
+                    - var header = '['+recipe.id+']'+' '+recipe.title
+                    .card-header= header                   
+                .card-body  
+                    .form-group.row
+                        input(name='title', type='text', placeholder='Recipe title', value=recipe.title).form-control.form-control-sm
+                    .form-group.row
+                        input(name='title_for_url', type='text', placeholder='Title for URL', value=recipe.title_for_url).form-control.form-control-sm
+                    .form-group.row
+                        textarea(name='description', cols="100", rows="2", placeholder="Description").form-control= recipe.description
+                    .form-group.row
+                        textarea(name='ingredients', cols="100", rows="10", placeholder="Ingredients").form-control= recipe.ingredients_raw
+                    .form-group.row
+                        textarea(name='steps', cols="100", rows="10",  placeholder="Directions").form-control= recipe.steps_raw
+                    .form-group.row  
+                        button(type="submit" ).btn.btn-primary Save

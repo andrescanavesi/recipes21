@@ -1,17 +1,17 @@
 const createError = require("http-errors");
 const express = require("express");
 const favicon = require("express-favicon");
+const session = require("express-session");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
+const uuid = require("uuid/v4");
 
 const indexRouter = require("./routes/index");
-const usersRouter = require("./routes/users");
-const recipiesRouter = require("./routes/recipies");
 const cacheRouter = require("./routes/cache");
 const recipeRouter = require("./routes/recipe");
 const sitemapRouter = require("./routes/sitemap");
-const dashboardRouter = require("./routes/dashboard");
+const ssoRouter = require("./routes/sso");
 
 const app = express();
 
@@ -27,13 +27,29 @@ app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+// add & configure middleware
+//TODO to use => cookie: { secure: true }
+app.use(
+    session({
+        genid: req => {
+            console.log("Inside the session middleware");
+            console.log(req.sessionID);
+            return uuid(); // use UUIDs for session IDs
+        },
+        secret: process.env.R21_SESSION_SECRET,
+        resave: false,
+        saveUninitialized: true,
+    })
+);
+
 app.use("/", indexRouter);
-app.use("/users", usersRouter);
-app.use("/recipies", recipiesRouter);
+//app.use("/users", usersRouter);
+//app.use("/recipies", recipiesRouter);
 app.use("/cache", cacheRouter);
 app.use("/recipe", recipeRouter);
 app.use("/sitemap.xml", sitemapRouter);
-app.use("/dashboard", dashboardRouter);
+//app.use("/dashboard", dashboardRouter);
+app.use("/sso", ssoRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

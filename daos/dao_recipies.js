@@ -1,6 +1,11 @@
 const dbHelper = require("./db_helper");
 const moment = require("moment");
 const sqlFormatter = require("sql-formatter");
+
+const FlexSearch = require("flexsearch");
+const preset = "fast";
+const searchIndex = new FlexSearch(preset);
+
 let allRecipes = [];
 let spotlightRecipes = [];
 async function findAll() {
@@ -26,9 +31,9 @@ async function findWithLimit(limit, keyword) {
     const bindings = [limit];
     if (keyword) {
         bindings.push("%" + keyword + "%");
-        query = "SELECT * FROM recipes WHERE active=true AND keywords like $2 ORDER BY updatedat DESC LIMIT $1 ";
+        query = "SELECT * FROM recipes WHERE active=true AND keywords like $2 ORDER BY updated_at DESC LIMIT $1 ";
     } else {
-        query = "SELECT * FROM recipes WHERE active=true ORDER BY updatedat DESC LIMIT $1 ";
+        query = "SELECT * FROM recipes WHERE active=true ORDER BY updated_at DESC LIMIT $1 ";
     }
 
     const result = await dbHelper.execute.query(query, bindings);
@@ -86,7 +91,7 @@ async function findByIds(ids) {
 }
 
 function convertRecipe(row) {
-    const imageBase = "https://res.cloudinary.com/dniiru5xy/image/upload/c_fill,g_auto/w_900,q_auto,f_auto/recipes21/";
+    const imageBase = "https://res.cloudinary.com/dniiru5xy/image/upload/c_fill,w_900/v1563920763/";
     const featuredImageBase = imageBase;
     const thumbnailImageBase = imageBase.replace("w_900", "w_400");
     const thumbnail200ImageBase = imageBase.replace("w_900", "w_200");
@@ -94,34 +99,94 @@ function convertRecipe(row) {
     recipe.id = row.id;
     recipe.title = row.title;
     recipe.description = row.description;
-    recipe.featured_image = featuredImageBase + row.featuredimagename;
-    recipe.thumbnail = thumbnailImageBase + row.featuredimagename;
-    recipe.thumbnail200 = thumbnail200ImageBase + row.featuredimagename;
+    recipe.featured_image = featuredImageBase + row.featured_image_name;
+    recipe.thumbnail = thumbnailImageBase + row.featured_image_name;
+    recipe.thumbnail200 = thumbnail200ImageBase + row.featured_image_name;
     recipe.ingredients_raw = row.ingredients;
     recipe.ingredients = row.ingredients.split("\n");
     recipe.steps_raw = row.steps;
     recipe.steps = row.steps.split("\n");
-    recipe.keywords_csv = row.keywords.replace(" ", "");
+    if (row.keywords) {
+        recipe.keywords_csv = row.keywords.replace(" ", "");
+    } else {
+        recipe.keywords_csv = "";
+    }
     recipe.keywords = recipe.keywords_csv.split(",");
-    recipe.title_for_url = row.titleforurl;
-    recipe.created_at = moment(row.createdat, "YYYY-MM-DD");
+    recipe.title_for_url = row.title_for_url;
+    recipe.created_at = moment(row.created_at, "YYYY-MM-DD");
     recipe.created_at = recipe.created_at.format("YYYY-MM-DD");
-    recipe.updated_at = moment(row.updatedat, "YYYY-MM-DD");
+    recipe.updated_at = moment(row.updated_at, "YYYY-MM-DD");
     recipe.updated_at = recipe.updated_at.format("YYYY-MM-DD");
-    recipe.apto_celiacos = row.apto_celiacos;
-    recipe.total_time_tex = row.total_time_text;
-    recipe.total_time_meta = row.total_time_meta;
-    recipe.category = row.category;
     recipe.url = process.env.R21_BASE_URL + "recipe/" + recipe.id + "/" + recipe.title_for_url;
     return recipe;
 }
 
+module.exports.create = async function(recipe) {
+    console.info("Creating recipe");
+    const today = moment().format("YYYY-MM-DD HH:mm:ss");
+    const query =
+        "INSERT INTO recipes(title, description, ingredients, steps, title_for_url, user_id, active, featured_image_name, keywords, created_at, updated_at) " +
+        "VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)";
+    const bindings = [
+        recipe.title,
+        recipe.description,
+        recipe.ingredients,
+        recipe.steps,
+        recipe.title_for_url,
+        recipe.user_id,
+        recipe.active,
+        recipe.featured_image_name,
+        recipe.keywords,
+        today,
+        today,
+    ];
+    const result = await dbHelper.execute.query(query, bindings);
+    //console.info(result);
+    return result.insertId;
+};
+
+module.exports.seed = async function(userId) {
+    for (let i = 1; i < 10; i++) {
+        const recipe = {
+            title: "recipe " + i,
+            description: "description " + i,
+            ingredients: "ingr 1 \n ingr 2 \n ingr 3",
+            steps: "step1 \n step2 \n step3",
+            title_for_url: "recipe-" + i,
+            featured_image_name: "default.jpg",
+            keywords: "key1,key2,key3",
+            active: true,
+            user_id: userId,
+        };
+        await this.create(recipe);
+    }
+};
+
 async function update(recipe) {
+    console.info("updating recipe...");
     const today = moment().format("YYYY-MM-DD HH:mm:ss");
     const query = "UPDATE recipes SET ingredients=$1, steps=$2, updatedat=$3, titleforurl=$4 WHERE id=$5";
     const bindings = [recipe.ingredients, recipe.steps, today, recipe.titleForUrl, recipe.id];
     const result = await dbHelper.execute.query(query, bindings);
     console.info(result);
+}
+
+async function buildSearchIndex() {
+    console.time("buildIndexTook");
+    console.info("building index...");
+
+    const allRecipes = await Recipe.findAll();
+
+    const size = allRecipes.length;
+    for (let i = 0; i < size; i++) {
+        //we might concatenate the fields we want for our content
+        const content = allRecipes[i].title + " " + allRecipes[i].description + " " + allRecipes[i].keywords;
+        const key = parseInt(allRecipes[i].id);
+        searchIndex.add(key, content);
+    }
+    console.info("index built, length: " + searchIndex.length);
+    console.info("Open a browser at http://localhost:3000/");
+    console.timelineEnd("buildIndexTook");
 }
 
 module.exports.find = find;
@@ -131,3 +196,5 @@ module.exports.findAll = findAll;
 module.exports.findWithKeyword = findWithKeyword;
 module.exports.findRecipesSpotlight = findRecipesSpotlight;
 module.exports.update = update;
+module.exports.searchIndex = searchIndex;
+module.exports.buildSearchIndex = buildSearchIndex;

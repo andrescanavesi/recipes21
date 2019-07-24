@@ -1,30 +1,50 @@
 const express = require("express");
 const router = express.Router();
 const daoRecipies = require("../daos/dao_recipies");
-const {responseJson, cache} = require("../util/configs");
+const daoUsers = require("../daos/dao_users");
+const {cache} = require("../util/configs");
+const responseHelper = require("../util/response_helper");
+const dbHelper = require("../daos/db_helper");
 
-const FlexSearch = require("flexsearch");
-const preset = "fast";
-const searchIndex = new FlexSearch(preset);
-
-buildSearchIndex()
-    .then(() => {
-        console.info("Search index ready to use");
-    })
-    .catch(err => {
-        console.error(err);
-    });
+router.get("/seed", async function(req, res, next) {
+    try {
+        if (req.query.adminSecret === process.env.R21_ADMIN_SECRET) {
+            console.info("db seed....");
+            await daoUsers.seed();
+            await daoRecipies.seed(1);
+            res.json({status: "ok"});
+        }
+    } catch (e) {
+        next(e);
+    }
+});
+router.get("/build-search-index", async function(req, res, next) {
+    try {
+        if (req.query.adminSecret === process.env.R21_ADMIN_SECRET) {
+            await daoRecipies.buildSearchIndex();
+            res.json({status: "ok"});
+        }
+    } catch (e) {
+        next(e);
+    }
+});
 
 /**
  * Home page
  */
 router.get("/", async function(req, res, next) {
     try {
+        let responseJson = responseHelper.getResponseJson(req);
+        responseJson.displayMoreRecipes = true;
         const page = getPage(req);
 
-        const p1 = daoRecipies.find(page);
+        const p1 = daoRecipies.findAll(page);
         const p2 = daoRecipies.findAll(page);
-        const [recipes, footerRecipes] = await Promise.all([p1, p2]);
+        const p3 = daoRecipies.findAll(page);
+
+        //const p2 = daoRecipies.findAll(page);
+        //const p3 = daoRecipies.findRecipesSpotlight();
+        const [recipes, footerRecipes, recipesSpotlight] = await Promise.all([p1, p2, p3]);
 
         if (!recipes) {
             throw Error("No recipes found");
@@ -32,6 +52,7 @@ router.get("/", async function(req, res, next) {
         responseJson.recipes = recipes;
         responseJson.isHomePage = true;
         responseJson.footerRecipes = footerRecipes;
+        responseJson.recipesSpotlight = recipesSpotlight;
         responseJson.searchText = "";
         res.render("index", responseJson);
     } catch (e) {
@@ -41,7 +62,9 @@ router.get("/", async function(req, res, next) {
 
 router.get("/search", async function(req, res, next) {
     try {
-        if (searchIndex.length === 0) {
+        let responseJson = responseHelper.getResponseJson(req);
+        responseJson.displayMoreRecipes = true;
+        if (dbHelper.searchIndex.length === 0) {
             throw new Error("index to search not ready");
         }
         const phrase = req.query.q;
@@ -51,7 +74,7 @@ router.get("/search", async function(req, res, next) {
         console.info("searching by: " + phrase);
 
         //search using flexsearch. It will return a list of IDs we used as keys during indexing
-        const resultIds = await searchIndex.search({
+        const resultIds = await dbHelper.searchIndex.search({
             query: phrase,
             suggest: true, //When suggestion is enabled all results will be filled up (until limit, default 1000) with similar matches ordered by relevance.
         });
@@ -87,6 +110,8 @@ router.get("/search", async function(req, res, next) {
 
 router.get("/recipes/keyword/:keyword", async function(req, res, next) {
     try {
+        let responseJson = responseHelper.getResponseJson(req);
+        responseJson.displayMoreRecipes = true;
         console.info("recipes by keyword: " + req.params.keyword);
         const recipes = await daoRecipies.findWithKeyword(req.params.keyword);
         const recipesSpotlight = await daoRecipies.findRecipesSpotlight();
@@ -109,24 +134,6 @@ router.get("/recipes/keyword/:keyword", async function(req, res, next) {
         next(e);
     }
 });
-
-async function buildSearchIndex() {
-    console.time("buildIndexTook");
-    console.info("building index...");
-
-    const allRecipes = await daoRecipies.findAll();
-
-    const size = allRecipes.length;
-    for (let i = 0; i < size; i++) {
-        //we might concatenate the fields we want for our content
-        const content = allRecipes[i].title + " " + allRecipes[i].description + " " + allRecipes[i].keywords_csv;
-        const key = parseInt(allRecipes[i].id);
-        searchIndex.add(key, content);
-    }
-    console.info("index built, length: " + searchIndex.length);
-    console.info("Open a browser at http://localhost:3000/");
-    console.timelineEnd("buildIndexTook");
-}
 
 /**
  *

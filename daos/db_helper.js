@@ -1,7 +1,3 @@
-console.info("Initializing DB...");
-if (!process.env.DATABASE_URL) {
-    throw new Error("No DB configured. Set the environment config DATABASE_URL");
-}
 const parseDbUrl = require("parse-database-url");
 
 const dbConfig = parseDbUrl(process.env.DATABASE_URL);
@@ -15,5 +11,4 @@ const pool = new Pool({
     ssl: true,
 });
 
-console.info("DB initialized");
 module.exports.execute = pool;

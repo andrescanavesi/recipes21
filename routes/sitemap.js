@@ -21,8 +21,7 @@ router.get("/", async function(req, res, next) {
         rootUrl.changefreq = "daily";
         rootUrl.priority = "1.0";
         rootUrl["image:image"] = {
-            "image:loc":
-                "https://res.cloudinary.com/dniiru5xy/image/upload/w_600,ar_16:9,c_fill,g_auto,e_sharpen/v1556981218/recipes21/choco-cookies.jpg",
+            "image:loc": "https://res.cloudinary.com/dniiru5xy/image/upload/c_fill,w_900/v1563920763/default.jpg",
             "image:caption": "recipes21.com. The best recipes for cooking",
         };
         collection.push(rootUrl);

@@ -1,6 +1,6 @@
 {
-    "name": "recetas-node-back",
-    "version": "0.0.0",
+    "name": "recipe21",
+    "version": "0.0.1",
     "private": true,
     "scripts": {
         "start": "nodemon ./bin/www",
@@ -12,16 +12,20 @@
         "debug": "~2.6.9",
         "express": "~4.16.0",
         "express-favicon": "^2.0.1",
+        "express-session": "^1.16.2",
         "flexsearch": "^0.6.22",
+        "googleapis": "^41.0.0",
         "http-errors": "~1.6.2",
         "js2xmlparser": "^4.0.0",
         "moment": "^2.24.0",
         "morgan": "~1.9.0",
         "nodemon": "^1.18.11",
         "parse-database-url": "^0.3.0",
-        "pg": "^7.10.0",
+        "pg": "^7.11.0",
+        "pg-hstore": "^2.3.3",
         "pug": "2.0.3",
-        "sql-formatter": "^2.3.2"
+        "sql-formatter": "^2.3.2",
+        "uuid": "^3.3.2"
     },
     "devDependencies": {
         "chai": "^4.2.0",
