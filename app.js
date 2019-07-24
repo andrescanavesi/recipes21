@@ -8,12 +8,9 @@ const logger = require("morgan");
 const uuid = require("uuid/v4");
 
 const indexRouter = require("./routes/index");
-//const usersRouter = require("./routes/users");
-//const recipiesRouter = require("./routes/recipies");
 const cacheRouter = require("./routes/cache");
 const recipeRouter = require("./routes/recipe");
 const sitemapRouter = require("./routes/sitemap");
-//const dashboardRouter = require("./routes/dashboard");
 const ssoRouter = require("./routes/sso");
 
 const app = express();
