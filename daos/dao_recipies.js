@@ -54,7 +54,7 @@ async function find(page) {
  * @param {number} id
  * @param {boolean} ignoreActive true to find active true and false
  */
-async function findById(id, ignoreActive) {
+module.exports.findById = async function(id, ignoreActive) {
     if (!id) {
         throw Error("id param not defined");
     }
@@ -74,7 +74,7 @@ async function findById(id, ignoreActive) {
     } else {
         throw Error("recipe not found by id " + id);
     }
-}
+};
 
 async function findByIds(ids) {
     if (!ids) {
@@ -117,11 +117,12 @@ function convertRecipe(row) {
     recipe.steps_raw = row.steps;
     recipe.steps = row.steps.split("\n");
     if (row.keywords) {
-        recipe.keywords_csv = row.keywords.replace(" ", "");
+        recipe.keywords = row.keywords;
+        recipe.keywords_array = row.keywords.split(",");
     } else {
-        recipe.keywords_csv = "";
+        recipe.keywords = "";
+        recipe.keywords_array = [];
     }
-    recipe.keywords = recipe.keywords_csv.split(",");
     recipe.title_for_url = row.title_for_url;
     recipe.created_at = moment(row.created_at, "YYYY-MM-DD");
     recipe.created_at = recipe.created_at.format("YYYY-MM-DD");
@@ -129,6 +130,7 @@ function convertRecipe(row) {
     recipe.updated_at = recipe.updated_at.format("YYYY-MM-DD");
     recipe.url = process.env.R21_BASE_URL + "recipe/" + recipe.id + "/" + recipe.title_for_url;
     recipe.active = row.active;
+    recipe.user_id = row.user_id;
     return recipe;
 }
 
@@ -179,8 +181,8 @@ module.exports.seed = async function(userId) {
 async function update(recipe) {
     console.info("updating recipe...");
     const today = moment().format("YYYY-MM-DD HH:mm:ss");
-    const query = "UPDATE recipes SET ingredients=$1, steps=$2, updatedat=$3, titleforurl=$4 WHERE id=$5";
-    const bindings = [recipe.ingredients, recipe.steps, today, recipe.titleForUrl, recipe.id];
+    const query = "UPDATE recipes SET ingredients=$1, steps=$2, updated_at=$3, active=$4 WHERE id=$5";
+    const bindings = [recipe.ingredients, recipe.steps, today, recipe.active, recipe.id];
     const result = await dbHelper.execute.query(query, bindings);
     console.info(result);
 }
@@ -203,8 +205,14 @@ async function buildSearchIndex() {
     console.timelineEnd("buildIndexTook");
 }
 
+module.exports.activateDeactivate = async function(recipeId, activate) {
+    const query = "UPDATE recipes SET active=$1 WHERE id=$2";
+    const bindings = [activate, recipeId];
+    const result = await dbHelper.execute.query(query, bindings);
+    console.info(result);
+};
+
 module.exports.find = find;
-module.exports.findById = findById;
 module.exports.findByIds = findByIds;
 module.exports.findAll = findAll;
 module.exports.findWithKeyword = findWithKeyword;

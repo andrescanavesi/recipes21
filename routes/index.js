@@ -5,6 +5,7 @@ const daoUsers = require("../daos/dao_users");
 const {cache} = require("../util/configs");
 const responseHelper = require("../util/response_helper");
 const dbHelper = require("../daos/db_helper");
+const utils = require("../util/utils");
 
 router.get("/seed", async function(req, res, next) {
     try {
@@ -49,6 +50,11 @@ router.get("/", async function(req, res, next) {
         if (!recipes) {
             throw Error("No recipes found");
         }
+        for (let i = 0; i < recipes.length; i++) {
+            recipes[i].im_owner = utils.imRecipeOwner(req, recipes[i]);
+            recipes[i].allow_edition = utils.allowEdition(req, recipes[i]);
+        }
+
         responseJson.recipes = recipes;
         responseJson.isHomePage = true;
         responseJson.footerRecipes = footerRecipes;

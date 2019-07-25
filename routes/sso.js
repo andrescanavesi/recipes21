@@ -41,11 +41,12 @@ router.get("/google/callback", async function(req, res, next) {
                 userName: req.session.userName,
             };
             console.info("The user " + result.email + " is not registered. Will be created");
-            await daoUsers.create(user);
+            user.id = await daoUsers.create(user);
         } else {
-            req.session.user_id = user.id;
             console.info("the user " + result.email + " is already registered");
         }
+        req.session.user_id = user.id;
+        req.session.is_user_admin = user.id === 1; //let's do this for now
 
         res.redirect("/");
     } catch (e) {
