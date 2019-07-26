@@ -66,7 +66,7 @@ module.exports.findById = async function(id, ignoreActive) {
     }
 
     const bindings = [id];
-    console.info(sqlFormatter.format(query));
+    //console.info(sqlFormatter.format(query));
     console.info("bindings: " + bindings);
     const result = await dbHelper.execute.query(query, bindings);
     if (result.rows.length > 0) {
@@ -90,8 +90,8 @@ async function findByIds(ids) {
     //in this case we concatenate string instead of using bindings. Something to improve
     const query = "SELECT * FROM recipes WHERE active=true AND id IN (" + ids + ") LIMIT 100";
     const bindings = [];
-    console.info(sqlFormatter.format(query));
-    console.info("bindings: " + bindings);
+    //console.info(sqlFormatter.format(query));
+    //console.info("bindings: " + bindings);
     const result = await dbHelper.execute.query(query, bindings);
     const recipes = [];
     for (let i = 0; i < result.rows.length; i++) {
@@ -178,14 +178,15 @@ module.exports.seed = async function(userId) {
     }
 };
 
-async function update(recipe) {
+module.exports.update = async function(recipe) {
     console.info("updating recipe...");
     const today = moment().format("YYYY-MM-DD HH:mm:ss");
     const query = "UPDATE recipes SET ingredients=$1, steps=$2, updated_at=$3, active=$4 WHERE id=$5";
     const bindings = [recipe.ingredients, recipe.steps, today, recipe.active, recipe.id];
+    console.info(bindings);
     const result = await dbHelper.execute.query(query, bindings);
-    console.info(result);
-}
+    //console.info(result);
+};
 
 async function buildSearchIndex() {
     console.time("buildIndexTook");
@@ -217,6 +218,5 @@ module.exports.findByIds = findByIds;
 module.exports.findAll = findAll;
 module.exports.findWithKeyword = findWithKeyword;
 module.exports.findRecipesSpotlight = findRecipesSpotlight;
-module.exports.update = update;
 module.exports.searchIndex = searchIndex;
 module.exports.buildSearchIndex = buildSearchIndex;

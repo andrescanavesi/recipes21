@@ -17,18 +17,19 @@ block content
                         .form-group.row
                             span.text-danger Unpublished recipe
                     .form-group.row
+                        label Created at: 
+                        span=recipe.created_at
+                        label.ml-3 Updated at: 
+                        span=recipe.updated_at
+                    .form-group.row
                         input(name='title', type='text', placeholder='Recipe title', value=recipe.title).form-control.form-control-sm
                     .form-group.row
                         .form-check
-                            if recipe.active
-                                input(name='active', type='checkbox', id="active" checked
-                                placeholder='Published / Unpublished', value=recipe.active).form-check-input
-                            
-                            else
-                                input(name='active', type='checkbox', id="active"
-                                placeholder='Published / Unpublished', value=recipe.active).form-check-input
-                        
-                            label(for="active").form-check-label Published?
+                            input(type='radio', name='active', id='active', value='active' checked=recipe.active).form-check-input
+                            label(for='active').form-check-label Active
+                        .form-check.ml-2
+                            input(type='radio', name='active', id='inactive', value='inactive' checked=!recipe.active).form-check-input
+                            label(for='inactive').form-check-label Inactive
                     .form-group.row
                         input(name='featured_image_name', type='text', placeholder='Featured image name', value=recipe.featured_image_name).form-control.form-control-sm
                     .form-group.row

@@ -89,8 +89,10 @@ router.post("/edit", async function(req, res, next) {
             //TODO sanitize with express validator
             let recipeId = req.query.id;
             console.info("Recipe edit, id: " + recipeId);
-            console.info("Recipe title submited: " + recipeId + " " + req.body.title);
+            //console.info("Recipe title submited: " + recipeId + " " + req.body.title);
+            //console.info(req.body);
             const userId = req.session.user_id || 1; //TODO change this
+            const active = req.body.active === "active";
             const recipeToUdate = {
                 id: recipeId,
                 title: req.body.title,
@@ -101,9 +103,9 @@ router.post("/edit", async function(req, res, next) {
                 keywords: transformKeywords(req.body.keywords),
                 featured_image_name: req.body.featured_image_name,
                 user_id: userId,
-                active: req.body.active,
+                active: active,
             };
-            console.info(recipeToUdate);
+            //console.info(recipeToUdate);
             if (recipeId === "0") {
                 recipeId = await daoRecipies.create(recipeToUdate);
             } else {
