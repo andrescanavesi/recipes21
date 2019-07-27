@@ -7,7 +7,7 @@ module.exports.create = async function(user) {
     const today = moment().format("YYYY-MM-DD HH:mm:ss");
     const query =
         "INSERT INTO users(email, is_admin, username, first_name, last_name,created_at, updated_at) " +
-        "VALUES($1,$2,$3,$4,$5,$6,$7)";
+        "VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING id";
     const bindings = [user.email, user.is_admin, user.username, user.first_name, user.last_name, today, today];
     const result = await dbHelper.execute.query(query, bindings);
     //console.info(result);

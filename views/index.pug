@@ -24,6 +24,10 @@ block content
                     li.card-text= ingr
               p.card-text.text-right
                 a(href=`${recipe.url}`) Continue reading
+                if recipe.allow_edition
+                    - var href = "/recipe/edit?id="+recipe.id
+                    span.mx-1.text-secondary |
+                    a(href=href) Edit
               
 
 

@@ -4,7 +4,7 @@ block content
   div.mt-3
     if successMessage
         div(role='alert').alert.alert-success= successMessage
-    - var action = "/recipe/edit/"+recipe.id
+    - var action = "/recipe/edit?id="+recipe.id
     form(action=action method="POST")
             .card.mt-2.mb-5.border-0
                 if newRecipe
@@ -13,10 +13,27 @@ block content
                     - var header = '['+recipe.id+']'+' '+recipe.title
                     .card-header= header                   
                 .card-body  
+                    if !recipe.active
+                        .form-group.row
+                            span.text-danger Unpublished recipe
+                    .form-group.row
+                        label Created at: 
+                        span=recipe.created_at
+                        label.ml-3 Updated at: 
+                        span=recipe.updated_at
                     .form-group.row
                         input(name='title', type='text', placeholder='Recipe title', value=recipe.title).form-control.form-control-sm
                     .form-group.row
-                        input(name='title_for_url', type='text', placeholder='Title for URL', value=recipe.title_for_url).form-control.form-control-sm
+                        .form-check
+                            input(type='radio', name='active', id='active', value='active' checked=recipe.active).form-check-input
+                            label(for='active').form-check-label Active
+                        .form-check.ml-2
+                            input(type='radio', name='active', id='inactive', value='inactive' checked=!recipe.active).form-check-input
+                            label(for='inactive').form-check-label Inactive
+                    .form-group.row
+                        input(name='featured_image_name', type='text', placeholder='Featured image name', value=recipe.featured_image_name).form-control.form-control-sm
+                    .form-group.row
+                        input(name='keywords', type='text', placeholder='keywords', value=recipe.keywords).form-control.form-control-sm
                     .form-group.row
                         textarea(name='description', cols="100", rows="2", placeholder="Description").form-control= recipe.description
                     .form-group.row
