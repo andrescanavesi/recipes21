@@ -15,14 +15,17 @@ module.exports.create = async function(user) {
 };
 
 module.exports.seed = async function() {
-    const user = {
-        email: "andres.canavesi@gmail.com",
-        is_admin: true,
-        username: "andres.canavesi",
-        first_name: "Andres",
-        last_name: "Canavesi",
-    };
-    await this.create(user);
+    const user1 = await this.findByEmail("andres.canavesi@gmail.com");
+    if (!user1) {
+        const user = {
+            email: "andres.canavesi@gmail.com",
+            is_admin: true,
+            username: "andres.canavesi",
+            first_name: "Andres",
+            last_name: "Canavesi",
+        };
+        await this.create(user);
+    }
 };
 module.exports.findByEmail = async function(email) {
     if (!email) {

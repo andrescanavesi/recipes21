@@ -19,16 +19,6 @@ router.get("/seed", async function(req, res, next) {
         next(e);
     }
 });
-router.get("/build-search-index", async function(req, res, next) {
-    try {
-        if (req.query.adminSecret === process.env.R21_ADMIN_SECRET) {
-            await daoRecipies.buildSearchIndex();
-            res.json({status: "ok"});
-        }
-    } catch (e) {
-        next(e);
-    }
-});
 
 /**
  * Home page
@@ -70,17 +60,19 @@ router.get("/search", async function(req, res, next) {
     try {
         let responseJson = responseHelper.getResponseJson(req);
         responseJson.displayMoreRecipes = true;
-        if (dbHelper.searchIndex.length === 0) {
-            throw new Error("index to search not ready");
-        }
+
         const phrase = req.query.q;
         if (!phrase) {
             throw Error("phrase query parameter empty");
         }
         console.info("searching by: " + phrase);
 
+        if (daoRecipies.searchIndex.length === 0) {
+            await daoRecipies.buildSearchIndex();
+        }
+
         //search using flexsearch. It will return a list of IDs we used as keys during indexing
-        const resultIds = await dbHelper.searchIndex.search({
+        const resultIds = await daoRecipies.searchIndex.search({
             query: phrase,
             suggest: true, //When suggestion is enabled all results will be filled up (until limit, default 1000) with similar matches ordered by relevance.
         });
