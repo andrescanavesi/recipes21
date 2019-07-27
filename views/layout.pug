@@ -39,7 +39,7 @@ html(lang="en")
           "@type": "WebSite",
           "name": "recipes21.com. The best recipes for cooking",
           "image": [
-          "https://res.cloudinary.com/dniiru5xy/image/upload/w_600,ar_16:9,c_fill,g_auto,e_sharpen/v1556981218/recipes21/choco-cookies.jpg"
+          "https://res.cloudinary.com/dniiru5xy/image/upload/c_fill,w_900/v1563920763/default.jpg"
           ],
           "datePublished": "2019/05/02",
           "description": "recipes21.com. The best recipes for cooking",
@@ -49,22 +49,7 @@ html(lang="en")
     link(rel='stylesheet' media="screen" href='/stylesheets/style.css')
 
   body
-    script.
-      function search(event) {
-        if (event.keyCode === 13) {//listen to 'enter' key
-          const phrase = document.getElementById('search').value;
-          if(phrase.length > 0){
-            console.info('phrase: '+phrase);
-            window.location.href = '/search?q='+phrase;
-          }else{
-            window.location.href = '/';
-          }
-          
-        }
-      }
-      function redirectToSSO(){
-        window.location.href = '/sso';
-      }
+    script(src='/javascripts/common.js')
     .shadow-sm.pb-3.mb-3
       header
         .container-fluid

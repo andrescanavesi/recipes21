@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const daoRecipies = require("../daos/dao_recipies");
-const {cache} = require("../util/configs");
 const responseHelper = require("../util/response_helper");
 const utils = require("../util/utils");
 
@@ -25,7 +24,7 @@ router.get("/:id/:titleforurl", async function(req, res, next) {
         responseJson.linkToThisPage = recipe.url;
         responseJson.description = recipe.description + " | recipes21.com";
         responseJson.metaImage = recipe.featured_image;
-        responseJson.keywords = recipe.keywords_csv;
+        responseJson.keywords = recipe.keywords;
         responseJson.recipesSpotlight = recipesSpotlight;
         responseJson.isHomePage = false;
         responseJson.footerRecipes = footerRecipes;
@@ -66,10 +65,10 @@ router.get("/edit", async function(req, res, next) {
     //we cannot use /edit/:recipeId because there's already a route /:id/:title so it makes conflicts
     //that's why we receive the recipe id by query param instead of path param
     try {
+        let responseJson = responseHelper.getResponseJson(req);
         if (responseJson.isProduction && responseJson.isUserAuthenticated) {
             res.redirect("/sso");
         } else {
-            let responseJson = responseHelper.getResponseJson(req);
             const recipeId = req.query.id;
             const recipe = await daoRecipies.findById(recipeId, true);
             responseJson.recipe = recipe;
