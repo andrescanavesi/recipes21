@@ -18,6 +18,7 @@ export R21_GOOGLE_CALLBACK_URL=http://localhost:3000/sso/google/callback
 export PGSSLMODE=require
 export R21_SESSION_SECRET=*****************
 export R21_ADMIN_SECRET=***************** ## to excute some admin tasks
+export R21_LOG_LEVEL="info"
 ```
 
 # Packages

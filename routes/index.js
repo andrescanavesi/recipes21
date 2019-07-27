@@ -1,3 +1,6 @@
+const {logger} = require("../util/logger");
+const log = new logger("route_index");
+
 const express = require("express");
 const router = express.Router();
 const daoRecipies = require("../daos/dao_recipies");
@@ -10,7 +13,7 @@ const utils = require("../util/utils");
 router.get("/seed", async function(req, res, next) {
     try {
         if (req.query.adminSecret === process.env.R21_ADMIN_SECRET) {
-            console.info("db seed....");
+            log.info("db seed....");
             await daoUsers.seed();
             await daoRecipies.seed(1);
             res.json({status: "ok"});
@@ -65,7 +68,7 @@ router.get("/search", async function(req, res, next) {
         if (!phrase) {
             throw Error("phrase query parameter empty");
         }
-        console.info("searching by: " + phrase);
+        log.info("searching by: " + phrase);
 
         if (daoRecipies.searchIndex.length === 0) {
             await daoRecipies.buildSearchIndex();
@@ -77,7 +80,7 @@ router.get("/search", async function(req, res, next) {
             suggest: true, //When suggestion is enabled all results will be filled up (until limit, default 1000) with similar matches ordered by relevance.
         });
 
-        console.info("results: " + resultIds.length);
+        log.info("results: " + resultIds.length);
         let p1;
         if (resultIds.length === 0) {
             p1 = daoRecipies.findRecipesSpotlight();
@@ -108,7 +111,7 @@ router.get("/recipes/keyword/:keyword", async function(req, res, next) {
     try {
         let responseJson = responseHelper.getResponseJson(req);
         responseJson.displayMoreRecipes = true;
-        console.info("recipes by keyword: " + req.params.keyword);
+        log.info("recipes by keyword: " + req.params.keyword);
         const recipes = await daoRecipies.findWithKeyword(req.params.keyword);
         const recipesSpotlight = await daoRecipies.findRecipesSpotlight();
         const footerRecipes = await daoRecipies.findAll();
