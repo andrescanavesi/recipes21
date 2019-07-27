@@ -3,6 +3,7 @@ const router = express.Router();
 const daoRecipies = require("../daos/dao_recipies");
 const js2xmlparser = require("js2xmlparser");
 const moment = require("moment");
+const configs = require("../util/configs");
 
 /**
  * It generates an standard sitemal.xml for SEO purposes
@@ -21,7 +22,7 @@ router.get("/", async function(req, res, next) {
         rootUrl.changefreq = "daily";
         rootUrl.priority = "1.0";
         rootUrl["image:image"] = {
-            "image:loc": "https://res.cloudinary.com/dniiru5xy/image/upload/c_fill,w_900/v1563920763/default.jpg",
+            "image:loc": configs.DEFAULT_IMAGE_URL,
             "image:caption": "recipes21.com. The best recipes for cooking",
         };
         collection.push(rootUrl);

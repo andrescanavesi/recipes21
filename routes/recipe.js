@@ -41,7 +41,7 @@ router.get("/:id/:titleforurl", async function(req, res, next) {
 router.get("/new", async function(req, res, next) {
     try {
         let responseJson = responseHelper.getResponseJson(req);
-        if (responseJson.isProduction && responseJson.isUserAuthenticated) {
+        if (responseJson.isProduction && !responseJson.isUserAuthenticated) {
             res.redirect("/sso");
         } else {
             responseJson.recipe = {
@@ -69,7 +69,7 @@ router.get("/edit", async function(req, res, next) {
     //that's why we receive the recipe id by query param instead of path param
     try {
         let responseJson = responseHelper.getResponseJson(req);
-        if (responseJson.isProduction && responseJson.isUserAuthenticated) {
+        if (responseJson.isProduction && !responseJson.isUserAuthenticated) {
             res.redirect("/sso");
         } else {
             const recipeId = req.query.id;
@@ -85,7 +85,7 @@ router.get("/edit", async function(req, res, next) {
 router.post("/edit", async function(req, res, next) {
     try {
         let responseJson = responseHelper.getResponseJson(req);
-        if (responseJson.isProduction && responseJson.isUserAuthenticated) {
+        if (responseJson.isProduction && !responseJson.isUserAuthenticated) {
             res.redirect("/sso");
         } else {
             //TODO sanitize with express validator
