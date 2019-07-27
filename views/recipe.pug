@@ -2,7 +2,7 @@ extends layout
 
 block content
     h1=recipe.title
-    - var img = recipe.featured_image
+    - var img = recipe.featured_image_url
     img(src=img, alt='recipe image').card-img-top.img-fluid
     .mt-3
       span.mr-1.lead= recipe.description  

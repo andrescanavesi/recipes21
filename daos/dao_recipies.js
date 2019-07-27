@@ -8,12 +8,13 @@ const searchIndex = new FlexSearch(preset);
 
 let allRecipes = [];
 let spotlightRecipes = [];
-async function findAll() {
+
+module.exports.findAll = async function() {
     if (allRecipes.length === 0) {
         allRecipes = findWithLimit(1000);
     }
     return allRecipes;
-}
+};
 
 async function findRecipesSpotlight() {
     if (spotlightRecipes.length === 0) {
@@ -109,7 +110,8 @@ function convertRecipe(row) {
     recipe.id = row.id;
     recipe.title = row.title;
     recipe.description = row.description;
-    recipe.featured_image = featuredImageBase + row.featured_image_name;
+    recipe.featured_image_name = row.featured_image_name;
+    recipe.featured_image_url = featuredImageBase + row.featured_image_name;
     recipe.thumbnail = thumbnailImageBase + row.featured_image_name;
     recipe.thumbnail200 = thumbnail200ImageBase + row.featured_image_name;
     recipe.ingredients_raw = row.ingredients;
@@ -181,18 +183,19 @@ module.exports.seed = async function(userId) {
 module.exports.update = async function(recipe) {
     console.info("updating recipe...");
     const today = moment().format("YYYY-MM-DD HH:mm:ss");
-    const query = "UPDATE recipes SET ingredients=$1, steps=$2, updated_at=$3, active=$4 WHERE id=$5";
-    const bindings = [recipe.ingredients, recipe.steps, today, recipe.active, recipe.id];
+    const query =
+        "UPDATE recipes SET ingredients=$1, steps=$2, updated_at=$3, active=$4, featured_image_name=$5 WHERE id=$6";
+    const bindings = [recipe.ingredients, recipe.steps, today, recipe.active, recipe.featured_image_name, recipe.id];
     console.info(bindings);
     const result = await dbHelper.execute.query(query, bindings);
     //console.info(result);
 };
 
-async function buildSearchIndex() {
+module.exports.buildSearchIndex = async function() {
     console.time("buildIndexTook");
     console.info("building index...");
 
-    const allRecipes = await Recipe.findAll();
+    const allRecipes = await this.findAll();
 
     const size = allRecipes.length;
     for (let i = 0; i < size; i++) {
@@ -204,7 +207,7 @@ async function buildSearchIndex() {
     console.info("index built, length: " + searchIndex.length);
     console.info("Open a browser at http://localhost:3000/");
     console.timelineEnd("buildIndexTook");
-}
+};
 
 module.exports.activateDeactivate = async function(recipeId, activate) {
     const query = "UPDATE recipes SET active=$1 WHERE id=$2";
@@ -215,8 +218,6 @@ module.exports.activateDeactivate = async function(recipeId, activate) {
 
 module.exports.find = find;
 module.exports.findByIds = findByIds;
-module.exports.findAll = findAll;
 module.exports.findWithKeyword = findWithKeyword;
 module.exports.findRecipesSpotlight = findRecipesSpotlight;
 module.exports.searchIndex = searchIndex;
-module.exports.buildSearchIndex = buildSearchIndex;
