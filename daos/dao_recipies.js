@@ -12,9 +12,10 @@ const searchIndex = new FlexSearch(preset);
 let allRecipes = [];
 let spotlightRecipes = [];
 
-module.exports.resetCache = function() {
+module.exports.resetCache = async function() {
     allRecipes = [];
     spotlightRecipes = [];
+    await this.buildSearchIndex();
 };
 
 module.exports.findAll = async function() {
@@ -168,6 +169,7 @@ module.exports.create = async function(recipe) {
 
     //log.info(result);
     log.info("Recipe created: " + result.rows[0].id);
+    this.resetCache();
     return result.rows[0].id;
 };
 
@@ -207,6 +209,7 @@ module.exports.update = async function(recipe) {
     log.info(bindings);
     const result = await dbHelper.execute.query(query, bindings);
     //log.info(result);
+    this.resetCache();
 };
 
 module.exports.buildSearchIndex = async function() {
@@ -230,6 +233,7 @@ module.exports.activateDeactivate = async function(recipeId, activate) {
     const query = "UPDATE recipes SET active=$1 WHERE id=$2";
     const bindings = [activate, recipeId];
     const result = await dbHelper.execute.query(query, bindings);
+    this.resetCache();
     //log.info(result);
 };
 

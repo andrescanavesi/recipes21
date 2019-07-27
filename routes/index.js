@@ -30,7 +30,7 @@ router.get("/reset-cache", async function(req, res, next) {
     try {
         if (req.query.adminSecret === process.env.R21_ADMIN_SECRET) {
             log.info("Reset cache....");
-            daoRecipies.resetCache();
+            await daoRecipies.resetCache();
             res.json({status: "ok"});
         } else {
             res.status(400);
