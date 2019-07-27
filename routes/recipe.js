@@ -1,3 +1,6 @@
+const {logger} = require("../util/logger");
+const log = new logger("route_recipe");
+
 const express = require("express");
 const router = express.Router();
 const daoRecipies = require("../daos/dao_recipies");
@@ -7,7 +10,7 @@ const utils = require("../util/utils");
 router.get("/:id/:titleforurl", async function(req, res, next) {
     try {
         const recipeId = req.params.id;
-        console.info("View recipe: " + req.params.id);
+        log.info("View recipe: " + req.params.id);
         let responseJson = responseHelper.getResponseJson(req);
         responseJson.displayMoreRecipes = true;
 
@@ -87,9 +90,9 @@ router.post("/edit", async function(req, res, next) {
         } else {
             //TODO sanitize with express validator
             let recipeId = req.query.id;
-            console.info("Recipe edit, id: " + recipeId);
-            //console.info("Recipe title submited: " + recipeId + " " + req.body.title);
-            //console.info(req.body);
+            log.info("Recipe edit, id: " + recipeId);
+            //log.info("Recipe title submited: " + recipeId + " " + req.body.title);
+            //log.info(req.body);
             const userId = req.session.user_id || 1; //TODO change this
             const active = req.body.active === "active";
             const recipeToUdate = {
@@ -104,7 +107,7 @@ router.post("/edit", async function(req, res, next) {
                 user_id: userId,
                 active: active,
             };
-            //console.info(recipeToUdate);
+            //log.info(recipeToUdate);
             if (recipeId === "0") {
                 recipeId = await daoRecipies.create(recipeToUdate);
             } else {

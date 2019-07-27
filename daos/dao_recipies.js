@@ -1,3 +1,5 @@
+const {logger} = require("../util/logger");
+const log = new logger("dao_recipes");
 const dbHelper = require("./db_helper");
 const moment = require("moment");
 const sqlFormatter = require("sql-formatter");
@@ -38,7 +40,7 @@ async function findWithLimit(limit, keyword) {
     }
 
     const result = await dbHelper.execute.query(query, bindings);
-    console.info("recipes: " + result.rows.length);
+    log.info("recipes: " + result.rows.length);
     const recipes = [];
     for (let i = 0; i < result.rows.length; i++) {
         recipes.push(convertRecipe(result.rows[i]));
@@ -67,8 +69,8 @@ module.exports.findById = async function(id, ignoreActive) {
     }
 
     const bindings = [id];
-    //console.info(sqlFormatter.format(query));
-    console.info("bindings: " + bindings);
+    //log.info(sqlFormatter.format(query));
+    log.info("bindings: " + bindings);
     const result = await dbHelper.execute.query(query, bindings);
     if (result.rows.length > 0) {
         return convertRecipe(result.rows[0]);
@@ -81,8 +83,8 @@ async function findByIds(ids) {
     if (!ids) {
         throw Error("ids param not defined");
     }
-    console.info("findByIds");
-    console.info(ids);
+    log.info("findByIds");
+    //log.info(ids);
     for (let i = 0; i < ids.length; i++) {
         if (isNaN(ids[i])) {
             throw new Error("Seems '" + ids[i] + "' is not a number");
@@ -91,8 +93,8 @@ async function findByIds(ids) {
     //in this case we concatenate string instead of using bindings. Something to improve
     const query = "SELECT * FROM recipes WHERE active=true AND id IN (" + ids + ") LIMIT 100";
     const bindings = [];
-    //console.info(sqlFormatter.format(query));
-    //console.info("bindings: " + bindings);
+    //log.info(sqlFormatter.format(query));
+    //log.info("bindings: " + bindings);
     const result = await dbHelper.execute.query(query, bindings);
     const recipes = [];
     for (let i = 0; i < result.rows.length; i++) {
@@ -137,7 +139,7 @@ function convertRecipe(row) {
 }
 
 module.exports.create = async function(recipe) {
-    console.info("Creating recipe");
+    log.info("Creating recipe");
     const today = moment().format("YYYY-MM-DD HH:mm:ss");
     const query =
         "INSERT INTO recipes(title, description, ingredients, steps, title_for_url, user_id, active, featured_image_name, keywords, created_at, updated_at) " +
@@ -158,8 +160,8 @@ module.exports.create = async function(recipe) {
 
     const result = await dbHelper.execute.query(query, bindings);
 
-    //console.info(result);
-    console.info("Recipe created: " + result.rows[0].id);
+    //log.info(result);
+    log.info("Recipe created: " + result.rows[0].id);
     return result.rows[0].id;
 };
 
@@ -181,7 +183,7 @@ module.exports.seed = async function(userId) {
 };
 
 module.exports.update = async function(recipe) {
-    console.info("updating recipe...");
+    log.info("updating recipe...");
     const today = moment().format("YYYY-MM-DD HH:mm:ss");
     const query =
         "UPDATE recipes SET ingredients=$1, steps=$2, updated_at=$3, active=$4, featured_image_name=$5, keywords=$6 WHERE id=$7";
@@ -194,14 +196,14 @@ module.exports.update = async function(recipe) {
         recipe.keywords,
         recipe.id,
     ];
-    console.info(bindings);
+    log.info(bindings);
     const result = await dbHelper.execute.query(query, bindings);
-    //console.info(result);
+    //log.info(result);
 };
 
 module.exports.buildSearchIndex = async function() {
     console.time("buildIndexTook");
-    console.info("building index...");
+    log.info("building index...");
 
     const allRecipes = await this.findAll();
 
@@ -212,8 +214,7 @@ module.exports.buildSearchIndex = async function() {
         const key = parseInt(allRecipes[i].id);
         searchIndex.add(key, content);
     }
-    console.info("index built, length: " + searchIndex.length);
-    console.info("Open a browser at http://localhost:3000/");
+    log.info("index built, length: " + searchIndex.length);
     console.timelineEnd("buildIndexTook");
 };
 
@@ -221,7 +222,7 @@ module.exports.activateDeactivate = async function(recipeId, activate) {
     const query = "UPDATE recipes SET active=$1 WHERE id=$2";
     const bindings = [activate, recipeId];
     const result = await dbHelper.execute.query(query, bindings);
-    console.info(result);
+    //log.info(result);
 };
 
 module.exports.find = find;

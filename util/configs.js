@@ -1,3 +1,6 @@
+const {logger} = require("../util/logger");
+const log = new logger("configs");
+
 const moment = require("moment");
 
 //console.info("is production: " + responseJson.isProduction);
@@ -10,8 +13,8 @@ const cacheOptions = {};
 cacheOptions.debug = JSON.parse(cacheDebug);
 cacheOptions.enabled = JSON.parse(cacheEnabled);
 cacheOptions.defaultDuration = "1 minute";
-console.info("cache options: ");
-console.info(cacheOptions);
+//log.info("cache options: ");
+//log.info(cacheOptions);
 apicache.options(cacheOptions);
 /////////////////////////////////////////////////////////////////////////////////////////////////
 

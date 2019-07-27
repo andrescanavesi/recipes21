@@ -1,9 +1,12 @@
+const {logger} = require("../util/logger");
+const log = new logger("dao_users");
+
 const dbHelper = require("./db_helper");
 const moment = require("moment");
 const sqlFormatter = require("sql-formatter");
 
 module.exports.create = async function(user) {
-    console.info("Creating user");
+    log.info("Creating user");
     const today = moment().format("YYYY-MM-DD HH:mm:ss");
     const query =
         "INSERT INTO users(email, is_admin, username, first_name, last_name,created_at, updated_at) " +
@@ -35,7 +38,7 @@ module.exports.findByEmail = async function(email) {
     const query = "SELECT * FROM users WHERE email = $1 LIMIT 1";
     const bindings = [email];
     //console.info(sqlFormatter.format(query));
-    console.info("bindings: " + bindings);
+    log.info("bindings: " + bindings);
     const result = await dbHelper.execute.query(query, bindings);
     if (result.rows.length > 0) {
         return convertUser(result.rows[0]);

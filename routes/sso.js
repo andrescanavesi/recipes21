@@ -1,3 +1,6 @@
+const {logger} = require("../util/logger");
+const log = new logger("route_sso");
+
 const express = require("express");
 const router = express.Router();
 const responseHelper = require("../util/response_helper");
@@ -19,8 +22,8 @@ router.get("/", async function(req, res, next) {
 router.get("/google/callback", async function(req, res, next) {
     try {
         const result = await googleUtil.getGoogleAccountFromCode(req.query.code);
-        console.info(result.id);
-        console.info(result.email);
+        log.info(result.id);
+        log.info(result.email);
         const urlGoogle = googleUtil.urlGoogle();
         let responseJson = responseHelper.getResponseJson(req);
         responseJson.urlGoogle = urlGoogle;
@@ -40,10 +43,10 @@ router.get("/google/callback", async function(req, res, next) {
                 email: result.email,
                 userName: req.session.userName,
             };
-            console.info("The user " + result.email + " is not registered. Will be created");
+            log.info("The user " + result.email + " is not registered. Will be created");
             user.id = await daoUsers.create(user);
         } else {
-            console.info("the user " + result.email + " is already registered");
+            log.info("the user " + result.email + " is already registered");
         }
         req.session.user_id = user.id;
         req.session.is_user_admin = user.id === 1; //let's do this for now

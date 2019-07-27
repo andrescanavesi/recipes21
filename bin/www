@@ -4,6 +4,9 @@
  * Module dependencies.
  */
 
+const {logger} = require("../util/logger");
+const log = new logger("bin");
+
 var app = require("../app");
 var debug = require("debug")("recetas-node-back:server");
 var http = require("http");
@@ -63,11 +66,11 @@ function onError(error) {
     // handle specific listen errors with friendly messages
     switch (error.code) {
         case "EACCES":
-            console.error(bind + " requires elevated privileges");
+            log.error(bind + " requires elevated privileges");
             process.exit(1);
             break;
         case "EADDRINUSE":
-            console.error(bind + " is already in use");
+            log.error(bind + " is already in use");
             process.exit(1);
             break;
         default:
@@ -83,5 +86,5 @@ function onListening() {
     var addr = server.address();
     var bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
     debug("Listening on " + bind);
-    console.info("Listening on " + bind);
+    log.info("Listening on " + bind);
 }

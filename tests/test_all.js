@@ -1,3 +1,6 @@
+const {logger} = require("../util/logger");
+const log = new logger("test_all");
+
 const app = require("../app");
 const chai = require("chai");
 const chaiHttp = require("chai-http");
@@ -10,7 +13,7 @@ chai.should();
 
 function assertNotError(err, res) {
     if (err) {
-        console.error(err);
+        log.error(err);
         assert.fail(err);
     }
 }

@@ -25,7 +25,6 @@ module.exports.getResponseJson = function(req) {
     responseJson.isUserAuthenticated = typeof req.session.ssoId !== "undefined";
     responseJson.userName = req.session.userName;
     responseJson.userImageUrl = req.session.userImageUrl;
-    //console.info(responseJson);
 
     return responseJson;
 };
