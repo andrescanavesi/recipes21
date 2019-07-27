@@ -79,16 +79,16 @@ html(lang="en")
             span.text-dark About
           a.nav-item.ml-3(href='/') 
             span.text-dark Recipes
-          a.nav-item.ml-3(href='/') 
+          a.nav-item.ml-3(href='/sso') 
             span.text-dark Subscribe
-          a.nav-item.ml-3(href='/') 
+          a.nav-item.ml-3(href='/sso') 
             span.text-dark Facebook
   
     .container-fluid
         .row
           .col-md-1
             //left
-          .col-md-8
+          .col-md-7
             block content
             //recipes spotlight
             if displayMoreRecipes
@@ -105,14 +105,14 @@ html(lang="en")
                      
                       
                       
-          .col-md-3
+          .col-md-4
             //right column
     //footer
     footer.bg-dark.text-white.py-4.mt-3
       .container
         .row
           each recipe in footerRecipes  
-            .col-2.mt-2
+            .col-md-4.mt-2
               a(href=`${recipe.url}`)
                 span.text-white= recipe.title
       // Copyright
