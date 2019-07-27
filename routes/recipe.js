@@ -135,22 +135,4 @@ function transformKeywords(keywordsCsv) {
     return keywordsCsv.toLowerCase();
 }
 
-// router.post("/publish-unpublish/:recipeId", async function(req, res, next) {
-//     try {
-//         let responseJson = responseHelper.getResponseJson(req);
-//         if (process.env.R21_IS_PRODUCTION === true && !responseJson.isUserAuthenticated) {
-//             res.redirect("/sso");
-//         } else {
-//             //TODO sanitize with express validator
-//             let recipeId = req.params.recipeId;
-//             const userId = req.session.user_id || 1; //TODO change this
-//             const recipe = await daoRecipies.findById(recipeId);
-//             await daoRecipies.activateDeactivate(!recipe.active);
-//             res.redirect("/recipe/edit?id=" + recipeId);
-//         }
-//     } catch (e) {
-//         next(e);
-//     }
-// });
-
 module.exports = router;

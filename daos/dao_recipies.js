@@ -164,7 +164,7 @@ module.exports.create = async function(recipe) {
 };
 
 module.exports.seed = async function(userId) {
-    for (let i = 1; i < 10; i++) {
+    for (let i = 1; i < 2; i++) {
         const recipe = {
             title: "recipe " + i,
             description: "description " + i,
@@ -184,8 +184,16 @@ module.exports.update = async function(recipe) {
     console.info("updating recipe...");
     const today = moment().format("YYYY-MM-DD HH:mm:ss");
     const query =
-        "UPDATE recipes SET ingredients=$1, steps=$2, updated_at=$3, active=$4, featured_image_name=$5 WHERE id=$6";
-    const bindings = [recipe.ingredients, recipe.steps, today, recipe.active, recipe.featured_image_name, recipe.id];
+        "UPDATE recipes SET ingredients=$1, steps=$2, updated_at=$3, active=$4, featured_image_name=$5, keywords=$6 WHERE id=$7";
+    const bindings = [
+        recipe.ingredients,
+        recipe.steps,
+        today,
+        recipe.active,
+        recipe.featured_image_name,
+        recipe.keywords,
+        recipe.id,
+    ];
     console.info(bindings);
     const result = await dbHelper.execute.query(query, bindings);
     //console.info(result);

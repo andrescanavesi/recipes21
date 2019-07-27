@@ -19,16 +19,6 @@ router.get("/seed", async function(req, res, next) {
         next(e);
     }
 });
-router.get("/build-search-index", async function(req, res, next) {
-    try {
-        if (req.query.adminSecret === process.env.R21_ADMIN_SECRET) {
-            await daoRecipies.buildSearchIndex();
-            res.json({status: "ok"});
-        }
-    } catch (e) {
-        next(e);
-    }
-});
 
 /**
  * Home page
