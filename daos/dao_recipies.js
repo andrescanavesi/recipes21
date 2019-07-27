@@ -194,7 +194,7 @@ module.exports.update = async function(recipe) {
     log.info("updating recipe...");
     const today = moment().format("YYYY-MM-DD HH:mm:ss");
     const query =
-        "UPDATE recipes SET ingredients=$1, steps=$2, updated_at=$3, active=$4, featured_image_name=$5, keywords=$6, title=$7, description=$8 WHERE id=$9";
+        "UPDATE recipes SET ingredients=$1, steps=$2, updated_at=$3, active=$4, featured_image_name=$5, keywords=$6, title=$7, description=$8, title_for_url=$9 WHERE id=$10";
     const bindings = [
         recipe.ingredients,
         recipe.steps,
@@ -204,6 +204,7 @@ module.exports.update = async function(recipe) {
         recipe.keywords,
         recipe.title,
         recipe.description,
+        recipe.title_for_url,
         recipe.id,
     ];
     log.info(bindings);

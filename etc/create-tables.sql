@@ -20,7 +20,7 @@ CREATE TABLE recipes
     title_for_url character varying(100) NOT NULL,
     description character varying(500) NOT NULL,
     ingredients character varying(1000) NOT NULL,
-    steps character varying(1000) NOT NULL,
+    steps character varying(2000) NOT NULL,
     keywords character varying(100),
     active boolean NOT NULL DEFAULT false,
     featured_image_name character varying(50) NOT NULL,
