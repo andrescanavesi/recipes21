@@ -11,6 +11,11 @@ const searchIndex = new FlexSearch(preset);
 let allRecipes = [];
 let spotlightRecipes = [];
 
+module.exports.resetCache = function() {
+    allRecipes = [];
+    spotlightRecipes = [];
+};
+
 module.exports.findAll = async function() {
     if (allRecipes.length === 0) {
         allRecipes = findWithLimit(1000);

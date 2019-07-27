@@ -17,6 +17,24 @@ router.get("/seed", async function(req, res, next) {
             await daoUsers.seed();
             await daoRecipies.seed(1);
             res.json({status: "ok"});
+        } else {
+            res.status(400);
+            res.json({status: "error"});
+        }
+    } catch (e) {
+        next(e);
+    }
+});
+
+router.get("/reset-cache", async function(req, res, next) {
+    try {
+        if (req.query.adminSecret === process.env.R21_ADMIN_SECRET) {
+            log.info("Reset cache....");
+            daoRecipies.resetCache();
+            res.json({status: "ok"});
+        } else {
+            res.status(400);
+            res.json({status: "error"});
         }
     } catch (e) {
         next(e);

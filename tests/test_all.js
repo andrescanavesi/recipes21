@@ -119,4 +119,17 @@ describe("Test home page", function() {
                 done();
             });
     });
+
+    it("should reset cache", function(done) {
+        chai.request(app)
+            .get("/reset-cache")
+            .query({
+                adminSecret: process.env.R21_ADMIN_SECRET,
+            })
+            .end(function(err, res) {
+                assertNotError(err, res);
+                expect(res).to.have.status(200);
+                done();
+            });
+    });
 });
