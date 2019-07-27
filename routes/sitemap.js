@@ -22,7 +22,7 @@ router.get("/", async function(req, res, next) {
         rootUrl.changefreq = "daily";
         rootUrl.priority = "1.0";
         rootUrl["image:image"] = {
-            "image:loc": configs.DEFAULT_IMAGE_URL,
+            "image:loc": process.env.R21_DEFAULT_IMAGE_URL,
             "image:caption": "recipes21.com. The best recipes for cooking",
         };
         collection.push(rootUrl);
@@ -33,7 +33,7 @@ router.get("/", async function(req, res, next) {
             url.loc = baseUrl + "recipe/" + recipes[i].id + "/" + recipes[i].title_for_url;
             url.lastmod = recipes[i].updated_at;
             url["image:image"] = {
-                "image:loc": recipes[i].featured_image,
+                "image:loc": recipes[i].featured_image_url,
                 "image:caption": recipes[i].description,
             };
 
