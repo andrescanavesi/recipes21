@@ -89,8 +89,6 @@ router.get("/search", async function(req, res, next) {
         const p3 = daoRecipies.findAll();
 
         const [recipes, recipesSpotlight, footerRecipes] = await Promise.all([p1, p2, p3]);
-        console.info("Recipes: ");
-        console.info(recipes);
         if (recipes.length === 0) {
             recipes = recipesSpotlight;
         }

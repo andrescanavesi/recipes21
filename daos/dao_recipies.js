@@ -82,7 +82,7 @@ async function findByIds(ids) {
         throw Error("ids param not defined");
     }
     console.info("findByIds");
-    console.info(ids);
+    //console.info(ids);
     for (let i = 0; i < ids.length; i++) {
         if (isNaN(ids[i])) {
             throw new Error("Seems '" + ids[i] + "' is not a number");
@@ -213,7 +213,6 @@ module.exports.buildSearchIndex = async function() {
         searchIndex.add(key, content);
     }
     console.info("index built, length: " + searchIndex.length);
-    console.info("Open a browser at http://localhost:3000/");
     console.timelineEnd("buildIndexTook");
 };
 
@@ -221,7 +220,7 @@ module.exports.activateDeactivate = async function(recipeId, activate) {
     const query = "UPDATE recipes SET active=$1 WHERE id=$2";
     const bindings = [activate, recipeId];
     const result = await dbHelper.execute.query(query, bindings);
-    console.info(result);
+    //console.info(result);
 };
 
 module.exports.find = find;
