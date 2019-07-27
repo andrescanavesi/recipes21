@@ -34,7 +34,7 @@ module.exports.findByEmail = async function(email) {
 
     const query = "SELECT * FROM users WHERE email = $1 LIMIT 1";
     const bindings = [email];
-    console.info(sqlFormatter.format(query));
+    //console.info(sqlFormatter.format(query));
     console.info("bindings: " + bindings);
     const result = await dbHelper.execute.query(query, bindings);
     if (result.rows.length > 0) {

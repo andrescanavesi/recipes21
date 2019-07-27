@@ -24,7 +24,7 @@ router.get("/:id/:titleforurl", async function(req, res, next) {
         responseJson.linkToThisPage = recipe.url;
         responseJson.description = recipe.description + " | recipes21.com";
         responseJson.metaImage = recipe.featured_image;
-        responseJson.keywords = recipe.keywords_csv;
+        responseJson.keywords = recipe.keywords;
         responseJson.recipesSpotlight = recipesSpotlight;
         responseJson.isHomePage = false;
         responseJson.footerRecipes = footerRecipes;
