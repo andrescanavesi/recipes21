@@ -3,6 +3,7 @@ const log = new logger("dao_recipes");
 const dbHelper = require("./db_helper");
 const moment = require("moment");
 const sqlFormatter = require("sql-formatter");
+const configs = require("../util/configs");
 
 const FlexSearch = require("flexsearch");
 const preset = "fast";
@@ -104,7 +105,7 @@ async function findByIds(ids) {
 }
 
 function convertRecipe(row) {
-    const imageBase = "https://res.cloudinary.com/dniiru5xy/image/upload/c_fill,w_900/v1563920763/";
+    const imageBase = process.env.R21_IMAGES_BASE_URL;
     const featuredImageBase = imageBase;
     const thumbnailImageBase = imageBase.replace("w_900", "w_400");
     const thumbnail200ImageBase = imageBase.replace("w_900", "w_200");
@@ -186,7 +187,7 @@ module.exports.update = async function(recipe) {
     log.info("updating recipe...");
     const today = moment().format("YYYY-MM-DD HH:mm:ss");
     const query =
-        "UPDATE recipes SET ingredients=$1, steps=$2, updated_at=$3, active=$4, featured_image_name=$5, keywords=$6 WHERE id=$7";
+        "UPDATE recipes SET ingredients=$1, steps=$2, updated_at=$3, active=$4, featured_image_name=$5, keywords=$6, title=$7, description=$8 WHERE id=$9";
     const bindings = [
         recipe.ingredients,
         recipe.steps,
@@ -194,6 +195,8 @@ module.exports.update = async function(recipe) {
         recipe.active,
         recipe.featured_image_name,
         recipe.keywords,
+        recipe.title,
+        recipe.description,
         recipe.id,
     ];
     log.info(bindings);

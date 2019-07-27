@@ -1,6 +1,8 @@
 const {logger} = require("./util/logger");
 const log = new logger("app");
 
+log.info("Is production environment: " + process.env.R21_IS_PRODUCTION);
+
 const createError = require("http-errors");
 const express = require("express");
 const favicon = require("express-favicon");

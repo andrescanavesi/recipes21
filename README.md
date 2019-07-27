@@ -19,6 +19,8 @@ export PGSSLMODE=require
 export R21_SESSION_SECRET=*****************
 export R21_ADMIN_SECRET=***************** ## to excute some admin tasks
 export R21_LOG_LEVEL="info"
+export R21_DEFAULT_IMAGE_URL="https://res.cloudinary.com/dniiru5xy/image/upload/c_scale,w_900/v1564258209/recipes21/default.jpg"
+export R21_IMAGES_BASE_URL="https://res.cloudinary.com/dniiru5xy/image/upload/c_scale,w_900/v1564258209/recipes21/"
 ```
 
 # Packages
