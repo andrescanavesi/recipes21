@@ -8,7 +8,14 @@ const expect = chai.expect;
 chai.use(chaiHttp);
 chai.should();
 
-describe("Text home page", function() {
+function assertNotError(err, res) {
+    if (err) {
+        console.error(err);
+        assert.fail(err);
+    }
+}
+
+describe("Test home page", function() {
     this.timeout(10 * 1000);
 
     before(function() {
@@ -22,6 +29,7 @@ describe("Text home page", function() {
                 adminSecret: process.env.R21_ADMIN_SECRET,
             })
             .end(function(err, res) {
+                assertNotError(err, res);
                 expect(res).to.have.status(200);
                 done();
             });
@@ -31,6 +39,7 @@ describe("Text home page", function() {
         chai.request(app)
             .get("/")
             .end(function(err, res) {
+                assertNotError(err, res);
                 expect(res).to.have.status(200);
                 done();
             });
@@ -40,6 +49,7 @@ describe("Text home page", function() {
         chai.request(app)
             .get("/search?q=chocolate")
             .end(function(err, res) {
+                assertNotError(err, res);
                 expect(res).to.have.status(200);
                 done();
             });
@@ -49,6 +59,7 @@ describe("Text home page", function() {
         chai.request(app)
             .get("/recipes/keyword/chocolate")
             .end(function(err, res) {
+                assertNotError(err, res);
                 expect(res).to.have.status(200);
                 done();
             });
@@ -58,6 +69,7 @@ describe("Text home page", function() {
         chai.request(app)
             .get("/recipe/24/something")
             .end(function(err, res) {
+                assertNotError(err, res);
                 expect(res).to.have.status(200);
                 done();
             });
@@ -67,6 +79,7 @@ describe("Text home page", function() {
         chai.request(app)
             .get("/recipe/new")
             .end(function(err, res) {
+                assertNotError(err, res);
                 expect(res).to.have.status(200);
                 done();
             });
@@ -76,6 +89,7 @@ describe("Text home page", function() {
         chai.request(app)
             .get("/recipe/edit?id=24")
             .end(function(err, res) {
+                assertNotError(err, res);
                 expect(res).to.have.status(200);
                 done();
             });
@@ -85,6 +99,7 @@ describe("Text home page", function() {
         chai.request(app)
             .get("/sitemap.xml")
             .end(function(err, res) {
+                assertNotError(err, res);
                 expect(res).to.have.status(200);
                 expect(res).to.have.headers;
                 expect(res).to.be.all; //TODO validate xml
@@ -96,6 +111,7 @@ describe("Text home page", function() {
         chai.request(app)
             .get("/sso")
             .end(function(err, res) {
+                assertNotError(err, res);
                 expect(res).to.have.status(200);
                 done();
             });
