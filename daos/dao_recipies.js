@@ -174,15 +174,19 @@ module.exports.create = async function(recipe) {
 };
 
 module.exports.seed = async function(userId) {
-    for (let i = 1; i < 2; i++) {
+    for (let i = 1; i < 1; i++) {
         const recipe = {
-            title: "recipe " + i,
-            description: "description " + i,
-            ingredients: "ingr 1 \n ingr 2 \n ingr 3",
-            steps: "step1 \n step2 \n step3",
-            title_for_url: "recipe-" + i,
+            title: "Lorem ipsum dolor sit amet consectetur, adipiscing elit etiam. " + i,
+            description:
+                "Lorem ipsum dolor sit amet consectetur adipiscing elit penatibus morbi tempor, nibh elementum class dapibus litora ridiculus pellentesque ut massa, faucibus nascetur ullamcorper aptent augue malesuada mus tempus velit. " +
+                i,
+            ingredients:
+                "Lorem ipsum dolor sit amet\nLorem ipsum dolor sit amet\nLorem ipsum dolor sit amet\nLorem ipsum dolor sit amet\nLorem ipsum dolor sit amet",
+            steps:
+                "adipiscing elit penatibus morbi tempor, nibh elementum class dapibus litora ridiculus pellentesque ut massa\nadipiscing elit penatibus morbi tempor, nibh elementum class dapibus litora ridiculus pellentesque ut massa\nadipiscing elit penatibus morbi tempor, nibh elementum class dapibus litora ridiculus pellentesque ut massa\nadipiscing elit penatibus morbi tempor, nibh elementum class dapibus litora ridiculus pellentesque ut massa\nadipiscing elit penatibus morbi tempor, nibh elementum class dapibus litora ridiculus pellentesque ut massa",
+            title_for_url: "lorem-ipsum-dolor-sit-amet-consectetur-" + i,
             featured_image_name: "default.jpg",
-            keywords: "key1,key2,key3",
+            keywords: "ipsum,dolor,lorem",
             active: true,
             user_id: userId,
         };
