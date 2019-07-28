@@ -19,9 +19,10 @@ router.get("/", async function(req, res, next) {
     }
 });
 
-router.get("/google/callback", async function(req, res, next) {
+router.get("/facebook/callback", async function(req, res, next) {
     try {
         log.info("facebook callback TBD");
+        res.redirect("/");
     } catch (e) {
         next(e);
     }
