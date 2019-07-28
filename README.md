@@ -23,6 +23,7 @@ export R21_DEFAULT_IMAGE_URL="https://res.cloudinary.com/dniiru5xy/image/upload/
 export R21_IMAGES_BASE_URL="https://res.cloudinary.com/dniiru5xy/image/upload/c_scale,w_900/v1564258209/recipes21/"
 export R21_FACEBOOK_CLIENT_ID=**********************
 export R21_FACEBOOK_CLIENT_SECRET=**********************
+export R21_SHOW_ADS = false
 ```
 
 # Packages
