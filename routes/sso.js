@@ -21,6 +21,14 @@ router.get("/", async function(req, res, next) {
 
 router.get("/google/callback", async function(req, res, next) {
     try {
+        log.info("facebook callback TBD");
+    } catch (e) {
+        next(e);
+    }
+});
+
+router.get("/google/callback", async function(req, res, next) {
+    try {
         const result = await googleUtil.getGoogleAccountFromCode(req.query.code);
         log.info(result.id);
         log.info(result.email);

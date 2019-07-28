@@ -152,6 +152,16 @@ router.get("/recipes/keyword/:keyword", async function(req, res, next) {
     }
 });
 
+router.get("/terms-and-conditions", async function(req, res, next) {
+    let responseJson = responseHelper.getResponseJson(req);
+    res.render("terms-and-conditions", responseJson);
+});
+
+router.get("/privacy-policy", async function(req, res, next) {
+    let responseJson = responseHelper.getResponseJson(req);
+    res.render("privacy-policy", responseJson);
+});
+
 /**
  *
  * @param {http request} req
