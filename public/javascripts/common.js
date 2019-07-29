@@ -13,3 +13,7 @@ function search(event) {
 function redirectToSSO() {
     window.location.href = "/sso";
 }
+
+function activateElem(element) {
+    element.classList.toggle("active");
+}
