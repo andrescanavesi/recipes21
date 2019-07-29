@@ -97,6 +97,8 @@ html(lang="en")
                   each recipe in recipesSpotlight
                     .col-sm-4.text-center
                       - var img = recipe.thumbnail200
+                      if isMobile
+                        - img = recipe.featured_image_url_mobile
                       a(href=`${recipe.url}`)
                         img.img-fluid(src=img, alt='recipe image')
                       a(href=`${recipe.url}`)

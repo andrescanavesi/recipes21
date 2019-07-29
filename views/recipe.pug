@@ -3,6 +3,8 @@ extends layout
 block content
     h1=recipe.title
     - var img = recipe.featured_image_url
+    if isMobile
+        - img = recipe.featured_image_url_mobile
     img(src=img, alt='recipe image').img-fluid
     .mt-3
       small.text-muted= recipe.description
@@ -17,7 +19,7 @@ block content
         li(onclick="activateElem(this)").list-group-item= ingr
 
     h2.mt-3 Directions
-    ol.list-group.list-group-flush.list-group-ol
+    ol.list-group.list-group-ol
       each step in recipe.steps
         li(onclick="activateElem(this)").list-group-item.list-group-item-ol= step
     

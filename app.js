@@ -18,7 +18,11 @@ const recipeRouter = require("./routes/recipe");
 const sitemapRouter = require("./routes/sitemap");
 const ssoRouter = require("./routes/sso");
 
+const useragent = require("express-useragent");
+
 const app = express();
+
+app.use(useragent.express());
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));

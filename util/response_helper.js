@@ -1,3 +1,8 @@
+const {logger} = require("./logger");
+const log = new logger("response_helper");
+
+var useragent = require("express-useragent");
+
 const moment = require("moment");
 
 module.exports.getResponseJson = function(req) {
@@ -24,6 +29,10 @@ module.exports.getResponseJson = function(req) {
     responseJson.isUserAuthenticated = typeof req.session.ssoId !== "undefined";
     responseJson.userName = req.session.userName;
     responseJson.userImageUrl = req.session.userImageUrl;
+    responseJson.isMobile = req.useragent.isMobile;
+    responseJson.isDesktop = req.useragent.isDesktop;
+    log.info("is mobile: " + responseJson.isMobile);
+    log.info("is desktop: " + responseJson.isDesktop);
 
     return responseJson;
 };

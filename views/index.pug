@@ -6,6 +6,8 @@ block content
       h1.recipe-title.px-2.py-1
         a(href=`${recipe.url}`)=recipe.title
       - var img = recipe.featured_image_url
+      if isMobile
+        - img = recipe.featured_image_url_mobile
       a(href=`${recipe.url}`)
         img.img-fluid(src=img, alt='recipe image')
       div.px-2.py-1.border.rounded-bottom
@@ -15,10 +17,11 @@ block content
           - var href = "https://www.pinterest.com/pin/create/button/?url=http://recipes21.com/recipe/"+recipe.id+"/"+recipe.title_for_url+"&media="+recipe.thumbnail+"&description="+recipe.description
           a(data-pin-do='buttonPin', href=href).ml-2
             img(src='//assets.pinterest.com/images/pidgets/pinit_fg_en_round_red_16.png')
-        h4.my-2.text-muted Ingredients
-        ul.list-group.list-group-flush
-          each ingr in recipe.ingredients
-            li(onclick="activateElem(this)").list-group-item= ingr
+        if !isMobile
+          h4.my-2.text-muted Ingredients
+          ul.list-group.list-group-flush
+            each ingr in recipe.ingredients
+              li(onclick="activateElem(this)").list-group-item= ingr
         p.text-right.mt-2.lead
           a(href=`${recipe.url}`) More &#8594; 
       if recipe.allow_edition
