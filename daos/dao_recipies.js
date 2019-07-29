@@ -116,7 +116,8 @@ function convertRecipe(row) {
     const thumbnailImageBase = imageBase.replace("w_900", "w_400");
     const thumbnail200ImageBase = imageBase.replace("w_900", "w_200");
     let thumbnail500ImageBase = imageBase.replace("w_900", "w_500");
-    const featured_image_name = row.featured_image_name.replace("jpg", "webp");
+    //const featured_image_name = row.featured_image_name.replace("jpg", "webp");
+    const featured_image_name = row.featured_image_name;
     const recipe = {};
     recipe.id = row.id;
     recipe.title = row.title;
