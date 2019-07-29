@@ -3,27 +3,30 @@ extends layout
 block content
     h1=recipe.title
     - var img = recipe.featured_image_url
-    img(src=img, alt='recipe image').card-img-top.img-fluid
+    if isMobile
+        - img = recipe.featured_image_url_mobile
+    img(src=img, alt='recipe image').img-fluid
     .mt-3
-      span.mr-1.lead= recipe.description  
+      small.text-muted= recipe.description
       // Pinterest button
       - var href = "https://www.pinterest.com/pin/create/button/?url=http://recipes21.com/recipe/"+recipe.id+"/"+recipe.title_for_url+"&media="+recipe.thumbnail+"&description="+recipe.description
-      a(data-pin-do='buttonPin', href=href)
+      a(data-pin-do='buttonPin', href=href).ml-2
         img(src='//assets.pinterest.com/images/pidgets/pinit_fg_en_round_red_16.png')
 
     h2.mt-3 Ingredients
-    ul
+    ul.list-group
       each ingr in recipe.ingredients
-        li= ingr
+        li(onclick="activateElem(this)").list-group-item= ingr
+
     h2.mt-3 Directions
-    ol
+    ol.list-group.list-group-ol
       each step in recipe.steps
-        li= step
+        li(onclick="activateElem(this)").list-group-item.list-group-item-ol= step
     
     .mt-2
       each keyword in recipe.keywords_array
-        a(href=`/recipes/keyword/${keyword}`)
-          span.badge.badge-pill.badge-secondary.mr-2.px-3.py-2=keyword
+        a(href=`/recipes/keyword/${keyword}`).badge.badge-pill.badge-info.mr-2.px-4.py-2
+          span=keyword
     if recipe.allow_edition
       .mt-2.text-right
         - var href = "/recipe/edit?id="+recipe.id
