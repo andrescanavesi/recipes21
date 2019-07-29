@@ -22,11 +22,11 @@ h2 {
 }
 
 .recipe-title a {
-    color: #212529 !important;
+    color: #333 !important;
 }
 
 a:hover {
-    color: #20c997 !important;
+    color: #333 !important;
 }
 
 .show-on-mobile {

@@ -3,12 +3,12 @@ extends layout
 block content
     h1=recipe.title
     - var img = recipe.featured_image_url
-    img(src=img, alt='recipe image').card-img-top.img-fluid
+    img(src=img, alt='recipe image').img-fluid
     .mt-3
-      span.mr-1.lead= recipe.description  
+      small.text-muted= recipe.description
       // Pinterest button
       - var href = "https://www.pinterest.com/pin/create/button/?url=http://recipes21.com/recipe/"+recipe.id+"/"+recipe.title_for_url+"&media="+recipe.thumbnail+"&description="+recipe.description
-      a(data-pin-do='buttonPin', href=href)
+      a(data-pin-do='buttonPin', href=href).ml-2
         img(src='//assets.pinterest.com/images/pidgets/pinit_fg_en_round_red_16.png')
 
     h2.mt-3 Ingredients
