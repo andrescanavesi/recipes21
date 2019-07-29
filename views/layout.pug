@@ -9,6 +9,12 @@ html(lang="en")
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', 'UA-139523568-1');
+    if showAds  
+      //Adsense Ads
+      script.
+        (adsbygoogle = window.adsbygoogle || []).push({google_ad_client: "ca-pub-9559827534748081",enable_page_level_ads: true});
+      //AMP ads
+      script(async='', custom-element='amp-auto-ads', src='https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js')
 
     title= title
    
@@ -49,7 +55,6 @@ html(lang="en")
     link(rel='stylesheet' media="screen" href='/stylesheets/style.css')
 
   body
-    script(src='/javascripts/common.js')
     .shadow-sm.pb-3.mb-3
       header
         .container-fluid
@@ -127,5 +132,7 @@ html(lang="en")
         span.text-white.mx-2 |
         a(href='/terms-and-conditions')  
           span.text-white Terms and conditions
-        
+  script(src='/javascripts/common.js')
+  if showAds
+    amp-auto-ads(type='adsense', data-ad-client='ca-pub-9559827534748081')        
 
