@@ -41,7 +41,7 @@ router.get("/:id/:titleforurl", async function(req, res, next) {
         responseJson.pageDateModified = recipe.updated_at;
         responseJson.pageDescription = recipe.description;
         responseJson.pageKeywords = recipe.keywords;
-        //responseJson.pageRecipeIngredients = JSON.stringify(recipe.ingredients);
+        responseJson.pageRecipeIngredients = JSON.stringify(recipe.ingredients);
 
         res.render("recipe", responseJson);
     } catch (e) {
