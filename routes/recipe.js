@@ -32,6 +32,17 @@ router.get("/:id/:titleforurl", async function(req, res, next) {
         responseJson.isHomePage = false;
         responseJson.footerRecipes = footerRecipes;
 
+        //structured data
+        //TODO add recipe steps based on https://search.google.com/structured-data/testing-tool?utm_campaign=devsite&utm_medium=jsonld&utm_source=recipe
+        responseJson.pageType = "Recipe";
+        responseJson.pageName = recipe.title;
+        responseJson.pageImage = recipe.featured_image_url_mobile;
+        responseJson.pageDatePublished = recipe.created_at;
+        responseJson.pageDateModified = recipe.updated_at;
+        responseJson.pageDescription = recipe.description;
+        responseJson.pageKeywords = recipe.keywords;
+        responseJson.pageRecipeIngredients = JSON.stringify(recipe.ingredients);
+
         res.render("recipe", responseJson);
     } catch (e) {
         next(e);
