@@ -32,8 +32,14 @@ module.exports.getResponseJson = function(req) {
     responseJson.userImageUrl = req.session.userImageUrl;
     responseJson.isMobile = req.useragent.isMobile;
     responseJson.isDesktop = req.useragent.isDesktop;
-    log.info("is mobile: " + responseJson.isMobile);
-    log.info("is desktop: " + responseJson.isDesktop);
+
+    //structured data
+    responseJson.pageType = "Website";
+    responseJson.pageName = "recipes21.com. The best recipes for cooking";
+    responseJson.pageImage = process.env.R21_DEFAULT_IMAGE_URL;
+    responseJson.datePublished = "2019/05/02";
+    responseJson.dateDescription = "recipes21.com. The best recipes for cooking";
+    responseJson.pageRecipeIngredients = "";
 
     return responseJson;
 };
