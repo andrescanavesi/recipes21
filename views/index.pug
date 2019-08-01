@@ -4,32 +4,32 @@ block content
   each recipe in recipes
     div.mt-3.mb-2
       h1.recipe-title.px-2.py-1
-        a(href=`${recipe.url}`)=recipe.title
+        a(href=`${recipe.url}`, title="Go to this recipe detail")=recipe.title
       - var img = recipe.featured_image_url
       if isMobile
         - img = recipe.featured_image_url_mobile
-      a(href=`${recipe.url}`)
-        img.img-fluid(src=img, alt='recipe image')
+      a(href=`${recipe.url}`, title="Go to this recipe detail")
+        img.img-fluid(src=img, alt='recipe image', loading="lazy")
       div.px-2.py-1.border.rounded-bottom
         div
           small.text-muted= recipe.description
-          a(data-pin-do='buttonPin', href=recipe.pinterestSharingUrl).ml-2
-            img(src='/images/pinterest-share-16.png')
-          a(data-pin-do='buttonWhatsapp', href=recipe.whatsappSharingUrl).ml-2
-            img(src='/images/whatsapp-share-16.png')
-          a(data-pin-do='buttonFacebook', href=recipe.facebookSharingUrl).ml-2
-            img(src='/images/facebook-share-16.png')
+          a(data-pin-do='buttonPin', href=recipe.pinterestSharingUrl, title="Share on Pinterest").ml-2
+            img(src='/images/pinterest-share-16.png', alt="Pinterest image", loading="lazy")
+          a(data-pin-do='buttonWhatsapp', href=recipe.whatsappSharingUrl, title="Share through Whatsapp").ml-2
+            img(src='/images/whatsapp-share-16.png', alt="Whatsapp image", loading="lazy")
+          a(data-pin-do='buttonFacebook', href=recipe.facebookSharingUrl, title="Share on Facebook").ml-2
+            img(src='/images/facebook-share-16.png', alt="Facebook image", loading="lazy")
         if !isMobile
           h4.my-2.text-muted Ingredients
           ul.list-group.list-group-flush
             each ingr in recipe.ingredients
               li(onclick="activateElem(this)").list-group-item= ingr
         p.text-right.mt-2.lead
-          a(href=`${recipe.url}`) More &#8594; 
+          a(href=`${recipe.url}`, title="Go to the recipe detail") Continue reading &#8594; 
       if recipe.allow_edition
         - var href = "/recipe/edit?id="+recipe.id
         span.mx-1.text-secondary |
-        a(href=href) Edit
+        a(href=href, title="Edit this recipe") Edit this recipe
    
               
               

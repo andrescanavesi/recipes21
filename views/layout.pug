@@ -112,7 +112,7 @@ html(lang="en")
                       if isMobile
                         - img = recipe.featured_image_url_mobile
                       a(href=`${recipe.url}`, title="See the recipe")
-                        img.img-fluid(src=img, alt='recipe image')
+                        img.img-fluid(src=img, alt='recipe image', loading="lazy")
                       a(href=`${recipe.url}`, title="See the recipe")
                         h6.text-dark= recipe.title
                      
