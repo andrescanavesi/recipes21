@@ -146,6 +146,18 @@ function convertRecipe(row) {
     recipe.url = process.env.R21_BASE_URL + "recipe/" + recipe.id + "/" + recipe.title_for_url;
     recipe.active = row.active;
     recipe.user_id = row.user_id;
+
+    //social sharing buttons
+    recipe.pinterestSharingUrl =
+        "https://www.pinterest.com/pin/create/button/?url=" +
+        recipe.url +
+        "&media=" +
+        recipe.thumbnail +
+        "&description=" +
+        recipe.description;
+    recipe.whatsappSharingUrl = "whatsapp://send?text=" + recipe.url;
+    recipe.facebookSharingUrl = "https://www.facebook.com/sharer/sharer.php?u=" + recipe.url;
+
     return recipe;
 }
 

@@ -30,7 +30,7 @@ router.get("/", async function(req, res, next) {
         //add recipes urls
         for (let i = 0; i < recipes.length; i++) {
             const url = {};
-            url.loc = baseUrl + "recipe/" + recipes[i].id + "/" + recipes[i].title_for_url;
+            url.loc = recipes[i].url;
             url.lastmod = recipes[i].updated_at;
             url["image:image"] = {
                 "image:loc": recipes[i].featured_image_url,
