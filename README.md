@@ -51,3 +51,15 @@ http://localhost:3000/cache
 http://localhost:3000/cache/clear
 
 # CI
+
+# Google Lighthouse
+
+Get some insight to optimize our frontend
+
+`sudo npm install -g lighthouse`
+
+Execute:
+
+`lighthouse <url_to_test>`
+
+After that a report will be generated in the home folder

@@ -9,11 +9,11 @@ block content
     .mt-3
       small.text-muted= recipe.description
       a(data-pin-do='buttonPin', href=recipe.pinterestSharingUrl).ml-2
-        img(src='/images/pinterest-share-16.png')
+        img(src='/images/pinterest-share-16.png', alt="pinterest image")
       a(data-pin-do='buttonWhatsapp', href=recipe.whatsappSharingUrl).ml-2
-        img(src='/images/whatsapp-share-16.png')
+        img(src='/images/whatsapp-share-16.png', alt="whatsapp image")
       a(data-pin-do='buttonFacebook', href=recipe.facebookSharingUrl).ml-2
-        img(src='/images/facebook-share-16.png')
+        img(src='/images/facebook-share-16.png', alt="facebook image")
     h2.mt-3 Ingredients
     ul.list-group
       each ingr in recipe.ingredients
@@ -26,9 +26,9 @@ block content
     
     .mt-2
       each keyword in recipe.keywords_array
-        a(href=`/recipes/keyword/${keyword}`).badge.badge-pill.badge-info.mr-2.px-4.py-2
+        a(href=`/recipes/keyword/${keyword}`, title="See more recipes for this tag").badge.badge-pill.badge-info.mr-2.px-4.py-2
           span=keyword
     if recipe.allow_edition
       .mt-2.text-right
         - var href = "/recipe/edit?id="+recipe.id
-        a(href=href) Edit
+        a(href=href, title="Edit this recipe") Edit this recipe

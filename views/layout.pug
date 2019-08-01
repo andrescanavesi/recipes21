@@ -72,31 +72,27 @@ html(lang="en")
             .col-lg-3
               h1.text-dark.brand.text-center.text-lg-left Recipes 21
             .col-lg-6
-              input(name='search', id="search" type='text', 
+              input(name='search', id="search" type='text', title="Search a recipe"
               placeholder='Find a recipe', onkeyup="search(event)", 
               value=searchText).form-control.form-control-md.mt-3
             .col-lg-3
               .mt-2.mr-3.show-on-desktop.text-right.mt-2
                 if isUserAuthenticated
-                  img(src=userImageUrl, title=userName).rounded-circle
+                  img(src=userImageUrl, title=userName, alt="User image").rounded-circle
                 else
                   button(onclick="redirectToSSO()").btn.btn-link Sign In
                   button(onclick="redirectToSSO()").btn.btn-outline-success Join
-
-        
-        
-        
       div.sub-header.mt-2  
         nav.nav.justify-content-center
-          a.nav-item.ml-3(href='/') 
+          a.nav-item.ml-3(href='/', title="Go to home page") 
             span.text-dark Home
-          a.nav-item.ml-3(href='/') 
+          a.nav-item.ml-3(href='/', title="Go to about page") 
             span.text-dark About
-          a.nav-item.ml-3(href='/') 
+          a.nav-item.ml-3(href='/', title="Go to all recipes") 
             span.text-dark Recipes
-          a.nav-item.ml-3(href='/sso') 
+          a.nav-item.ml-3(href='/sso', title="Go to subscribe") 
             span.text-dark Subscribe
-          a.nav-item.ml-3(href='https://www.facebook.com/Recipes21com-101318984547771') 
+          a.nav-item.ml-3(href='https://www.facebook.com/Recipes21com-101318984547771', title="Go to Facebook fan page") 
             span.text-dark Facebook
   
     .container-fluid
@@ -115,9 +111,9 @@ html(lang="en")
                       - var img = recipe.thumbnail200
                       if isMobile
                         - img = recipe.featured_image_url_mobile
-                      a(href=`${recipe.url}`)
+                      a(href=`${recipe.url}`, title="See the recipe")
                         img.img-fluid(src=img, alt='recipe image')
-                      a(href=`${recipe.url}`)
+                      a(href=`${recipe.url}`, title="See the recipe")
                         h6.text-dark= recipe.title
                      
                       
@@ -130,21 +126,21 @@ html(lang="en")
         .row
           each recipe in footerRecipes  
             .col-md-4.mt-2
-              a(href=`${recipe.url}`)
+              a(href=`${recipe.url}`, title="See the recipe")
                 span.text-white=recipe.title
         .py-2.text-center
           hr.text-white
           .d-flex.justify-content-center
             div
               |© 2019 Copyright 
-              a(href='/')  
+              a(href='/', title="Go to home page")  
                 span.text-white www.recipes21.com
               span.text-white.mx-2 |
             div
-              a(href='/privacy-policy')  
+              a(href='/privacy-policy', title="See privacy policy")  
                 span.text-white Privacy Policy
               span.text-white.mx-2 |
-              a(href='/terms-and-conditions')  
+              a(href='/terms-and-conditions', title="See terms and conditions")  
                 span.text-white Terms and conditions
         
   script(async='', src='/javascripts/common.js')
