@@ -8,11 +8,12 @@ block content
     img(src=img, alt='recipe image').img-fluid
     .mt-3
       small.text-muted= recipe.description
-      // Pinterest button
-      - var href = "https://www.pinterest.com/pin/create/button/?url=http://recipes21.com/recipe/"+recipe.id+"/"+recipe.title_for_url+"&media="+recipe.thumbnail+"&description="+recipe.description
-      a(data-pin-do='buttonPin', href=href).ml-2
-        img(src='//assets.pinterest.com/images/pidgets/pinit_fg_en_round_red_16.png')
-
+      a(data-pin-do='buttonPin', href=recipe.pinterestSharingUrl).ml-2
+        img(src='/images/pinterest-share-16.png')
+      a(data-pin-do='buttonWhatsapp', href=recipe.whatsappSharingUrl).ml-2
+        img(src='/images/whatsapp-share-16.png')
+      a(data-pin-do='buttonFacebook', href=recipe.facebookSharingUrl).ml-2
+        img(src='/images/facebook-share-16.png')
     h2.mt-3 Ingredients
     ul.list-group
       each ingr in recipe.ingredients
