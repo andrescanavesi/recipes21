@@ -30,6 +30,7 @@ router.get("/:id/:titleforurl", async function(req, res, next) {
         responseJson.keywords = recipe.keywords;
         responseJson.recipesSpotlight = recipesSpotlight;
         responseJson.isHomePage = false;
+        responseJson.isRecipePage = true;
         responseJson.footerRecipes = footerRecipes;
 
         //structured data
@@ -49,6 +50,13 @@ router.get("/:id/:titleforurl", async function(req, res, next) {
         }
 
         responseJson.pageRecipeInstructions = JSON.stringify(instructions);
+
+        responseJson.recipeCategory = recipe.category_name;
+        responseJson.pageRecipePrepTime = recipe.prep_time;
+        responseJson.pageRecipeCookTime = recipe.cook_time;
+        responseJson.pageRecipeTotalTime = recipe.total_time;
+        responseJson.pageRecipeCusine = recipe.cuisine;
+        responseJson.pageRecipeYield = recipe.recipe_yield;
 
         res.render("recipe", responseJson);
     } catch (e) {

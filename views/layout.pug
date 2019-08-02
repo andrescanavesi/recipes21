@@ -38,21 +38,61 @@ html(lang="en")
     meta(property='og:url', content=linkToThisPage)
     meta(property='og:image', content=metaImage)
     meta(property='article:modified_time', content=updatedAt)
-    script(async='async', defer='true', charset='UTF-8', type='application/ld+json').
-      {
+    if isHomePage
+      script(async='async', defer='true', charset='UTF-8', type='application/ld+json').
+        {
           "@context": "http://schema.org/",
-          "@type": "#{pageType}",
-          "name": "#{pageName}",
+          "@type": "RecipesArticle",
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http://recipes21.com/"
+          },
+          "headline": "Recipes21",
           "image": [
-          "#{pageImage}"
+            "#{pageImage}"
           ],
           "datePublished": "#{pageDatePublished}",
           "dateModified": "#{pageDateModified}",
+          "author": {
+            "@type": "Organization",
+            "name": "Recipes21"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "Recipes21"
+            "logo": {
+              "@type": "ImageObject",
+                "url": "pageLogo"
+            }
+          },
           "description": "#{pageDescription}",
-          "keywords": "#{pageKeywords}",
-          "recipeIngredient": !{pageRecipeIngredients},
-          "recipeInstructions": !{pageRecipeInstructions}
-      }         
+        }
+    if isRecipePage
+      script(async='async', defer='true', charset='UTF-8', type='application/ld+json').
+        {
+            "@context": "http://schema.org/",
+            "@type": "#{pageType}",
+            "name": "#{pageName}",
+            "image": [
+            "#{pageImage}"
+            ],
+            "datePublished": "#{pageDatePublished}",
+            "dateModified": "#{pageDateModified}",
+            "description": "#{pageDescription}",
+            "keywords": "#{pageKeywords}",
+            "recipeIngredient": !{pageRecipeIngredients},
+            "recipeInstructions": !{pageRecipeInstructions},
+            "recipeCategory": #{pageRecipeCategory}",
+            "author": {
+              "@type": "Organization",
+              "name": "recipes21"
+            },
+            "prepTime":"pageRecipePrepTime",
+            "cookTime":"pageRecipeCookTime",
+            "totalTime":"pageRecipeTotalTime",
+            "recipeCuisine":"pageRecipeCusine",
+            "recipeYield":"pageRecipeYield"
+        }         
     
     //pushengage.com notifications
     script.

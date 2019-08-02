@@ -12,6 +12,7 @@ module.exports.getResponseJson = function(req) {
     responseJson.today = moment().format("YYYY-MM-DD");
     responseJson.isProduction = JSON.parse(process.env.R21_IS_PRODUCTION) || false;
     responseJson.isHomePage = false;
+    responseJson.isRecipePage = false;
     responseJson.displayMoreRecipes = false;
     responseJson.createdAt = moment().format("YYYY-MM-DD");
     responseJson.updatedAt = moment().format("YYYY-MM-DD");
@@ -40,6 +41,7 @@ module.exports.getResponseJson = function(req) {
     responseJson.datePublished = "2019/05/02";
     responseJson.dateDescription = "recipes21.com. The best recipes for cooking";
     responseJson.pageRecipeIngredients = "";
+    responseJson.pageLogo = ""; //TODO put url to logo
 
     return responseJson;
 };
