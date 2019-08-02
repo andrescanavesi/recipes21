@@ -42,12 +42,13 @@ html(lang="en")
       script(async='async', defer='true', charset='UTF-8', type='application/ld+json').
         {
           "@context": "http://schema.org/",
-          "@type": "RecipesArticle",
-          "mainEntityOfPage": {
-            "@type": "WebPage",
-            "@id": "http://recipes21.com/"
-          },
-          "headline": "Recipes21",
+          "@type": "WebSite",
+          "url": "http://recipes21.com/",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "http://recipes21.com/search?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
           "image": [
             "#{pageImage}"
           ],
@@ -65,7 +66,7 @@ html(lang="en")
                 "url": "#{pageLogo}"
             }
           },
-          "description": "#{pageDescription}",
+          "description": "#{pageDescription}"
         }
     if isRecipePage
       script(async='async', defer='true', charset='UTF-8', type='application/ld+json').

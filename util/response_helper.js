@@ -40,8 +40,9 @@ module.exports.getResponseJson = function(req) {
     responseJson.pageImage = process.env.R21_DEFAULT_IMAGE_URL;
     responseJson.datePublished = "2019/05/02";
     responseJson.dateDescription = "recipes21.com. The best recipes for cooking";
-    responseJson.pageRecipeIngredients = "";
-    responseJson.pageLogo = ""; //TODO put url to logo
+    responseJson.pageLogo =
+        "https://res.cloudinary.com/dniiru5xy/image/upload/v1564715812/recipes21/recipes21-logo.png";
+    responseJson.pageDescription = responseJson.description;
 
     return responseJson;
 };
