@@ -158,6 +158,14 @@ function convertRecipe(row) {
     recipe.whatsappSharingUrl = "whatsapp://send?text=" + recipe.url;
     recipe.facebookSharingUrl = "https://www.facebook.com/sharer/sharer.php?u=" + recipe.url;
 
+    //TODO make dynamic
+    recipe.category_name = "General";
+    recipe.prep_time = "PT20M";
+    recipe.cook_time = "PT30M";
+    recipe.total_time = "PT50M";
+    recipe.cuisine = "American";
+    recipe.yield = "5 servings";
+
     return recipe;
 }
 
