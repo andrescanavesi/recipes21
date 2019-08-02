@@ -3,6 +3,7 @@ html(lang="en")
   head
     if isProduction
       //Global site tag (gtag.js) - Google Analytics
+      link(rel="preconnect" href="//googletagmanager.com"  crossorigin)
       script(async='', src='https://www.googletagmanager.com/gtag/js?id=UA-139523568-1')
       script.
         window.dataLayer = window.dataLayer || [];
@@ -102,6 +103,7 @@ html(lang="en")
       script(src='https://clientcdn.pushengage.com/core/4f2f926fc003eea6387a795c630c6abe.js', async='')
   
     
+    link(rel="preconnect" href="//stackpath.bootstrapcdn.com"  crossorigin)
     link(href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css", rel="stylesheet", integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T", crossorigin="anonymous")
     link(rel='stylesheet', type='text/css', href='/stylesheets/style.css')
   
@@ -139,9 +141,9 @@ html(lang="en")
   
     .container-fluid
         .row
-          .col-md-1
+          .col-md-3
             //left
-          .col-md-7
+          .col-md-6
             block content
             //recipes spotlight
             if displayMoreRecipes
@@ -160,30 +162,23 @@ html(lang="en")
                      
                       
                       
-          .col-md-4
+          .col-md-3
             //right column
     //footer
-    footer.bg-dark.text-white.py-4.mt-3.background-carbon-fibre
-      .container
-        .row
-          each recipe in footerRecipes  
-            .col-md-4.mt-2
-              a(href=`${recipe.url}`, title="See the recipe")
-                span.text-white=recipe.title
-        .py-2.text-center
-          hr.text-white
-          .d-flex.justify-content-center
-            div
-              |© 2019 Copyright 
-              a(href='/', title="Go to home page")  
-                span.text-white www.recipes21.com
-              span.text-white.mx-2 |
-            div
-              a(href='/privacy-policy', title="See privacy policy")  
-                span.text-white Privacy Policy
-              span.text-white.mx-2 |
-              a(href='/terms-and-conditions', title="See terms and conditions")  
-                span.text-white Terms and conditions
+    footer.bg-dark.py-4.mt-3.background-carbon-fibre
+      .container.py-2
+        .row.justify-content-center
+          div
+            span.text-white |© 2019 Copyright 
+            a(href='/', title="Go to home page")  
+              span.text-white www.recipes21.com
+        .row.justify-content-center
+          div.mt-2
+            a(href='/privacy-policy', title="See privacy policy")  
+              span.text-white.lead Privacy Policy
+            span.text-white.mx-2.lead - 
+            a(href='/terms-and-conditions', title="See terms and conditions")  
+              span.text-white.lead Terms and conditions
         
   script(async='', src='/javascripts/common.js')
   if showAds

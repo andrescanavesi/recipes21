@@ -13,12 +13,13 @@ block content
       div.px-2.py-1.border.rounded-bottom
         div
           small.text-muted= recipe.description
-          a(data-pin-do='buttonPin', href=recipe.pinterestSharingUrl, title="Share on Pinterest").ml-2
-            img(src='/images/pinterest-share-16.png', alt="Pinterest image", loading="lazy")
-          a(data-pin-do='buttonWhatsapp', href=recipe.whatsappSharingUrl, title="Share through Whatsapp").ml-2
-            img(src='/images/whatsapp-share-16.png', alt="Whatsapp image", loading="lazy")
-          a(data-pin-do='buttonFacebook', href=recipe.facebookSharingUrl, title="Share on Facebook").ml-2
-            img(src='/images/facebook-share-16.png', alt="Facebook image", loading="lazy")
+          span.d-none
+            a(data-pin-do='buttonPin', href=recipe.pinterestSharingUrl, title="Share on Pinterest").ml-2
+              img(src='/images/pinterest-share-16.png', alt="Pinterest image", loading="lazy")
+            a(data-pin-do='buttonWhatsapp', href=recipe.whatsappSharingUrl, title="Share through Whatsapp").ml-2
+              img(src='/images/whatsapp-share-16.png', alt="Whatsapp image", loading="lazy")
+            a(data-pin-do='buttonFacebook', href=recipe.facebookSharingUrl, title="Share on Facebook").ml-2
+              img(src='/images/facebook-share-16.png', alt="Facebook image", loading="lazy")
         if !isMobile
           h4.my-2.text-muted Ingredients
           ul.list-group.list-group-flush

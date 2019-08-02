@@ -138,6 +138,13 @@ function convertRecipe(row) {
         recipe.keywords = "";
         recipe.keywords_array = [];
     }
+    let i = 0;
+    recipe.keywords_array_3 = []; //contains maximum 3 keywords for SEO and UI purposes
+    while (i < 3) {
+        recipe.keywords_array_3.push(recipe.keywords_array[i]);
+        i++;
+    }
+
     recipe.title_for_url = row.title_for_url;
     recipe.created_at = moment(row.created_at, "YYYY-MM-DD");
     recipe.created_at = recipe.created_at.format("YYYY-MM-DD");
