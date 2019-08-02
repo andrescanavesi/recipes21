@@ -6,6 +6,7 @@ const router = express.Router();
 const responseHelper = require("../util/response_helper");
 const googleUtil = require("../util/google-util");
 const daoUsers = require("../daos/dao_users");
+const daoRecipies = require("../daos/dao_recipies");
 
 router.get("/", async function(req, res, next) {
     try {
@@ -13,20 +14,28 @@ router.get("/", async function(req, res, next) {
         const responseJson = responseHelper.getResponseJson(req);
         responseJson.urlGoogle = urlGoogle;
 
+        const p1 = daoRecipies.findAll();
+        const p2 = daoRecipies.findRecipesSpotlight();
+        const [footerRecipes, recipesSpotlight] = await Promise.all([p1, p2]);
+
+        responseJson.displayMoreRecipes = true;
+        responseJson.footerRecipes = footerRecipes;
+        responseJson.recipesSpotlight = recipesSpotlight;
+
         res.render("sso", responseJson);
     } catch (e) {
         next(e);
     }
 });
 
-router.get("/facebook/callback", async function(req, res, next) {
-    try {
-        log.info("facebook callback TBD");
-        res.redirect("/");
-    } catch (e) {
-        next(e);
-    }
-});
+// router.get("/facebook/callback", async function(req, res, next) {
+//     try {
+//         log.info("facebook callback TBD");
+//         res.redirect("/");
+//     } catch (e) {
+//         next(e);
+//     }
+// });
 
 router.get("/google/callback", async function(req, res, next) {
     try {

@@ -176,9 +176,12 @@ router.get("/subscribe", async function(req, res, next) {
     let responseJson = responseHelper.getResponseJson(req);
 
     const p1 = daoRecipies.findAll();
-    const [footerRecipes] = await Promise.all([p1]);
+    const p2 = daoRecipies.findRecipesSpotlight();
+    const [footerRecipes, recipesSpotlight] = await Promise.all([p1, p2]);
 
+    responseJson.displayMoreRecipes = true;
     responseJson.footerRecipes = footerRecipes;
+    responseJson.recipesSpotlight = recipesSpotlight;
 
     res.render("subscribe", responseJson);
 });
@@ -187,9 +190,12 @@ router.get("/subscription-done", async function(req, res, next) {
     let responseJson = responseHelper.getResponseJson(req);
 
     const p1 = daoRecipies.findAll();
-    const [footerRecipes] = await Promise.all([p1]);
+    const p2 = daoRecipies.findRecipesSpotlight();
+    const [footerRecipes, recipesSpotlight] = await Promise.all([p1, p2]);
 
+    responseJson.displayMoreRecipes = true;
     responseJson.footerRecipes = footerRecipes;
+    responseJson.recipesSpotlight = recipesSpotlight;
 
     res.render("subscription-done", responseJson);
 });
