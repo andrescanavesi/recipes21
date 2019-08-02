@@ -18,7 +18,7 @@ function assertNotError(err, res) {
     }
 }
 
-describe("Test home page", function() {
+describe("Test All", function() {
     this.timeout(10 * 1000);
 
     before(function() {
@@ -38,9 +38,29 @@ describe("Test home page", function() {
             });
     });
 
+    it("should get error seeding with missing admin secret", function(done) {
+        chai.request(app)
+            .get("/seed")
+            .end(function(err, res) {
+                assertNotError(err, res);
+                expect(res).to.have.status(400);
+                done();
+            });
+    });
+
     it("should get home page", function(done) {
         chai.request(app)
             .get("/")
+            .end(function(err, res) {
+                assertNotError(err, res);
+                expect(res).to.have.status(200);
+                done();
+            });
+    });
+
+    it("should get home page with page number", function(done) {
+        chai.request(app)
+            .get("/?page=1")
             .end(function(err, res) {
                 assertNotError(err, res);
                 expect(res).to.have.status(200);
@@ -126,6 +146,69 @@ describe("Test home page", function() {
             .query({
                 adminSecret: process.env.R21_ADMIN_SECRET,
             })
+            .end(function(err, res) {
+                assertNotError(err, res);
+                expect(res).to.have.status(200);
+                done();
+            });
+    });
+
+    it("should get an error on missing admin secret (reset-cache)", function(done) {
+        chai.request(app)
+            .get("/reset-cache")
+            .end(function(err, res) {
+                assertNotError(err, res);
+                expect(res).to.have.status(400);
+                done();
+            });
+    });
+
+    it("should call google callback", function(done) {
+        chai.request(app)
+            .get("/sso/google/callback")
+            .query({
+                imTesting: true,
+            })
+            .end(function(err, res) {
+                assertNotError(err, res);
+                expect(res).to.have.status(200);
+                done();
+            });
+    });
+
+    it("should get terms and conditions page", function(done) {
+        chai.request(app)
+            .get("/terms-and-conditions")
+            .end(function(err, res) {
+                assertNotError(err, res);
+                expect(res).to.have.status(200);
+                done();
+            });
+    });
+
+    it("should get privacy policy page", function(done) {
+        chai.request(app)
+            .get("/privacy-policy")
+            .end(function(err, res) {
+                assertNotError(err, res);
+                expect(res).to.have.status(200);
+                done();
+            });
+    });
+
+    it("should get subscribe page", function(done) {
+        chai.request(app)
+            .get("/subscribe")
+            .end(function(err, res) {
+                assertNotError(err, res);
+                expect(res).to.have.status(200);
+                done();
+            });
+    });
+
+    it("should get subscription done page", function(done) {
+        chai.request(app)
+            .get("/subscription-done")
             .end(function(err, res) {
                 assertNotError(err, res);
                 expect(res).to.have.status(200);

@@ -34,7 +34,7 @@ module.exports.findByEmail = async function(email) {
     if (!email) {
         throw Error("email param not defined");
     }
-
+    log.info("findByEmail: " + email);
     const query = "SELECT * FROM users WHERE email = $1 LIMIT 1";
     const bindings = [email];
     //console.info(sqlFormatter.format(query));
@@ -43,7 +43,7 @@ module.exports.findByEmail = async function(email) {
     if (result.rows.length > 0) {
         return convertUser(result.rows[0]);
     } else {
-        throw Error("user not found by id " + id);
+        return null;
     }
 };
 
