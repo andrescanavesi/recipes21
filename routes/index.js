@@ -54,8 +54,6 @@ router.get("/", async function(req, res, next) {
         const p2 = daoRecipies.findAll(page);
         const p3 = daoRecipies.findAll(page);
 
-        //const p2 = daoRecipies.findAll(page);
-        //const p3 = daoRecipies.findRecipesSpotlight();
         const [recipes, footerRecipes, recipesSpotlight] = await Promise.all([p1, p2, p3]);
 
         if (!recipes) {
@@ -154,12 +152,52 @@ router.get("/recipes/keyword/:keyword", async function(req, res, next) {
 
 router.get("/terms-and-conditions", async function(req, res, next) {
     let responseJson = responseHelper.getResponseJson(req);
+
+    const p1 = daoRecipies.findAll();
+    const [footerRecipes] = await Promise.all([p1]);
+
+    responseJson.footerRecipes = footerRecipes;
+
     res.render("terms-and-conditions", responseJson);
 });
 
 router.get("/privacy-policy", async function(req, res, next) {
     let responseJson = responseHelper.getResponseJson(req);
+
+    const p1 = daoRecipies.findAll();
+    const [footerRecipes] = await Promise.all([p1]);
+
+    responseJson.footerRecipes = footerRecipes;
+
     res.render("privacy-policy", responseJson);
+});
+
+router.get("/subscribe", async function(req, res, next) {
+    let responseJson = responseHelper.getResponseJson(req);
+
+    const p1 = daoRecipies.findAll();
+    const p2 = daoRecipies.findRecipesSpotlight();
+    const [footerRecipes, recipesSpotlight] = await Promise.all([p1, p2]);
+
+    responseJson.displayMoreRecipes = true;
+    responseJson.footerRecipes = footerRecipes;
+    responseJson.recipesSpotlight = recipesSpotlight;
+
+    res.render("subscribe", responseJson);
+});
+
+router.get("/subscription-done", async function(req, res, next) {
+    let responseJson = responseHelper.getResponseJson(req);
+
+    const p1 = daoRecipies.findAll();
+    const p2 = daoRecipies.findRecipesSpotlight();
+    const [footerRecipes, recipesSpotlight] = await Promise.all([p1, p2]);
+
+    responseJson.displayMoreRecipes = true;
+    responseJson.footerRecipes = footerRecipes;
+    responseJson.recipesSpotlight = recipesSpotlight;
+
+    res.render("subscription-done", responseJson);
 });
 
 /**
