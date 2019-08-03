@@ -70,8 +70,9 @@ router.get("/google/callback", async function(req, res, next) {
                 is_admin: false,
             };
             log.info("The user " + result.email + " is not registered. Will be created");
-            const userId = await daoUsers.create(user);
-            user.id = userId;
+            await daoUsers.create(user);
+            const userDB = await daoUsers.findByEmail(user.email);
+            user.id = userDB.id;
         } else {
             log.info("the user " + result.email + " is already registered");
         }
