@@ -7,7 +7,7 @@ block content
         - img = recipe.featured_image_url_mobile
     img(src=img, alt='recipe image', loading="lazy").img-fluid
     .mt-3
-      small.text-muted= recipe.description
+      .text-muted= recipe.description
       span.d-none
         a(data-pin-do='buttonPin', href=recipe.pinterestSharingUrl).ml-2
           img(src='/images/pinterest-share-16.png', alt="pinterest image", loading="lazy")

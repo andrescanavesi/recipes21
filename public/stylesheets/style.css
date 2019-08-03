@@ -62,11 +62,6 @@ a:hover {
 .brand {
     font-style: italic;
     font-family: -webkit-body;
-    margin-top: 8px;
-}
-
-.sub-header {
-    font-size: 18px;
 }
 
 .login-button {
@@ -113,4 +108,9 @@ a:hover {
 
 .keywords-section {
     height: 185px;
+}
+
+.search-section {
+    height: 200px;
+    padding-top: 85px;
 }

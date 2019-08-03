@@ -1,9 +1,17 @@
-function search(event) {
+function searchTop(event) {
+    const element = document.getElementById("searchTop");
+    search(event, element);
+}
+
+function searchBottom(event) {
+    const element = document.getElementById("searchBottom");
+    search(event, element);
+}
+function search(event, element) {
     if (event.keyCode === 13) {
         //listen to 'enter' key
-        const phrase = document.getElementById("search").value;
+        let phrase = element.value;
         if (phrase.length > 0) {
-            console.info("phrase: " + phrase);
             window.location.href = "/search?q=" + phrase;
         } else {
             window.location.href = "/";
@@ -16,4 +24,13 @@ function redirectToSSO() {
 
 function activateElem(element) {
     element.classList.toggle("active");
+}
+
+function toggleMenu() {
+    const classList = document.getElementById("dropdownMenuList").classList;
+    if (classList.contains("show")) {
+        document.getElementById("dropdownMenuList").classList.remove("show");
+    } else {
+        document.getElementById("dropdownMenuList").classList.add("show");
+    }
 }

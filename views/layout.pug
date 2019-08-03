@@ -111,39 +111,37 @@ html(lang="en")
   body
     .shadow-sm.pb-3.mb-3
       header
-        .container-fluid
-          .row
-            .col-lg-3
-              h1.text-dark.brand.text-center.text-lg-left Recipes 21
-            .col-lg-6
-              input(name='search', id="search" type='text', title="Search a recipe"
-              placeholder='Find a recipe', onkeyup="search(event)", 
-              value=searchText).form-control.form-control-md.mt-3
-            .col-lg-3
-              .mt-2.mr-3.show-on-desktop.text-right.mt-2
-                if isUserAuthenticated
-                  img(src=userImageUrl, title=userName, alt="User image").rounded-circle
-                else
-                  button(onclick="redirectToSSO()").btn.btn-link Sign In
-                  button(onclick="redirectToSSO()").btn.btn-outline-success Join
-      div.sub-header.mt-2  
-        nav.nav.justify-content-center
-          a.nav-item.ml-3(href='/', title="Go to home page") 
-            span.text-dark Home
-          a.nav-item.ml-3(href='/', title="Go to about page") 
-            span.text-dark About
-          a.nav-item.ml-3(href='/', title="Go to all recipes") 
-            span.text-dark Recipes
-          a.nav-item.ml-3(href='/subscribe', title="Go to subscribe form") 
-            span.text-dark Subscribe
-          a.nav-item.ml-3(href='https://www.facebook.com/Recipes21com-101318984547771', title="Go to Facebook fan page") 
-            span.text-dark Facebook
-  
+        .d-flex.justify-content-between.mt-3.px-2
+          div
+            .dropdown
+              button#dropdownMenuButton.btn.btn-outline-secondary.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false', onclick="toggleMenu();")
+                | Menu
+              #dropdownMenuList.dropdown-menu(aria-labelledby='dropdownMenuButton')
+                a.dropdown-item(href='/', title="Go to home page") Home
+                a.dropdown-item(href='/subscribe', title="Go to subscribe form") Subscribe
+                a.dropdown-item(href='https://www.facebook.com/Recipes21com-101318984547771', title="Go to Facebook fan page") Facebook
+          div
+            h1.text-dark.brand Recipes 21
+          div
+            if isUserAuthenticated
+                img(src=userImageUrl, title=userName, alt="User image").rounded-circle
+            else
+                button(onclick="redirectToSSO()").btn.btn-outline-success Join
+      
     .container-fluid
+        .row
+          .col-md-3
+          .col-md-6
+            .py-1.px-1
+              input(name='search', id="searchTop" type='text', title="Search a recipe"
+                  placeholder='Find a recipe', onkeyup="searchTop(event)", 
+                  value=searchText).form-control.form-control
+          .col-md-3
         .row
           .col-md-3
             //left
           .col-md-6
+            .mt-3
             block content
             //recipes spotlight
             if displayMoreRecipes
@@ -159,13 +157,18 @@ html(lang="en")
                         img.img-fluid(src=img, alt='recipe image', loading="lazy")
                       a(href=`${recipe.url}`, title="See the recipe")
                         h6.text-dark= recipe.title
-                     
-                      
-                      
+                       
           .col-md-3
             //right column
+     
+    .row
+      .col   
+        .search-section.bg-primary.px-2
+          input(name='searchBottom', id="searchBottom" type='text', title="Search a recipe"
+                  placeholder='Find a recipe', onkeyup="searchBottom(event)", 
+                  value=searchText).form-control.form-control 
     //footer
-    footer.bg-dark.py-4.mt-3.background-carbon-fibre
+    footer.bg-dark.py-5.background-carbon-fibre
       .container.py-2
         .row.justify-content-center
           div
