@@ -47,7 +47,7 @@ router.get("/reset-cache", async function(req, res, next) {
 router.get("/", async function(req, res, next) {
     try {
         let responseJson = responseHelper.getResponseJson(req);
-        responseJson.displayMoreRecipes = true;
+        responseJson.displayMoreRecipes = false;
         const page = getPage(req);
 
         const p1 = daoRecipies.findAll(page);
@@ -78,7 +78,7 @@ router.get("/", async function(req, res, next) {
 router.get("/search", async function(req, res, next) {
     try {
         let responseJson = responseHelper.getResponseJson(req);
-        responseJson.displayMoreRecipes = true;
+        responseJson.displayMoreRecipes = false;
 
         const phrase = req.query.q;
         if (!phrase) {

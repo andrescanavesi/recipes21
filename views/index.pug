@@ -3,16 +3,15 @@ extends layout
 block content
   each recipe in recipes
     div.mt-3.mb-2
-      h1.recipe-title.px-2.py-1
+      h1.px-2.py-1
         a(href=`${recipe.url}`, title="Go to this recipe detail")=recipe.title
       - var img = recipe.featured_image_url
       if isMobile
         - img = recipe.featured_image_url_mobile
-      a(href=`${recipe.url}`, title="Go to this recipe detail")
-        img.img-fluid(src=img, alt='recipe image', loading="lazy")
+      img.img-fluid(src=img, alt='recipe image', loading="lazy")
       div.px-2.py-1.border.rounded-bottom
         div
-          small.text-muted= recipe.description
+          .text-muted= recipe.description
           span.d-none
             a(data-pin-do='buttonPin', href=recipe.pinterestSharingUrl, title="Share on Pinterest").ml-2
               img(src='/images/pinterest-share-16.png', alt="Pinterest image", loading="lazy")

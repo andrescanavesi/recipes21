@@ -5,10 +5,6 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-a {
-    text-decoration: none !important;
-}
-
 h1 {
     font-size: 1.5rem;
 }
@@ -19,14 +15,6 @@ h2 {
 
 .lead {
     font-size: 1rem;
-}
-
-.recipe-title a {
-    color: #333 !important;
-}
-
-a:hover {
-    color: #333 !important;
 }
 
 .show-on-mobile {
