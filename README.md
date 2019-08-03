@@ -25,6 +25,7 @@ export R21_FACEBOOK_CLIENT_ID=**********************
 export R21_FACEBOOK_CLIENT_SECRET=**********************
 export R21_SHOW_ADS=false
 export NODE_ENV="development"
+export R21_REDIRECT_TO_HTTPS=false ##must be true in production
 ```
 
 # Packages

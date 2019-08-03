@@ -24,6 +24,14 @@ const app = express();
 
 app.use(useragent.express());
 
+if (process.env.R21_REDIRECT_TO_HTTPS === "true") {
+    app.use(function(request, response) {
+        if (!request.secure) {
+            response.redirect("https://" + request.headers.host + request.url);
+        }
+    });
+}
+
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
