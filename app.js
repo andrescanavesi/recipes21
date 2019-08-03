@@ -25,11 +25,12 @@ const app = express();
 app.use(useragent.express());
 
 if (process.env.R21_REDIRECT_TO_HTTPS === "true") {
-    app.use(function(request, response) {
-        if (!request.secure) {
-            response.redirect("https://" + request.headers.host + request.url);
-        }
-    });
+    app.use(
+        "/",
+        require("redirect-https")({
+            body: "<!-- Hello Mr Developer! Please use HTTPS instead -->",
+        })
+    );
 }
 
 // view engine setup
