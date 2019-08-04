@@ -25,6 +25,7 @@ const app = express();
 app.use(useragent.express());
 
 if (process.env.R21_REDIRECT_TO_HTTPS === "true") {
+    //auto-redirect to https in case we access through http
     const secure = require("ssl-express-www");
     app.use(secure);
 }
