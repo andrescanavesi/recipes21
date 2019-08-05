@@ -163,7 +163,9 @@ function convertRecipe(row) {
         "&description=" +
         recipe.description;
     recipe.whatsappSharingUrl = "whatsapp://send?text=" + recipe.url;
-    recipe.facebookSharingUrl = "https://www.facebook.com/sharer/sharer.php?u=" + recipe.url;
+    recipe.facebookSharingUrl = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURI(recipe.url);
+    let twitterUrl = encodeURI(recipe.url + "&text=" + recipe.title);
+    recipe.twitterSharingUrl = "https://twitter.com/intent/tweet?url=" + twitterUrl;
 
     //TODO make dynamic
     recipe.category_name = "General";
