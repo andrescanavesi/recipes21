@@ -11,6 +11,8 @@ const responseHelper = require("../util/response_helper");
 const dbHelper = require("../daos/db_helper");
 const utils = require("../util/utils");
 
+const {check, validationResult} = require("express-validator");
+
 router.get("/seed", async function(req, res, next) {
     try {
         if (req.query.adminSecret === process.env.R21_ADMIN_SECRET) {
@@ -203,13 +205,12 @@ router.get("/subscription-done", async function(req, res, next) {
 
 router.post("/subscribe-email", async function(req, res, next) {
     try {
-        //TODO sanitize with express validator
         let email = req.body.email;
         if (!email) {
-            throw Error("Please write your email");
+            throw Error("Seems you forgot to write your email");
         }
         if (!utils.isEmailvalid(email)) {
-            throw Error("Email address is not valid");
+            throw Error("Seems your email address is not valid");
         }
         log.info("Email to subscribe: " + email);
         daoEmailSubscription.create(email);
