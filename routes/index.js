@@ -4,6 +4,7 @@ const log = new logger("route_index");
 const express = require("express");
 const router = express.Router();
 const daoRecipies = require("../daos/dao_recipies");
+const daoEmailSubscription = require("../daos/dao_email_subscription");
 const daoUsers = require("../daos/dao_users");
 const {cache} = require("../util/configs");
 const responseHelper = require("../util/response_helper");
@@ -198,6 +199,24 @@ router.get("/subscription-done", async function(req, res, next) {
     responseJson.recipesSpotlight = recipesSpotlight;
 
     res.render("subscription-done", responseJson);
+});
+
+router.post("/subscribe-email", async function(req, res, next) {
+    try {
+        //TODO sanitize with express validator
+        let email = req.body.email;
+        if (!email) {
+            throw Error("Please write your email");
+        }
+        if (!utils.isEmailvalid(email)) {
+            throw Error("Email address is not valid");
+        }
+        log.info("Email to subscribe: " + email);
+        daoEmailSubscription.create(email);
+        res.redirect("/subscription-done");
+    } catch (e) {
+        next(e);
+    }
 });
 
 /**

@@ -17,3 +17,10 @@ module.exports.imRecipeOwner = function(req, recipe) {
 module.exports.allowEdition = function(req, recipe) {
     return req.session.is_user_admin === true || this.imRecipeOwner(req, recipe);
 };
+/**
+ *
+ */
+module.exports.isEmailvalid = function(email) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+};
