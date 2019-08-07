@@ -213,7 +213,18 @@ router.post("/subscribe-email", async function(req, res, next) {
             throw Error("Seems your email address is not valid");
         }
         log.info("Email to subscribe: " + email);
-        daoEmailSubscription.create(email);
+        try {
+            await daoEmailSubscription.create(email);
+        } catch (e2) {
+            if (e2.constraint === "email_subscription_email_key") {
+                log.warn("Email already registered");
+                //in this case we do not throw an error to users
+                //TODO re-subscribe in case it is deactivated
+            } else {
+                throw Error(e2);
+            }
+        }
+
         res.redirect("/subscription-done");
     } catch (e) {
         next(e);

@@ -15,7 +15,7 @@ chai.should();
 
 function assertNotError(err, res) {
     if (err) {
-        log.error(err);
+        log.error(err.message);
         assert.fail(err);
     }
 }
@@ -231,13 +231,15 @@ describe("Test All", function() {
             });
     });
 
-    it("should not subscribe repeated email", function(done) {
+    it("should re-subscribe repeated email", function(done) {
         const email = "andres.canavesi@gmail.com";
         chai.request(app)
             .post("/subscribe-email")
             .send({email: email})
             .end(function(err, res) {
-                expect(res).to.have.status(500);
+                assertNotError(err, res);
+                expect(res).to.have.status(200);
+                //TODO validate the email is re-subscribed
                 done();
             });
     });
