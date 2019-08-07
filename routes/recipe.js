@@ -52,9 +52,9 @@ router.get("/:id/:titleforurl", async function(req, res, next) {
         responseJson.pageRecipeInstructions = JSON.stringify(instructions);
 
         responseJson.pageRecipeCategory = recipe.category_name;
-        responseJson.pageRecipePrepTime = recipe.prep_time;
-        responseJson.pageRecipeCookTime = recipe.cook_time;
-        responseJson.pageRecipeTotalTime = recipe.total_time;
+        responseJson.pageRecipePrepTime = recipe.prep_time_seo;
+        responseJson.pageRecipeCookTime = recipe.cook_time_seo;
+        responseJson.pageRecipeTotalTime = recipe.total_time_seo;
         responseJson.pageRecipeCusine = recipe.cuisine;
         responseJson.pageRecipeYield = recipe.recipe_yield;
 

@@ -7,13 +7,15 @@ const chaiHttp = require("chai-http");
 const assert = chai.assert;
 const expect = chai.expect;
 
+var randomstring = require("randomstring");
+
 // Configure chai
 chai.use(chaiHttp);
 chai.should();
 
 function assertNotError(err, res) {
     if (err) {
-        log.error(err);
+        log.error(err.message);
         assert.fail(err);
     }
 }
@@ -212,6 +214,54 @@ describe("Test All", function() {
             .end(function(err, res) {
                 assertNotError(err, res);
                 expect(res).to.have.status(200);
+                done();
+            });
+    });
+
+    it("should subscribe an email", function(done) {
+        const random = randomstring.generate(7);
+        const randomEmail = "email" + random + "@gmail.com";
+        chai.request(app)
+            .post("/subscribe-email")
+            .send({email: randomEmail})
+            .end(function(err, res) {
+                assertNotError(err, res);
+                expect(res).to.have.status(200);
+                done();
+            });
+    });
+
+    it("should re-subscribe repeated email", function(done) {
+        const email = "andres.canavesi@gmail.com";
+        chai.request(app)
+            .post("/subscribe-email")
+            .send({email: email})
+            .end(function(err, res) {
+                assertNotError(err, res);
+                expect(res).to.have.status(200);
+                //TODO validate the email is re-subscribed
+                done();
+            });
+    });
+
+    it("should not subscribe empty email", function(done) {
+        const email = "";
+        chai.request(app)
+            .post("/subscribe-email")
+            .send({email: email})
+            .end(function(err, res) {
+                expect(res).to.have.status(500);
+                done();
+            });
+    });
+
+    it("should not subscribe invalid email", function(done) {
+        const email = randomstring.generate(7);
+        chai.request(app)
+            .post("/subscribe-email")
+            .send({email: email})
+            .end(function(err, res) {
+                expect(res).to.have.status(500);
                 done();
             });
     });

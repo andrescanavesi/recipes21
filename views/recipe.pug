@@ -19,7 +19,12 @@ block content
     ul.list-group.list-group-flush
       each ingr in recipe.ingredients
         li(onclick="activateElem(this)").list-group-item= ingr
-
+    .bg-light.border.pt-3.mt-2
+      ul
+        li Prep: #{recipe.prep_time}
+        li Cook: #{recipe.cook_time}
+        li Total: #{recipe.total_time}
+        li Yield: #{recipe.yield}
     h2.mt-3 Directions
     ol.list-group.list-group-flush.list-group-ol
       each step in recipe.steps
@@ -44,7 +49,7 @@ block content
           img(src='/images/twitter-32.png', width="32px", alt="twitter image", loading="lazy")
           span.pl-2 Tweet It
 
-    .bg-light.py-1.mt-2
+    .bg-light.border.py-1.mt-2
       span.text-secondary.pl-2 Recipe tags
       .d-flex.justify-content-center
         each keyword in recipe.keywords_array_3
@@ -55,3 +60,13 @@ block content
       .mt-3.text-right
         - var href = "/recipe/edit?id="+recipe.id
         a(href=href, title="Edit this recipe") Edit this recipe
+
+    //email subscription box
+    .bg-light.py-3.px-3.mt-2
+      span Get helpful baking tips and recipes for cookies, cakes, breads, and more treats, delivered right to your inbox.
+      form(action="/subscribe-email" method="POST")
+        .input-group.mt-2.mb-1
+          input#emailSubscription.form-control(type='text', name="email", placeholder="Enter your email", aria-label="Enter your email", aria-describedby='button-addon2')
+          .input-group-append
+            button#button-addon2.btn.btn-outline-secondary(type='submit') Go!
+      

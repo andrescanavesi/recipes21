@@ -18,6 +18,7 @@ function search(event, element) {
         }
     }
 }
+
 function redirectToSSO() {
     window.location.href = "/sso";
 }

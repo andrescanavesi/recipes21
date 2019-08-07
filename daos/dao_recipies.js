@@ -169,9 +169,12 @@ function convertRecipe(row) {
 
     //TODO make dynamic
     recipe.category_name = "General";
-    recipe.prep_time = "PT20M";
-    recipe.cook_time = "PT30M";
-    recipe.total_time = "PT50M";
+    recipe.prep_time_seo = "PT20M";
+    recipe.cook_time_seo = "PT30M";
+    recipe.total_time_seo = "PT50M";
+    recipe.prep_time = "20 minutes";
+    recipe.cook_time = "30 minutes";
+    recipe.total_time = "50 minutes";
     recipe.cuisine = "American";
     recipe.yield = "5 servings";
 

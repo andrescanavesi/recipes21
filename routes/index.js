@@ -4,11 +4,14 @@ const log = new logger("route_index");
 const express = require("express");
 const router = express.Router();
 const daoRecipies = require("../daos/dao_recipies");
+const daoEmailSubscription = require("../daos/dao_email_subscription");
 const daoUsers = require("../daos/dao_users");
 const {cache} = require("../util/configs");
 const responseHelper = require("../util/response_helper");
 const dbHelper = require("../daos/db_helper");
 const utils = require("../util/utils");
+
+const {check, validationResult} = require("express-validator");
 
 router.get("/seed", async function(req, res, next) {
     try {
@@ -198,6 +201,34 @@ router.get("/subscription-done", async function(req, res, next) {
     responseJson.recipesSpotlight = recipesSpotlight;
 
     res.render("subscription-done", responseJson);
+});
+
+router.post("/subscribe-email", async function(req, res, next) {
+    try {
+        let email = req.body.email;
+        if (!email) {
+            throw Error("Seems you forgot to write your email");
+        }
+        if (!utils.isEmailvalid(email)) {
+            throw Error("Seems your email address is not valid");
+        }
+        log.info("Email to subscribe: " + email);
+        try {
+            await daoEmailSubscription.create(email);
+        } catch (e2) {
+            if (e2.constraint === "email_subscription_email_key") {
+                log.warn("Email already registered");
+                //in this case we do not throw an error to users
+                //TODO re-subscribe in case it is deactivated
+            } else {
+                throw Error(e2);
+            }
+        }
+
+        res.redirect("/subscription-done");
+    } catch (e) {
+        next(e);
+    }
 });
 
 /**

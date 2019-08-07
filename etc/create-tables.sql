@@ -30,3 +30,12 @@ CREATE TABLE recipes
 );
 CREATE UNIQUE INDEX recipes_pkey ON recipes(id int4_ops);
 
+CREATE TABLE email_subscription (
+    id SERIAL PRIMARY KEY,
+    email text NOT NULL UNIQUE,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    subscribed boolean NOT NULL DEFAULT true
+);
+
+CREATE UNIQUE INDEX email_subscription_pkey ON email_subscription(id int4_ops);
