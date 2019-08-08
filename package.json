@@ -27,6 +27,7 @@
         "pg": "^7.11.0",
         "pg-hstore": "^2.3.3",
         "pug": "2.0.3",
+        "sib-api-v3-sdk": "^7.1.4",
         "sql-formatter": "^2.3.2",
         "ssl-express-www": "^3.0.3",
         "uuid": "^3.3.2"
