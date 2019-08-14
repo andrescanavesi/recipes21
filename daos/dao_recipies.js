@@ -27,7 +27,7 @@ module.exports.findAll = async function() {
 
 async function findRecipesSpotlight() {
     if (spotlightRecipes.length === 0) {
-        spotlightRecipes = findWithLimit(8);
+        spotlightRecipes = findWithLimit(6);
     }
     return spotlightRecipes;
 }

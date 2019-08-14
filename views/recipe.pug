@@ -61,12 +61,8 @@ block content
         - var href = "/recipe/edit?id="+recipe.id
         a(href=href, title="Edit this recipe") Edit this recipe
 
-    //email subscription box
-    .bg-light.py-3.px-3.mt-2
-      span Get helpful baking tips and recipes for cookies, cakes, breads, and more treats, delivered right to your inbox.
-      form(action="/subscribe-email" method="POST")
-        .input-group.mt-2.mb-1
-          input#emailSubscription.form-control(type='text', name="email", placeholder="Enter your email", aria-label="Enter your email", aria-describedby='button-addon2')
-          .input-group-append
-            button#button-addon2.btn.btn-outline-secondary(type='submit') Go!
-      
+    //sendinblue iframe
+    .border.mt-2
+      iframe(src="https://sibforms.com/serve/MUIEAFkvPJnLIAg6c-Gk2J3yfeurzrRwloLUbqWaixhDK3yZFtvC9Q1NUvIIR7AEIIZp4mJRp2t8k71GDx_xjhJf4fDswPqbIOgpoUTUqi_nlXSmhkdmEXslJ2gMkLC8b6taqfUACTYmr_L9ZHKobL8aFmT-5xLL0K1AJ2IpBhCpeXrxj-eKlZDXYRyIqbWWiST-MSwLFafN2grB", 
+      frameborder="0" scrolling="auto" allowfullscreen,
+      style="display: block;margin-left: auto;margin-right: auto;height: 500px; width: 100%;")
