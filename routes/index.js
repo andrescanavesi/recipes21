@@ -18,7 +18,9 @@ router.get("/seed", async function(req, res, next) {
         if (req.query.adminSecret === process.env.R21_ADMIN_SECRET) {
             log.info("db seed....");
             await daoUsers.seed();
-            await daoRecipies.seed(1);
+            const userId = 1;
+            const quantity = 1;
+            await daoRecipies.seed(userId, quantity);
             res.json({status: "ok"});
         } else {
             res.status(400);
