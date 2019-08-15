@@ -2,7 +2,11 @@
 
 [![Build Status](https://travis-ci.com/andrescanavesi/recetas-node-back.svg?branch=master)](https://travis-ci.com/andrescanavesi/recetas-node-back)
 
-# Environment configs
+Recipes21 is an open source project written in Node.js
+
+# Environment variables
+
+Create or edit the file `$HOME/.bash.profile`
 
 ```bash
 export R21_CACHE_DEBUG=false
@@ -29,6 +33,14 @@ export R21_REDIRECT_TO_HTTPS=false ## It should be true in production
 export R21_SENDINBLUE_API_KEY_V3="*********"
 ```
 
+After saving the file execute this to reload variables
+
+`source .bash_profile`
+
+# Run
+
+`npm start`
+
 # Packages
 
 -   mocha
@@ -43,17 +55,22 @@ export R21_SENDINBLUE_API_KEY_V3="*********"
 
 # Run tests
 
-`npm tests`
+`npm test`
 
-# Cache
+It will generate a `mochawesome` report at `test_results` folder. It also
+will generate a conerage report at `coverage` folder
 
-https://www.npmjs.com/package/apicache
+# Heroku
 
-http://localhost:3000/cache
+Heroku is the platform used to deploy this projects.
+There is a pipeline with two apps: staging and production.
 
-http://localhost:3000/cache/clear
+Staging app has automatic deploy enabled from `master` branch. It waits for Travis runs all the tests
+before deploying.
 
 # CI
+
+[https://travis-ci.com](https://travis-ci.com)
 
 # Google Lighthouse
 
@@ -66,3 +83,7 @@ Execute:
 `lighthouse <url_to_test>`
 
 After that a report will be generated in the home folder
+
+# License
+
+Apache License 2.0.
