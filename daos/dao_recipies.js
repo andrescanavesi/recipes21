@@ -125,6 +125,7 @@ function convertRecipe(row) {
     recipe.featured_image_name = featured_image_name;
     recipe.featured_image_url = featuredImageBase + featured_image_name;
     recipe.featured_image_url_mobile = thumbnail500ImageBase + featured_image_name;
+    recipe.thumbnail500 = thumbnail500ImageBase + featured_image_name;
     recipe.thumbnail = thumbnailImageBase + featured_image_name;
     recipe.thumbnail200 = thumbnail200ImageBase + featured_image_name;
     recipe.ingredients_raw = row.ingredients;
@@ -209,10 +210,14 @@ module.exports.create = async function(recipe) {
     return result.rows[0].id;
 };
 
-module.exports.seed = async function(userId) {
-    for (let i = 1; i < 1; i++) {
+/**
+ * @param userId the user to asociate the recipe
+ */
+module.exports.seed = async function(userId, quantity) {
+    log.info("Seeding recipes");
+    for (let i = 1; i < quantity; i++) {
         const recipe = {
-            title: "Lorem ipsum dolor sit amet consectetur, adipiscing elit etiam. " + i,
+            title: "Easy, Chewy Flourless Peanut Butter Cookies. " + i,
             description:
                 "Lorem ipsum dolor sit amet consectetur adipiscing elit penatibus morbi tempor, nibh elementum class dapibus litora ridiculus pellentesque ut massa, faucibus nascetur ullamcorper aptent augue malesuada mus tempus velit. " +
                 i,
@@ -220,9 +225,9 @@ module.exports.seed = async function(userId) {
                 "Lorem ipsum dolor sit amet\nLorem ipsum dolor sit amet\nLorem ipsum dolor sit amet\nLorem ipsum dolor sit amet\nLorem ipsum dolor sit amet",
             steps:
                 "adipiscing elit penatibus morbi tempor, nibh elementum class dapibus litora ridiculus pellentesque ut massa\nadipiscing elit penatibus morbi tempor, nibh elementum class dapibus litora ridiculus pellentesque ut massa\nadipiscing elit penatibus morbi tempor, nibh elementum class dapibus litora ridiculus pellentesque ut massa\nadipiscing elit penatibus morbi tempor, nibh elementum class dapibus litora ridiculus pellentesque ut massa\nadipiscing elit penatibus morbi tempor, nibh elementum class dapibus litora ridiculus pellentesque ut massa",
-            title_for_url: "lorem-ipsum-dolor-sit-amet-consectetur-" + i,
-            featured_image_name: "default.jpg",
-            keywords: "ipsum,dolor,lorem",
+            title_for_url: "easy-chewy-flourless-peanut-butter-cookies-" + i,
+            featured_image_name: "peanut-cookies.jpg",
+            keywords: "easy,chewy,flourless",
             active: true,
             user_id: userId,
         };

@@ -146,16 +146,15 @@ html(lang="en")
             if displayMoreRecipes
               .mt-4.border-top
                 h3.pt-3 Latest recipes
-                .row
+                .row.no-gutters
                   each recipe in recipesSpotlight
-                    .col-sm-4.text-center
-                      - var img = recipe.thumbnail200
-                      if isMobile
-                        - img = recipe.featured_image_url_mobile
+                    .col-sm-6
+                      - var img = recipe.thumbnail500
                       a(href=`${recipe.url}`, title="See the recipe")
-                        img.img-fluid(src=img, alt='recipe image', loading="lazy")
-                      a(href=`${recipe.url}`, title="See the recipe")
-                        h6.text-dark= recipe.title
+                        div(style="height: 250px; background-image: url('https://res.cloudinary.com/dniiru5xy/image/upload/c_scale,w_500,q_auto:low/v1564258209/recipes21/default.jpg')").mb-2.mr-1.rounded
+                          .mb-2.mr-1.lead.text-white.position-absolute.px-2.pb-2.fixed-bottom(style="background-color: rgba(0,0,0,0.65);")
+                            .py-1.font-weight-bold= recipe.title
+                        
                        
           .col-md-3
             //right column
