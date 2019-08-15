@@ -8,7 +8,7 @@ const moment = require("moment");
 module.exports.getResponseJson = function(req) {
     //default attributes for the response response.
     const responseJson = {};
-    responseJson.title = "recipes21.com";
+    responseJson.title = "Recipes21 | Cook easy. Cook fast";
     responseJson.today = moment().format("YYYY-MM-DD");
     responseJson.isProduction = JSON.parse(process.env.R21_IS_PRODUCTION) || false;
     responseJson.isHomePage = false;

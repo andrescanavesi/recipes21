@@ -1,7 +1,31 @@
 {
     "name": "recipe21",
+    "description": "Recipes21 is an open source project written in Node.js",
     "version": "0.0.1",
     "private": true,
+    "license": "Apache License 2.0",
+    "author": {
+        "name": "Andrés Canavesi",
+        "email": "andres.canavesi@gmail.com",
+        "url": "https://javaniceday.com"
+    },
+    "contributors": [
+        {
+            "name": "Andrés Canavesi",
+            "email": "andres.canavesi@gmail.com",
+            "url": "https://javaniceday.com"
+        }
+    ],
+    "keywords": [
+        "recipes",
+        "website"
+    ],
+    "bugs": "https://github.com/andrescanavesi/recipes21/issues",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/andrescanavesi/recipes21.git"
+    },
+    "homepage": "https://www.recipes21.com",
     "scripts": {
         "start": "nodemon ./bin/www",
         "test": "nyc --check-coverage --lines 40 --per-file --reporter=html mocha tests/test_*.js --recursive --reporter mochawesome --reporter-options reportDir=./test_results --exit"
