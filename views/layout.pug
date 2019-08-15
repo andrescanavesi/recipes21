@@ -150,8 +150,9 @@ html(lang="en")
                   each recipe in recipesSpotlight
                     .col-sm-6
                       - var img = recipe.thumbnail500
+                      - var style = "height: 250px; background-image: url('"+img+"')"
                       a(href=`${recipe.url}`, title="See the recipe")
-                        div(style="height: 250px; background-image: url('https://res.cloudinary.com/dniiru5xy/image/upload/c_scale,w_500,q_auto:low/v1564258209/recipes21/default.jpg')").mb-2.mr-1.rounded
+                        div(style=`${style}`).mb-2.mr-1.rounded
                           .mb-2.mr-1.lead.text-white.position-absolute.px-2.pb-2.fixed-bottom(style="background-color: rgba(0,0,0,0.65);")
                             .py-1.font-weight-bold= recipe.title
                         
