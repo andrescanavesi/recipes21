@@ -13,13 +13,17 @@ block content
                     - var header = '['+recipe.id+']'+' '+recipe.title
                     .card-header= header                   
                 .card-body  
+                    if !newRecipe
+                        .form-group.row
+                            span Recipe link: 
+                                a(href=`${recipe.url}`, title="Go to this recipe detail")=recipe.url
                     if !recipe.active
                         .form-group.row
                             span.text-danger Unpublished recipe
                     .form-group.row
-                        label Created at: 
+                        label.font-weight-bold Created at: 
                         span=recipe.created_at
-                        label.ml-3 Updated at: 
+                        label.ml-3.font-weight-bold Updated at: 
                         span=recipe.updated_at
                     .form-group.row
                         input(name='title', type='text', placeholder='Recipe title', value=recipe.title).form-control.form-control-sm
