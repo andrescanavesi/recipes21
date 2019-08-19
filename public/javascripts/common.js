@@ -26,12 +26,3 @@ function redirectToSSO() {
 function activateElem(element) {
     element.classList.toggle("active");
 }
-
-function toggleMenu() {
-    const classList = document.getElementById("dropdownMenuList").classList;
-    if (classList.contains("show")) {
-        document.getElementById("dropdownMenuList").classList.remove("show");
-    } else {
-        document.getElementById("dropdownMenuList").classList.add("show");
-    }
-}

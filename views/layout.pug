@@ -113,19 +113,26 @@ html(lang="en")
         .d-flex.justify-content-between.mt-3.px-2
           div
             .dropdown
-              button#dropdownMenuButton.btn.btn-outline-secondary.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false', onclick="toggleMenu();")
+              button#dropdownMenuButton.btn.btn-outline-secondary.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
                 | Menu
               #dropdownMenuList.dropdown-menu(aria-labelledby='dropdownMenuButton')
                 a.dropdown-item(href='/', title="Go to home page") Home
                 a.dropdown-item(href='/subscribe', title="Go to subscribe form") Subscribe
                 a.dropdown-item(href='https://www.facebook.com/Recipes21com-101318984547771', title="Go to Facebook fan page") Facebook
           div
-            h1.text-dark.brand Recipes 21
+            h1
+              a(href="/").text-dark 
+                span.brand Recipes 21
           div
             if isUserAuthenticated
-                img(src=userImageUrl, title=userName, alt="User image").rounded-circle
+              - var style = "background-image: url('"+userImageUrl+"')"
+              button#dropdownMenu2.btn.btn-outline-light.btn-lg.dropdown-toggle.profileMenu(type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' style=`${style}`)
+              .dropdown-menu(aria-labelledby='dropdownMenu2')
+                a.dropdown-item(href="/recipe/new") New Recipe
+                a.dropdown-item(href="/my-profile") My Profile
             else
-                button(onclick="redirectToSSO()").btn.btn-outline-success Join
+                a(href="/sso").btn.btn-outline-success Join
+                    
       
     .container-fluid
         .row
@@ -183,6 +190,10 @@ html(lang="en")
               span.text-white.lead Terms and conditions
         
   script(async='', src='/javascripts/common.js')
+  script(src='https://code.jquery.com/jquery-3.3.1.slim.min.js' integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo' crossorigin='anonymous')
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js' integrity='sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1' crossorigin='anonymous')
+  script(async='', src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js' integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM' crossorigin='anonymous')
+
   if showAds
     amp-auto-ads(type='adsense', data-ad-client='ca-pub-9559827534748081')        
 
