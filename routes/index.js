@@ -233,6 +233,19 @@ router.post("/subscribe-email", async function(req, res, next) {
     }
 });
 
+router.get("/my-profile", async function(req, res, next) {
+    try {
+        let responseJson = responseHelper.getResponseJson(req);
+        if (responseJson.isUserAuthenticated) {
+            res.render("my-profile", responseJson);
+        } else {
+            res.redirect("/sso");
+        }
+    } catch (e) {
+        next(e);
+    }
+});
+
 /**
  *
  * @param {http request} req

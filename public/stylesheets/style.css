@@ -50,6 +50,7 @@ h2 {
 .brand {
     font-style: italic;
     font-family: -webkit-body;
+    text-decoration: none;
 }
 
 .login-button {
@@ -97,4 +98,10 @@ h2 {
 .search-section {
     height: 200px;
     padding-top: 85px;
+}
+
+.profileMenu {
+    background-repeat: no-repeat;
+    border: none;
+    padding-left: 60px;
 }
