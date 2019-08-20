@@ -61,10 +61,10 @@ router.get("/google/callback", async function(req, res, next) {
         req.session.userName = result.email.split("@")[0];
         req.session.userImageUrl = result.imageUrl;
 
-        const user = await daoUsers.findByEmail(result.email);
+        let user = await daoUsers.findByEmail(result.email);
         if (!user) {
             //the user does not exist, let's create a new one
-            const user = {
+            user = {
                 email: result.email,
                 username: req.session.userName,
                 is_admin: false,
@@ -73,6 +73,7 @@ router.get("/google/callback", async function(req, res, next) {
             await daoUsers.create(user);
             const userDB = await daoUsers.findByEmail(user.email);
             user.id = userDB.id;
+            log.info("user created from SSO: " + user.id);
         } else {
             log.info("the user " + result.email + " is already registered");
         }

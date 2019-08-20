@@ -41,8 +41,10 @@ module.exports.findByEmail = async function(email) {
     log.info("bindings: " + bindings);
     const result = await dbHelper.execute.query(query, bindings);
     if (result.rows.length > 0) {
+        log.info("user found: " + result.rows[0].id);
         return convertUser(result.rows[0]);
     } else {
+        log.info("user not found");
         return null;
     }
 };
