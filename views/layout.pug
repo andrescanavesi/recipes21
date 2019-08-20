@@ -128,7 +128,7 @@ html(lang="en")
               - var style = "background-image: url('"+userImageUrl+"')"
               button#dropdownMenu2.btn.btn-outline-light.btn-lg.dropdown-toggle.profileMenu(type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' style=`${style}`)
               .dropdown-menu(aria-labelledby='dropdownMenu2')
-                a.dropdown-item(href="/recipe/new") New Recipe
+                a.dropdown-item(href="/recipe/new").d-none New Recipe
                 a.dropdown-item(href="/my-profile") My Profile
             else
                 a(href="/sso").btn.btn-outline-success Join
