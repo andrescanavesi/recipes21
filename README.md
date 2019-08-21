@@ -1,6 +1,6 @@
 # Recipes21
 
-[![Build Status](https://travis-ci.com/andrescanavesi/recetas-node-back.svg?branch=master)](https://travis-ci.com/andrescanavesi/recetas-node-back)
+[![Build Status](https://travis-ci.com/andrescanavesi/recipes21.svg?branch=master)](https://travis-ci.com/andrescanavesi/recipes21)
 
 Recipes21 is an open source project written in Node.js
 
