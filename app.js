@@ -11,6 +11,7 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const morganLogger = require("morgan");
 const uuid = require("uuid/v4");
+const compression = require("compression");
 
 const indexRouter = require("./routes/index");
 const cacheRouter = require("./routes/cache");
@@ -21,6 +22,7 @@ const ssoRouter = require("./routes/sso");
 const useragent = require("express-useragent");
 
 const app = express();
+app.use(compression());
 
 app.use(useragent.express());
 
