@@ -156,8 +156,8 @@ html(lang="en")
                 .row.no-gutters
                   each recipe in recipesSpotlight
                     .col-sm-6
-                      - var img = recipe.thumbnail500
-                      - var style = "height: 300px; background-image: url('"+img+"')"
+                      - var img = recipe.thumbnail300
+                      - var style = "height: 200px; background-image: url('"+img+"')"
                       a(href=`${recipe.url}`, title="See the recipe")
                         div(style=`${style}`).mb-2.mr-1.rounded
                           .mb-2.mr-1.lead.text-white.position-absolute.px-2.pb-2.fixed-bottom(style="background-color: rgba(0,0,0,0.65);")
@@ -190,6 +190,7 @@ html(lang="en")
               span.text-white.lead Terms and conditions
         
   script(async='', src='/javascripts/common.js')
+  //jquery and popper cannot be loaded async since is a dependency of bootstra.min.js
   script(src='https://code.jquery.com/jquery-3.3.1.slim.min.js' integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo' crossorigin='anonymous')
   script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js' integrity='sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1' crossorigin='anonymous')
   script(async='', src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js' integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM' crossorigin='anonymous')

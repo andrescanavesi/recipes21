@@ -23,7 +23,7 @@ module.exports.getResponseJson = function(req) {
     responseJson.recipesSpotlight = [];
     responseJson.footerRecipes = [];
     responseJson.searchText = "";
-    responseJson.showAds = process.env.R21_SHOW_ADS || false;
+    responseJson.showAds = JSON.parse(process.env.R21_SHOW_ADS);
 
     const metaCache = process.env.R21_META_CACHE || "1"; //in seconds
     responseJson.metaCache = "public, max-age=" + metaCache;

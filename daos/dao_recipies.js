@@ -116,6 +116,7 @@ function convertRecipe(row) {
     const thumbnailImageBase = imageBase.replace("w_900", "w_400");
     const thumbnail200ImageBase = imageBase.replace("w_900", "w_200");
     let thumbnail500ImageBase = imageBase.replace("w_900", "w_500");
+    let thumbnail300ImageBase = imageBase.replace("w_900", "w_300");
     //const featured_image_name = row.featured_image_name.replace("jpg", "webp");
     const featured_image_name = row.featured_image_name;
     const recipe = {};
@@ -126,6 +127,7 @@ function convertRecipe(row) {
     recipe.featured_image_url = featuredImageBase + featured_image_name;
     recipe.featured_image_url_mobile = thumbnail500ImageBase + featured_image_name;
     recipe.thumbnail500 = thumbnail500ImageBase + featured_image_name;
+    recipe.thumbnail300 = thumbnail300ImageBase + featured_image_name;
     recipe.thumbnail = thumbnailImageBase + featured_image_name;
     recipe.thumbnail200 = thumbnail200ImageBase + featured_image_name;
     recipe.ingredients_raw = row.ingredients;
