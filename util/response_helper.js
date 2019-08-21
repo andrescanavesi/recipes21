@@ -23,7 +23,7 @@ module.exports.getResponseJson = function(req) {
     responseJson.recipesSpotlight = [];
     responseJson.footerRecipes = [];
     responseJson.searchText = "";
-    responseJson.showAds = process.env.R21_SHOW_ADS || false;
+    responseJson.showAds = JSON.parse(process.env.R21_SHOW_ADS);
 
     const metaCache = process.env.R21_META_CACHE || "1"; //in seconds
     responseJson.metaCache = "public, max-age=" + metaCache;
@@ -40,8 +40,7 @@ module.exports.getResponseJson = function(req) {
     responseJson.pageImage = process.env.R21_DEFAULT_IMAGE_URL;
     responseJson.datePublished = "2019/05/02";
     responseJson.dateDescription = "recipes21.com. The best recipes for cooking";
-    responseJson.pageLogo =
-        "https://res.cloudinary.com/dniiru5xy/image/upload/v1564715812/recipes21/recipes21-logo.png";
+    responseJson.pageLogo = process.env.R21_IMAGES_BASE_URL + "recipes21-logo.png";
     responseJson.pageDescription = responseJson.description;
 
     responseJson.enablePushEngage = false;
