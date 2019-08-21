@@ -80,7 +80,7 @@ Get some insight to optimize our frontend
 
 Execute:
 
-`lighthouse <url_to_test>`
+`lighthouse --view <url_to_test>`
 
 After that a report will be generated in the home folder
 
