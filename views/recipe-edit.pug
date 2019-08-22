@@ -44,5 +44,23 @@ block content
                         textarea(name='ingredients', cols="100", rows="10", placeholder="Ingredients").form-control= recipe.ingredients_raw
                     .form-group.row
                         textarea(name='steps', cols="100", rows="10",  placeholder="Directions").form-control= recipe.steps_raw
+                    .form-group.row
+                        input(name='category_name', type='text', placeholder='Category name', value=recipe.category_name).form-control.form-control-sm
+                    .form-group.row
+                        input(name='prep_time_seo', type='text', placeholder='Prep time SEO', value=recipe.prep_time_seo).form-control.form-control-sm
+                    .form-group.row
+                        input(name='cook_time_seo', type='text', placeholder='Cook time SEO', value=recipe.cook_time_seo).form-control.form-control-sm
+                    .form-group.row
+                        input(name='total_time_seo', type='text', placeholder='Total time SEO', value=recipe.total_time_seo).form-control.form-control-sm
+                    .form-group.row
+                        input(name='prep_time', type='text', placeholder='Prep time', value=recipe.prep_time).form-control.form-control-sm
+                    .form-group.row
+                        input(name='cook_time', type='text', placeholder='Cook time', value=recipe.cook_time).form-control.form-control-sm
+                    .form-group.row
+                        input(name='total_time', type='text', placeholder='Total time', value=recipe.total_time).form-control.form-control-sm
+                    .form-group.row
+                        input(name='cuisine', type='text', placeholder='Cuisine', value=recipe.cuisine).form-control.form-control-sm
+                    .form-group.row
+                        input(name='yield', type='text', placeholder='Yield', value=recipe.yield).form-control.form-control-sm
                     .form-group.row  
                         button(type="submit" ).btn.btn-primary Save

@@ -80,6 +80,15 @@ router.get("/new", async function(req, res, next) {
                 description: "",
                 steps_raw: "",
                 keywords: "",
+                category_name: "General",
+                prep_time_seo: "PT20M",
+                cook_time_seo: "PT30M",
+                total_time_seo: "PT50M",
+                prep_time: "20 minutes",
+                cook_time: "30 minutes",
+                total_time: "50 minutes",
+                cuisine: "American",
+                yield: "5 servings",
             };
             responseJson.newRecipe = true;
             responseJson.successMessage = null;
