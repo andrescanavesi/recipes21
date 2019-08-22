@@ -141,6 +141,15 @@ router.post("/edit", async function(req, res, next) {
                 featured_image_name: req.body.featured_image_name,
                 user_id: userId,
                 active: active,
+                category_name: req.body.category_name,
+                prep_time_seo: req.body.prep_time_seo,
+                cook_time_seo: req.body.cook_time_seo,
+                total_time_seo: req.body.total_time_seo,
+                prep_time: req.body.prep_time,
+                cook_time: req.body.cook_time,
+                total_time: req.body.total_time,
+                cuisine: req.body.cuisine,
+                yield: req.body.yield,
             };
             //log.info(recipeToUdate);
             if (recipeId === "0") {
