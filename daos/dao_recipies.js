@@ -305,13 +305,13 @@ module.exports.buildSearchIndex = async function() {
     console.timelineEnd("buildIndexTook");
 };
 
-module.exports.activateDeactivate = async function(recipeId, activate) {
-    const query = "UPDATE recipes SET active=$1 WHERE id=$2";
-    const bindings = [activate, recipeId];
-    const result = await dbHelper.execute.query(query, bindings);
-    this.resetCache();
-    //log.info(result);
-};
+// module.exports.activateDeactivate = async function(recipeId, activate) {
+//     const query = "UPDATE recipes SET active=$1 WHERE id=$2";
+//     const bindings = [activate, recipeId];
+//     const result = await dbHelper.execute.query(query, bindings);
+//     this.resetCache();
+//     //log.info(result);
+// };
 
 module.exports.find = find;
 module.exports.findByIds = findByIds;

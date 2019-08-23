@@ -60,6 +60,16 @@ After saving the file execute this to reload variables
 It will generate a `mochawesome` report at `test_results` folder. It also
 will generate a conerage report at `coverage` folder
 
+## Run a specific test
+
+The first time install mocha globally
+
+`sudo npm install mocha -g`
+
+And then run the specific test:
+
+`mocha tests/test_all.js -g "should create a recipe"`
+
 # Heroku
 
 Heroku is the platform used to deploy this projects.
