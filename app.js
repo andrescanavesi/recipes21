@@ -79,7 +79,7 @@ app.use(function(err, req, res, next) {
     res.locals.message = err.message;
     res.locals.error = req.app.get("env") === "development" ? err : {};
     if (req.app.get("env") === "test") {
-        log.error(err, message);
+        log.error(message);
     } else {
         log.error(err);
     }

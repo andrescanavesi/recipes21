@@ -26,7 +26,16 @@ CREATE TABLE recipes
     featured_image_name character varying(50) NOT NULL,
     created_at timestamp with time zone NOT NULL,
     updated_at timestamp with time zone NOT NULL,
-    user_id integer REFERENCES users (id)
+    user_id integer REFERENCES users (id),
+    category_name character varying(30),
+    prep_time_seo character varying(20),
+    cook_time_seo character varying(20),
+    total_time_seo character varying(20),
+    prep_time character varying(20),
+    cook_time character varying(20),
+    total_time character varying(20),
+    cuisine character varying(40),
+    yield character varying(20)
 );
 CREATE UNIQUE INDEX recipes_pkey ON recipes(id int4_ops);
 

@@ -170,16 +170,15 @@ function convertRecipe(row) {
     let twitterUrl = encodeURI(recipe.url + "&text=" + recipe.title);
     recipe.twitterSharingUrl = "https://twitter.com/intent/tweet?url=" + twitterUrl;
 
-    //TODO make dynamic
-    recipe.category_name = "General";
-    recipe.prep_time_seo = "PT20M";
-    recipe.cook_time_seo = "PT30M";
-    recipe.total_time_seo = "PT50M";
-    recipe.prep_time = "20 minutes";
-    recipe.cook_time = "30 minutes";
-    recipe.total_time = "50 minutes";
-    recipe.cuisine = "American";
-    recipe.yield = "5 servings";
+    recipe.category_name = row.category_name || "General";
+    recipe.prep_time_seo = row.prep_time_seo || "PT20M";
+    recipe.cook_time_seo = row.cook_time_seo || "PT30M";
+    recipe.total_time_seo = row.total_time_seo || "PT50M";
+    recipe.prep_time = row.prep_time || "20 minutes";
+    recipe.cook_time = row.cook_time || "30 minutes";
+    recipe.total_time = row.total_time || "50 minutes";
+    recipe.cuisine = row.cuisine || "American";
+    recipe.yield = row.yield || "5 servings";
 
     return recipe;
 }
@@ -188,8 +187,11 @@ module.exports.create = async function(recipe) {
     log.info("Creating recipe");
     const today = moment().format("YYYY-MM-DD HH:mm:ss");
     const query =
-        "INSERT INTO recipes(title, description, ingredients, steps, title_for_url, user_id, active, featured_image_name, keywords, created_at, updated_at) " +
-        "VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING id";
+        "INSERT INTO recipes(title, description, ingredients, steps, title_for_url, user_id, " +
+        "active, featured_image_name, keywords, created_at, updated_at," +
+        "category_name,prep_time_seo, cook_time_seo, total_time_seo, prep_time, " +
+        "cook_time, total_time, cuisine, yield) " +
+        "VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING id";
     const bindings = [
         recipe.title,
         recipe.description,
@@ -202,6 +204,15 @@ module.exports.create = async function(recipe) {
         recipe.keywords,
         today,
         today,
+        recipe.category_name,
+        recipe.prep_time_seo,
+        recipe.cook_time_seo,
+        recipe.total_time_seo,
+        recipe.prep_time,
+        recipe.cook_time,
+        recipe.total_time,
+        recipe.cuisine,
+        recipe.yield,
     ];
 
     const result = await dbHelper.execute.query(query, bindings);
@@ -217,7 +228,7 @@ module.exports.create = async function(recipe) {
  */
 module.exports.seed = async function(userId, quantity) {
     log.info("Seeding recipes");
-    for (let i = 1; i < quantity; i++) {
+    for (let i = 0; i < quantity; i++) {
         const recipe = {
             title: "Easy, Chewy Flourless Peanut Butter Cookies. " + i,
             description:
@@ -237,11 +248,18 @@ module.exports.seed = async function(userId, quantity) {
     }
 };
 
+/**
+ * @param recipe
+ */
 module.exports.update = async function(recipe) {
     log.info("updating recipe...");
     const today = moment().format("YYYY-MM-DD HH:mm:ss");
     const query =
-        "UPDATE recipes SET ingredients=$1, steps=$2, updated_at=$3, active=$4, featured_image_name=$5, keywords=$6, title=$7, description=$8, title_for_url=$9 WHERE id=$10";
+        "UPDATE recipes SET ingredients=$1, steps=$2, updated_at=$3, active=$4, " +
+        "featured_image_name=$5, keywords=$6, title=$7, description=$8, title_for_url=$9, " +
+        "category_name=$10, prep_time_seo=$11, cook_time_seo=$12, total_time_seo=$13, " +
+        "prep_time=$14, cook_time=$15, total_time=$16, cuisine=$17, yield=$18 " +
+        " WHERE id=$19";
     const bindings = [
         recipe.ingredients,
         recipe.steps,
@@ -252,8 +270,18 @@ module.exports.update = async function(recipe) {
         recipe.title,
         recipe.description,
         recipe.title_for_url,
+        recipe.category_name,
+        recipe.prep_time_seo,
+        recipe.cook_time_seo,
+        recipe.total_time_seo,
+        recipe.prep_time,
+        recipe.cook_time,
+        recipe.total_time,
+        recipe.cuisine,
+        recipe.yield,
         recipe.id,
     ];
+    log.info(sqlFormatter.format(query));
     log.info(bindings);
     const result = await dbHelper.execute.query(query, bindings);
     //log.info(result);
