@@ -49,6 +49,16 @@ module.exports.findByEmail = async function(email) {
     }
 };
 
+/**
+ *
+ */
+module.exports.findLatestCreated = async function() {
+    const query = "SELECT * FROM users ORDER BY created_at DESC LIMIT 1";
+    //console.info(sqlFormatter.format(query));
+    const result = await dbHelper.execute.query(query, []);
+    return convertUser(result.rows[0]);
+};
+
 function convertUser(row) {
     const user = {};
     user.id = row.id;

@@ -8,6 +8,7 @@ const assert = chai.assert;
 const expect = chai.expect;
 
 const daoRecipes = require("../daos/dao_recipies");
+const daoUsers = require("../daos/dao_users");
 
 var randomstring = require("randomstring");
 
@@ -30,6 +31,21 @@ describe("Test All", function() {
     });
 
     describe("Test at Dao level", function() {
+        it("should create a user", async () => {
+            const random = "form_test_" + randomstring.generate(6);
+            const user = {
+                email: random + "@test.com",
+                is_admin: false,
+                username: random,
+                first_name: random,
+                last_name: random,
+            };
+            await daoUsers.create(user);
+
+            const userCreated = await daoUsers.findLatestCreated();
+            assert.isNotNull(userCreated);
+            assert.equal(random, userCreated.first_name);
+        });
         it("should create a recipe", async () => {
             const title = "from test create " + randomstring.generate(5);
             const userId = 1;
