@@ -130,10 +130,10 @@ function convertRecipe(row) {
     recipe.thumbnail300 = thumbnail300ImageBase + featured_image_name;
     recipe.thumbnail = thumbnailImageBase + featured_image_name;
     recipe.thumbnail200 = thumbnail200ImageBase + featured_image_name;
-    recipe.ingredients_raw = row.ingredients;
-    recipe.ingredients = row.ingredients.split("\n");
-    recipe.steps_raw = row.steps;
-    recipe.steps = row.steps.split("\n");
+    recipe.ingredients = row.ingredients;
+    recipe.ingredients_array = row.ingredients.split("\n");
+    recipe.steps = row.steps;
+    recipe.steps_array = row.steps.split("\n");
     if (row.keywords) {
         recipe.keywords = row.keywords;
         recipe.keywords_array = row.keywords.split(",");
@@ -281,8 +281,8 @@ module.exports.update = async function(recipe) {
         recipe.yield,
         recipe.id,
     ];
-    log.info(sqlFormatter.format(query));
-    log.info(bindings);
+    //log.info(sqlFormatter.format(query));
+    //log.info(bindings);
     const result = await dbHelper.execute.query(query, bindings);
     //log.info(result);
     this.resetCache();
@@ -312,6 +312,29 @@ module.exports.buildSearchIndex = async function() {
 //     this.resetCache();
 //     //log.info(result);
 // };
+
+module.exports.findRelated = async function(text) {
+    log.info("look for related results with: " + text);
+    if (this.searchIndex.length === 0) {
+        await this.buildSearchIndex();
+    }
+
+    const resultIds = await this.searchIndex.search({
+        query: text,
+        limit: 6,
+        suggest: true, //When suggestion is enabled all results will be filled up (until limit, default 1000) with similar matches ordered by relevance.
+    });
+
+    log.info("related results: " + resultIds.length);
+    let results;
+    if (resultIds.length === 0) {
+        results = await this.findRecipesSpotlight();
+    } else {
+        results = await this.findByIds(resultIds);
+    }
+
+    return results;
+};
 
 module.exports.find = find;
 module.exports.findByIds = findByIds;

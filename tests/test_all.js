@@ -82,6 +82,14 @@ describe("Test All", function() {
             const recipeUpdated = await daoRecipes.findById(id);
             assert.equal(newTitle, recipeUpdated.title);
         });
+
+        it("should get related recipes", async () => {
+            const keyword = "easy";
+            const results = await daoRecipes.findRelated(keyword);
+
+            assert.isNotNull(results);
+            assert.isAtLeast(results.length, 1);
+        });
     });
 
     describe("Test at web level", function() {
@@ -186,6 +194,18 @@ describe("Test All", function() {
                     expect(res).to.have.status(200);
                     expect(res).to.have.headers;
                     expect(res).to.be.all; //TODO validate xml
+                    done();
+                });
+        });
+
+        it("should display robots.txt", function(done) {
+            chai.request(app)
+                .get("/robots.txt")
+                .end(function(err, res) {
+                    assertNotError(err, res);
+                    expect(res).to.have.status(200);
+                    expect(res).to.have.headers;
+                    expect(res).to.be.all; //TODO validate txt content
                     done();
                 });
         });

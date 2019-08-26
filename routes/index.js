@@ -98,10 +98,11 @@ router.get("/search", async function(req, res, next) {
         //search using flexsearch. It will return a list of IDs we used as keys during indexing
         const resultIds = await daoRecipies.searchIndex.search({
             query: phrase,
+            limit: 15,
             suggest: true, //When suggestion is enabled all results will be filled up (until limit, default 1000) with similar matches ordered by relevance.
         });
 
-        log.info("results: " + resultIds.length);
+        log.info("results found for '" + phrase + "': " + resultIds.length);
         let p1;
         if (resultIds.length === 0) {
             p1 = daoRecipies.findRecipesSpotlight();
@@ -131,7 +132,7 @@ router.get("/search", async function(req, res, next) {
 router.get("/recipes/keyword/:keyword", async function(req, res, next) {
     try {
         let responseJson = responseHelper.getResponseJson(req);
-        responseJson.displayMoreRecipes = true;
+        responseJson.displayMoreRecipes = false;
         log.info("recipes by keyword: " + req.params.keyword);
         const recipes = await daoRecipies.findWithKeyword(req.params.keyword);
         const recipesSpotlight = await daoRecipies.findRecipesSpotlight();
@@ -264,5 +265,16 @@ function getPage(req) {
     }
     return page;
 }
+
+router.get("/robots.txt", async function(req, res, next) {
+    try {
+        const content = "User-agent: *\nAllow: /\nSitemap: https://www.recipes21.com/sitemap.xml";
+        res.set("Content-Type", "text/plain");
+        res.status(200);
+        res.send(content);
+    } catch (e) {
+        next(e);
+    }
+});
 
 module.exports = router;

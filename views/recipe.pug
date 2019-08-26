@@ -17,7 +17,7 @@ block content
           img(src='/images/facebook-share-16.png', alt="facebook image", loading="lazy")
     h2.mt-3 Ingredients
     ul.list-group.list-group-flush
-      each ingr in recipe.ingredients
+      each ingr in recipe.ingredients_array
         li(onclick="activateElem(this)").list-group-item= ingr
     .bg-light.border.pt-3.mt-2
       ul
@@ -27,7 +27,7 @@ block content
         li Yield: #{recipe.yield}
     h2.mt-3 Directions
     ol.list-group.list-group-flush.list-group-ol
-      each step in recipe.steps
+      each step in recipe.steps_array
         li(onclick="activateElem(this)").list-group-item.list-group-item-ol= step
     
     //social icons for sharing

@@ -16,7 +16,8 @@ router.get("/:id/:titleforurl", async function(req, res, next) {
 
         //titleforurl path param is for SEO purposes. It is ignored by the code
         const recipe = await daoRecipies.findById(recipeId);
-        const recipesSpotlight = await daoRecipies.findRecipesSpotlight();
+        const textRelated = recipe.keywords_array[0] || "easy";
+        const recipesSpotlight = await daoRecipies.findRelated(textRelated);
         const footerRecipes = await daoRecipies.findAll();
         recipe.im_owner = utils.imRecipeOwner(req, recipe);
         recipe.allow_edition = utils.allowEdition(req, recipe);
@@ -76,9 +77,9 @@ router.get("/new", async function(req, res, next) {
                 featured_image_name: "default.jpg",
                 active: false,
                 title_for_url: "",
-                ingredients_raw: "",
+                ingredients: "",
                 description: "",
-                steps_raw: "",
+                steps: "",
                 keywords: "",
                 category_name: "General",
                 prep_time_seo: "PT20M",
