@@ -22,7 +22,7 @@ block content
         if !isMobile
           h4.my-2.text-muted Ingredients
           ul.list-group.list-group-flush
-            each ingr in recipe.ingredients
+            each ingr in recipe.ingredients_array
               li(onclick="activateElem(this)").list-group-item= ingr
         p.text-right.mt-2.lead
           a(href=`${recipe.url}`, title="Go to the recipe detail") Continue reading &#8594; 
