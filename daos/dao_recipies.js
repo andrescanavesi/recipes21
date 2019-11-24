@@ -27,7 +27,7 @@ module.exports.findAll = async function() {
 
 async function findRecipesSpotlight() {
     if (spotlightRecipes.length === 0) {
-        spotlightRecipes = findWithLimit(6);
+        spotlightRecipes = findWithLimit(24);
     }
     return spotlightRecipes;
 }
@@ -302,7 +302,7 @@ module.exports.buildSearchIndex = async function() {
         searchIndex.add(key, content);
     }
     log.info("index built, length: " + searchIndex.length);
-    console.timelineEnd("buildIndexTook");
+    console.timeEnd("buildIndexTook");
 };
 
 // module.exports.activateDeactivate = async function(recipeId, activate) {
