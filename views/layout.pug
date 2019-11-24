@@ -126,7 +126,8 @@ html(lang="en")
             h1
               a(href="/").text-dark 
                 span.brand Recipes 21
-          div
+          div &nbsp; 
+          .d-none
             if isUserAuthenticated
               - var style = "background-image: url('"+userImageUrl+"')"
               button#dropdownMenu2.btn.btn-outline-light.btn-lg.dropdown-toggle.profileMenu(type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' style=`${style}`)

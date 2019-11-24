@@ -70,7 +70,7 @@ describe("Test All", function() {
         });
 
         it("should update a recipe", async () => {
-            const id = 1;
+            const id = 13;
             const recipe = await daoRecipes.findById(id);
             if (!recipe) {
                 assert.fail("Recipe with id " + id + " does not exist");

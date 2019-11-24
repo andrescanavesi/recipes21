@@ -94,11 +94,17 @@ Execute:
 
 After that a report will be generated in the home folder
 
-# Restore DB
+# Heroku commands
+
+## Restore DB
 
 Bring Prod DB to staging DB
 
 `heroku pg:backups:restore recetas-node-back::b004 DATABASE_URL --app recipes21-staging`
+
+## See prod logs
+
+`heroku logs --app recetas-node-back --tail`
 
 # License
 
