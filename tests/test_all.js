@@ -40,10 +40,13 @@ describe("Test All", function() {
                 first_name: random,
                 last_name: random,
             };
-            await daoUsers.create(user);
+            const id = await daoUsers.create(user);
+            assert.isNotNull(id);
+            assert.isAtLeast(id, 1);
 
             const userCreated = await daoUsers.findLatestCreated();
             assert.isNotNull(userCreated);
+            assert.equal(id, userCreated.id);
             assert.equal(random, userCreated.first_name);
         });
         it("should create a recipe", async () => {
@@ -210,16 +213,6 @@ describe("Test All", function() {
                 });
         });
 
-        it("should display SSO page", function(done) {
-            chai.request(app)
-                .get("/sso")
-                .end(function(err, res) {
-                    assertNotError(err, res);
-                    expect(res).to.have.status(200);
-                    done();
-                });
-        });
-
         it("should reset cache", function(done) {
             chai.request(app)
                 .get("/reset-cache")
@@ -239,19 +232,6 @@ describe("Test All", function() {
                 .end(function(err, res) {
                     assertNotError(err, res);
                     expect(res).to.have.status(400);
-                    done();
-                });
-        });
-
-        it("should call google callback", function(done) {
-            chai.request(app)
-                .get("/sso/google/callback")
-                .query({
-                    imTesting: true,
-                })
-                .end(function(err, res) {
-                    assertNotError(err, res);
-                    expect(res).to.have.status(200);
                     done();
                 });
         });
