@@ -1,5 +1,5 @@
 /**
- *
+ * @deprecated unused
  */
 module.exports.imRecipeOwner = function(req, recipe) {
     //console.info("im recipe owner. user session: " + req.session.user_id + " recipe user id: " + recipe.user_id);
@@ -12,7 +12,7 @@ module.exports.imRecipeOwner = function(req, recipe) {
 };
 
 /**
- *
+ * @deprecated unused
  */
 module.exports.allowEdition = function(req, recipe) {
     return req.session.is_user_admin === true || this.imRecipeOwner(req, recipe);
