@@ -31,6 +31,7 @@ export R21_SHOW_ADS=false
 export NODE_ENV="development"
 export R21_REDIRECT_TO_HTTPS=false ## It should be true in production
 export R21_SENDINBLUE_API_KEY_V3="*********"
+export R21_HTTP_AUTH_BASIC_PASSWORD="*********"
 ```
 
 After saving the file execute this to reload variables
@@ -105,6 +106,11 @@ Bring Prod DB to staging DB
 ## See prod logs
 
 `heroku logs --app recetas-node-back --tail`
+
+# HTTP auth basic
+
+user: admin
+pass: the value of the environment config `R21_HTTP_AUTH_BASIC_PASSWORD`
 
 # License
 

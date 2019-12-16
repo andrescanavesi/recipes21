@@ -6,6 +6,38 @@ const router = express.Router();
 const daoRecipies = require("../daos/dao_recipies");
 const responseHelper = require("../util/response_helper");
 const utils = require("../util/utils");
+const basicAuth = require("express-basic-auth");
+
+function myAuthorizer(username, password) {
+    const userMatches = basicAuth.safeCompare(username, "admin");
+    const passwordMatches = basicAuth.safeCompare(password, process.env.R21_HTTP_AUTH_BASIC_PASSWORD);
+    const matches = userMatches & passwordMatches;
+    return matches;
+}
+
+//http auth basic options
+// const authOptions = {
+//     challenge: true, //it will cause most browsers to show a popup to enter credentials on unauthorized responses,
+//     users: {admin: process.env.R21_HTTP_AUTH_BASIC_PASSWORD},
+//     authorizeAsync: false,
+//     unauthorizedResponse: getUnauthorizedResponse,
+// };
+
+const authOptions = {
+    challenge: true, //it will cause most browsers to show a popup to enter credentials on unauthorized responses,
+    authorizeAsync: false,
+    authorizer: myAuthorizer,
+    unauthorizedResponse: getUnauthorizedResponse,
+};
+
+/**
+ *
+ * @param req
+ * @returns {string} the text to be displayed when users hit on cancel prompt button
+ */
+function getUnauthorizedResponse(req) {
+    return "Unauthorized";
+}
 
 router.get("/:id/:titleforurl", async function(req, res, next) {
     try {
@@ -21,7 +53,9 @@ router.get("/:id/:titleforurl", async function(req, res, next) {
         const recipesSpotlight = await daoRecipies.findRecipesSpotlight();
         const footerRecipes = await daoRecipies.findAll();
         recipe.im_owner = utils.imRecipeOwner(req, recipe);
-        recipe.allow_edition = utils.allowEdition(req, recipe);
+        //recipe.allow_edition = utils.allowEdition(req, recipe);
+        recipe.allow_edition = responseJson.isUserAuthenticated;
+        log.info(`Allow recipe edition: ${recipe.allow_edition}`);
         responseJson.title = recipe.title;
         responseJson.recipe = recipe;
         responseJson.createdAt = recipe.created_at;
@@ -66,102 +100,98 @@ router.get("/:id/:titleforurl", async function(req, res, next) {
     }
 });
 
-router.get("/new", async function(req, res, next) {
+router.get("/new", basicAuth(authOptions), async function(req, res, next) {
     try {
+        req.session.authenticated = true;
         let responseJson = responseHelper.getResponseJson(req);
-        if (responseJson.isProduction && !responseJson.isUserAuthenticated) {
-            res.redirect("/sso");
-        } else {
-            responseJson.recipe = {
-                id: 0,
-                title: "",
-                featured_image_name: "default.jpg",
-                active: false,
-                title_for_url: "",
-                ingredients: "",
-                description: "",
-                steps: "",
-                keywords: "",
-                category_name: "General",
-                prep_time_seo: "PT20M",
-                cook_time_seo: "PT30M",
-                total_time_seo: "PT50M",
-                prep_time: "20 minutes",
-                cook_time: "30 minutes",
-                total_time: "50 minutes",
-                cuisine: "American",
-                yield: "5 servings",
-            };
-            responseJson.newRecipe = true;
-            responseJson.successMessage = null;
-            res.render("recipe-edit", responseJson);
-        }
+
+        responseJson.recipe = {
+            id: 0,
+            title: "",
+            featured_image_name: "default.jpg",
+            active: false,
+            title_for_url: "",
+            ingredients: "",
+            description: "",
+            steps: "",
+            keywords: "",
+            category_name: "General",
+            prep_time_seo: "PT20M",
+            cook_time_seo: "PT30M",
+            total_time_seo: "PT50M",
+            prep_time: "20 minutes",
+            cook_time: "30 minutes",
+            total_time: "50 minutes",
+            cuisine: "American",
+            yield: "5 servings",
+        };
+        responseJson.newRecipe = true;
+        responseJson.successMessage = null;
+        res.render("recipe-edit", responseJson);
     } catch (e) {
         next(e);
     }
 });
 
-router.get("/edit", async function(req, res, next) {
+router.get("/edit", basicAuth(authOptions), async function(req, res, next) {
     //we cannot use /edit/:recipeId because there's already a route /:id/:title so it makes conflicts
     //that's why we receive the recipe id by query param instead of path param
     try {
+        req.session.authenticated = true;
         let responseJson = responseHelper.getResponseJson(req);
-        if (responseJson.isProduction && !responseJson.isUserAuthenticated) {
-            res.redirect("/sso");
-        } else {
-            const recipeId = req.query.id;
-            const recipe = await daoRecipies.findById(recipeId, true);
-            responseJson.recipe = recipe;
-            res.render("recipe-edit", responseJson);
-        }
+        log.info(`auth: ${req.session.authenticated}`);
+        log.info(req);
+
+        const recipeId = req.query.id;
+        const recipe = await daoRecipies.findById(recipeId, true);
+        responseJson.recipe = recipe;
+        res.render("recipe-edit", responseJson);
     } catch (e) {
         next(e);
     }
 });
 
-router.post("/edit", async function(req, res, next) {
+router.post("/edit", basicAuth(authOptions), async function(req, res, next) {
     try {
+        req.session.authenticated = true;
         let responseJson = responseHelper.getResponseJson(req);
-        if (responseJson.isProduction && !responseJson.isUserAuthenticated) {
-            res.redirect("/sso");
-        } else {
-            //TODO sanitize with express validator
-            let recipeId = req.query.id;
-            log.info("Recipe edit, id: " + recipeId);
-            //log.info("Recipe title submited: " + recipeId + " " + req.body.title);
-            //log.info(req.body);
-            const userId = req.session.user_id || 1; //TODO change this
-            const active = req.body.active === "active";
-            const recipeToUdate = {
-                id: recipeId,
-                title: req.body.title,
-                title_for_url: getTitleUrl(req.body.title),
-                ingredients: req.body.ingredients,
-                description: req.body.description,
-                steps: req.body.steps,
-                keywords: transformKeywords(req.body.keywords),
-                featured_image_name: req.body.featured_image_name,
-                user_id: userId,
-                active: active,
-                category_name: req.body.category_name,
-                prep_time_seo: req.body.prep_time_seo,
-                cook_time_seo: req.body.cook_time_seo,
-                total_time_seo: req.body.total_time_seo,
-                prep_time: req.body.prep_time,
-                cook_time: req.body.cook_time,
-                total_time: req.body.total_time,
-                cuisine: req.body.cuisine,
-                yield: req.body.yield,
-            };
-            //log.info(recipeToUdate);
-            if (recipeId === "0") {
-                recipeId = await daoRecipies.create(recipeToUdate);
-            } else {
-                await daoRecipies.update(recipeToUdate);
-            }
 
-            res.redirect("/recipe/edit?id=" + recipeId);
+        //TODO sanitize with express validator
+        let recipeId = req.query.id;
+        log.info("Recipe edit, id: " + recipeId);
+        //log.info("Recipe title submited: " + recipeId + " " + req.body.title);
+        //log.info(req.body);
+        const userId = req.session.user_id || 1; //TODO change this
+        const active = req.body.active === "active";
+        const recipeToUdate = {
+            id: recipeId,
+            title: req.body.title,
+            title_for_url: getTitleUrl(req.body.title),
+            ingredients: req.body.ingredients,
+            description: req.body.description,
+            steps: req.body.steps,
+            keywords: transformKeywords(req.body.keywords),
+            featured_image_name: req.body.featured_image_name,
+            user_id: userId,
+            active: active,
+            category_name: req.body.category_name,
+            prep_time_seo: req.body.prep_time_seo,
+            cook_time_seo: req.body.cook_time_seo,
+            total_time_seo: req.body.total_time_seo,
+            prep_time: req.body.prep_time,
+            cook_time: req.body.cook_time,
+            total_time: req.body.total_time,
+            cuisine: req.body.cuisine,
+            yield: req.body.yield,
+        };
+        //log.info(recipeToUdate);
+        if (recipeId === "0") {
+            recipeId = await daoRecipies.create(recipeToUdate);
+        } else {
+            await daoRecipies.update(recipeToUdate);
         }
+
+        res.redirect("/recipe/edit?id=" + recipeId);
     } catch (e) {
         next(e);
     }

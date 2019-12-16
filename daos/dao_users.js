@@ -5,6 +5,9 @@ const dbHelper = require("./db_helper");
 const moment = require("moment");
 const sqlFormatter = require("sql-formatter");
 
+/**
+ * @returns the id of the created user
+ */
 module.exports.create = async function(user) {
     log.info("Creating user");
     const today = moment().format("YYYY-MM-DD HH:mm:ss");
@@ -14,7 +17,7 @@ module.exports.create = async function(user) {
     const bindings = [user.email, user.is_admin, user.username, user.first_name, user.last_name, today, today];
     const result = await dbHelper.execute.query(query, bindings);
     //console.info(result);
-    return result.insertId;
+    return result.rows[0].id;
 };
 
 module.exports.seed = async function() {
@@ -53,7 +56,7 @@ module.exports.findByEmail = async function(email) {
  *
  */
 module.exports.findLatestCreated = async function() {
-    const query = "SELECT * FROM users ORDER BY created_at DESC LIMIT 1";
+    const query = "SELECT * FROM users ORDER BY id DESC LIMIT 1";
     //console.info(sqlFormatter.format(query));
     const result = await dbHelper.execute.query(query, []);
     return convertUser(result.rows[0]);
