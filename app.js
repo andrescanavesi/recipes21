@@ -14,7 +14,6 @@ const uuid = require("uuid/v4");
 const compression = require("compression");
 
 const indexRouter = require("./routes/index");
-const cacheRouter = require("./routes/cache");
 const recipeRouter = require("./routes/recipe");
 const sitemapRouter = require("./routes/sitemap");
 
@@ -59,7 +58,6 @@ app.use(
 );
 
 app.use("/", indexRouter);
-app.use("/cache", cacheRouter);
 app.use("/recipe", recipeRouter);
 app.use("/sitemap.xml", sitemapRouter);
 
