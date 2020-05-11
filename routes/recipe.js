@@ -85,7 +85,6 @@ router.get("/:id/:titleforurl", async function(req, res, next) {
             let step = {"@type": "HowToStep", text: steps_array[i]};
             instructions.push(step);
         }
-
         responseJson.pageRecipeInstructions = JSON.stringify(instructions);
 
         responseJson.pageRecipeCategory = recipe.category_name;
