@@ -80,8 +80,9 @@ router.get("/:id/:titleforurl", async function(req, res, next) {
         responseJson.pageKeywords = recipe.keywords;
         responseJson.pageRecipeIngredients = JSON.stringify(recipe.ingredients);
         let instructions = [];
-        for (let i = 0; i < recipe.steps.length; i++) {
-            let step = {"@type": "HowToStep", text: recipe.steps[i]};
+        const steps_array = steps.split('\n');
+        for (let i = 0; i < steps_array.length; i++) {
+            let step = {"@type": "HowToStep", text: steps_array[i]};
             instructions.push(step);
         }
 
