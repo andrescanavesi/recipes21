@@ -50,7 +50,7 @@
         "parse-database-url": "^0.3.0",
         "pg": "^7.14.0",
         "pg-hstore": "^2.3.3",
-        "pug": "^2.0.4",
+        "pug": "^3.0.1",
         "sib-api-v3-sdk": "^7.1.4",
         "sql-formatter": "^2.3.3",
         "ssl-express-www": "^3.0.6",
