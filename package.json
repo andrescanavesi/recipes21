@@ -43,7 +43,7 @@
         "flexsearch": "^0.6.32",
         "http-errors": "~1.7.3",
         "js2xmlparser": "^4.0.0",
-        "log4js": "^6.1.0",
+        "log4js": "^6.4.0",
         "moment": "^2.24.0",
         "morgan": "~1.9.0",
         "nodemon": "^2.0.2",
